@@ -149,3 +149,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,eclipse,windows,git
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/br.com.project/crypto-portfolio/pom.xml
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
