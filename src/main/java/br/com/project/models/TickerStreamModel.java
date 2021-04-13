@@ -1,101 +1,61 @@
 package br.com.project.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class TickerStreamModel {
-	@JsonProperty("e")
-	@Getter
-	@Setter
-	private String EventType;
-	@JsonProperty("E")
-	@Getter
-	@Setter
+//	@SerializedName("e") 
+	private String EventTtype;
+//	@SerializedName("E") 
 	private long EventTime;
-	@JsonProperty("s")
-	@Getter
-	@Setter
+//	@SerializedName("s")
 	private String Symbol;
-	@JsonProperty("p")
-	@Getter
-	@Setter
+//	@SerializedName("p") 
 	private String PriceChange;
-	@JsonProperty("P")
-	@Getter
-	@Setter
+//	@SerializedName("P") 
 	private String PriceChangePercent;
-	@JsonProperty("w")
-	@Getter
-	@Setter
+//	@SerializedName("w") 
 	private String WeightedAveragePrice;
-	@JsonProperty("x")
-	@Getter
-	@Setter
+//	@SerializedName("x")
 	private String FirstTradePrice;
-	@JsonProperty("c")
-	@Getter
-	@Setter
+//	@SerializedName("c")
 	private String LastPrice;
-	@JsonProperty("Q")
-	@Getter
-	@Setter
+//	@SerializedName("Q") 
 	private String lastQuantity;
-	@JsonProperty("b")
-	@Getter
-	@Setter
+//	@SerializedName("b") 
 	private String BestBidPrice;
-	@JsonProperty("B")
-	@Getter
-	@Setter
+//	@SerializedName("B") 
 	private String BestBidQuantity;
-	@JsonProperty("a")
-	@Getter
-	@Setter
+//	@SerializedName("a") 
 	private String BestAskPrice;
-	@JsonProperty("A")
-	@Getter
-	@Setter
+//	@SerializedName("A") 
 	private String BestAskQuantity;
-	@JsonProperty("o")
-	@Getter
-	@Setter
+//	@SerializedName("o") 
 	private String OpenPrice;
-	@JsonProperty("h")
-	@Getter
-	@Setter
+//	@SerializedName("h") 
 	private String HighPrice;
-	@JsonProperty("l")
-	@Getter
-	@Setter
+//	@SerializedName("l") 
 	private String LowPrice;
-	@JsonProperty("v")
-	@Getter
-	@Setter
+//	@SerializedName("v") 
 	private String TotalTradedBase;
-	@JsonProperty("q")
-	@Getter
-	@Setter
+//	@SerializedName("q")
 	private String TotalTradedQuote;
-	@JsonProperty("O")
-	@Getter
-	@Setter
+//	@SerializedName("O") 
 	private long StatisticsOpenTime;
-	@JsonProperty("C")
-	@Getter
-	@Setter
+//	@SerializedName("C") 
 	private long StatisticsCloseTime;
-	@JsonProperty("F")
-	@Getter
-	@Setter
+//	@SerializedName("F") 
 	private long FirstTradeID;
-	@JsonProperty("L")
-	@Getter
-	@Setter
+//	@SerializedName("l") 
 	private long LastTradeID;
-	@JsonProperty("n")
-	@Getter
-	@Setter
+//	@SerializedName("n") 
 	private long TotalNumberTrades;
 }
+
+
+
+

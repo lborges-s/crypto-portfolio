@@ -9,11 +9,6 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.project.models.BinanceModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +25,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(_loadFXML("telaInicial"), 640, 480);
+        scene = new Scene(_loadFXML("primary"), 640, 480);
         stage.setScene(scene);
         stage.show();
         
@@ -57,7 +52,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
     
-    private void getApiTest() throws InterruptedException, ExecutionException, JsonMappingException, JsonProcessingException {
+    private void getApiTest() throws InterruptedException, ExecutionException {
 		final HttpClient client = HttpClient.newBuilder().build();
 		URI uri = URI.create(baseUrl);
 
@@ -65,16 +60,14 @@ public class App extends Application {
 
 		CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
 		response.thenAcceptAsync(res -> System.out.println(res));
-		
-		ObjectMapper objectMapper = new ObjectMapper();
 
 		if (response.get().statusCode() == 200) {
 			String body = response.get().body();
-
-			BinanceModel model = objectMapper.readValue(body, BinanceModel.class);
-			
-		//	System.out.println("SYMBOL > " + model.getSymbol());
-		//	System.out.println("LAST PRICE > " + model.getLastPrice());
+			System.out.println(body);
+//			Gson t = new Gson();
+//			BinanceModel model = t.fromJson(body, BinanceModel.class);
+//
+//			System.out.println("Response > " + model.getHighPrice());
 
 		}
 
