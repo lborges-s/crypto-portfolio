@@ -1,6 +1,5 @@
 package br.com.project.controllers;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -12,7 +11,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.project.crypto_portfolio.App;
 import br.com.project.models.MyClientEndpoint;
 import br.com.project.models.TickerStreamModel;
 import javafx.fxml.FXML;
@@ -45,10 +43,7 @@ public class PrimaryController implements Initializable {
 
 	}
 
-	@FXML
-	private void switchToSecondary() throws IOException {
-		App.setRoot("secondary");
-	}
+	
 
 	private void _initWebsocket() {
 		MyClientEndpoint client = new MyClientEndpoint(URI.create(uriWss));
@@ -66,12 +61,12 @@ public class PrimaryController implements Initializable {
 				try {
 					TickerStreamModel ticker = _objectMapper.readValue(message, TickerStreamModel.class);
 
-					Double.parseDouble(ticker.getLastPrice());
+					//Double.parseDouble(ticker.getLastPrice());
 					
 					System.out.println(message);
 
-					System.out.println("SYMBOL     > " + ticker.getSymbol());
-					System.out.println("LAST PRICE > " + brlFormat.format(Double.parseDouble(ticker.getLastPrice())));
+					//System.out.println("SYMBOL     > " + ticker.getSymbol());
+					//System.out.println("LAST PRICE > " + brlFormat.format(Double.parseDouble(ticker.getLastPrice())));
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
 				} catch (JsonProcessingException e) {

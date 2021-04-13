@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #131022;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.PrimaryController">
+   <children>
+      <WebView fx:id="browser" disable="true" layoutX="-2.0" prefHeight="68.0" prefWidth="678.0" AnchorPane.bottomAnchor="376.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane layoutY="91.0" prefHeight="369.0" prefWidth="198.0" style="-fx-background-color: #2A2738;" AnchorPane.topAnchor="91.0">
+         <children>
+            <Button contentDisplay="TOP" layoutX="-2.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="200.0" styleClass="button3" text="BTC" textFill="#a868a0">
+               <stylesheets>
+                  <URL value="@css/fullpackstyling.css" />
+               </stylesheets>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/btc.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" layoutX="-2.0" layoutY="95.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="200.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="XRP" textFill="#a868a0">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/xrp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" layoutX="-2.0" layoutY="190.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="200.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="ADA" textFill="#a868a0">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/ada.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" layoutX="-2.0" layoutY="285.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="200.0" styleClass="button3" stylesheets="@css/fullpackstyling.css" text="BNB" textFill="#a868a0">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/bnb.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

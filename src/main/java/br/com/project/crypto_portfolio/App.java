@@ -30,7 +30,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(_loadFXML("primary"), 640, 480);
+        scene = new Scene(_loadFXML("telaInicial"), 640, 480);
         stage.setScene(scene);
         stage.show();
         
@@ -73,8 +73,8 @@ public class App extends Application {
 
 			BinanceModel model = objectMapper.readValue(body, BinanceModel.class);
 			
-			System.out.println("SYMBOL > " + model.getSymbol());
-			System.out.println("LAST PRICE > " + model.getLastPrice());
+		//	System.out.println("SYMBOL > " + model.getSymbol());
+		//	System.out.println("LAST PRICE > " + model.getLastPrice());
 
 		}
 
