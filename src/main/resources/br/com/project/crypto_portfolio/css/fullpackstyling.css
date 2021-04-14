@@ -60,6 +60,10 @@
     -fx-background-radius :  30 30 30 30;
 }
 
+.button-blue{
+    -fx-background-color : #5f94e4;
+    -fx-background-radius :  30 30 30 30;
+}
 
 .combo-box
 {
@@ -150,3 +154,13 @@
 {
     -fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);
 }
+
+/* Pane properties */
+.pane-degrade {
+	-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D79E8);
+}
+
+.text-area {
+  -fx-border-radius: 10 10 10 10;
+  -fx-background-radius: 10 10 10 10;
+ }
