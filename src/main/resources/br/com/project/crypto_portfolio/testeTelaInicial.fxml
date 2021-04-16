@@ -73,7 +73,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="135.0" styleClass="button3" text="ADA" textFill="#a868a0">
+                  <Button  contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="135.0" styleClass="button3" text="ADA" textFill="#a868a0">
                      <stylesheets>
                         <URL value="@css/fullpackstyling.css" />
                      </stylesheets>

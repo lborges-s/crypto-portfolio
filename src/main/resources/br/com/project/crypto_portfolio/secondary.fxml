@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="300.0" prefWidth="852.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.SecondaryController">
+<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.SecondaryController">
 	<children>
-		<AnchorPane prefHeight="579.0" prefWidth="1000.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
+		<AnchorPane layoutX="-15.0" prefHeight="581.0" prefWidth="985.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
 			<children>
-				<AnchorPane layoutX="153.0" layoutY="8.0" prefHeight="561.0" prefWidth="980.0" style="-fx-background-color: #131022;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+				<AnchorPane layoutX="153.0" layoutY="8.0" style="-fx-background-color: #131022;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
 					<stylesheets>
 
 						<URL value="@css/fullpackstyling.css" />
@@ -30,7 +30,7 @@
 						</Label>
 					</children>
 				</AnchorPane>
-            <JFXButton fx:id="secondaryButton" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#switchToPrimary" prefHeight="53.0" prefWidth="126.0" ripplerFill="#4952ff" style="-fx-border-radius: 20;" text="TELA INICIAL" textFill="WHITE" />
+            <JFXButton fx:id="secondaryButton" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#switchTopPrimary" prefHeight="53.0" prefWidth="126.0" ripplerFill="#4952ff" style="-fx-border-radius: 20;" text="TELA INICIAL" textFill="WHITE" />
 			</children>
 		</AnchorPane>
 	</children>
