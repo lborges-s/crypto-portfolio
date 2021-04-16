@@ -1,9 +1,12 @@
 br\com\project\models\MyClientEndpoint$MessageHandler.class
 br\com\project\controllers\SecondaryController$1.class
+br\com\project\controllers\CoinChosee.class
 br\com\project\models\BinanceModel.class
+br\com\project\models\CoinChangeModel.class
 br\com\project\models\TickerStreamModel.class
 br\com\project\controllers\SecondaryController.class
 br\com\project\controllers\PrimaryController$1.class
 br\com\project\models\MyClientEndpoint.class
 br\com\project\crypto_portfolio\App.class
+br\com\project\controllers\CoinController.class
 br\com\project\controllers\PrimaryController.class

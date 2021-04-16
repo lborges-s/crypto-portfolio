@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
+	<children>
+		<BorderPane layoutY="76.0" prefHeight="800.0" prefWidth="1315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<left>
+				<VBox prefHeight="200.0" prefWidth="435.0" styleClass="barra-direita" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
+					<children>
+						<HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
+							<children>
+								<Label styleClass="texto" stylesheets="@css/fullpackstyling.css" text="moedas">
+									<font>
+										<Font name="Cambria Bold" size="40.0" />
+									</font>
+									<textFill>
+										<LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+											<stops>
+												<Stop>
+													<color>
+														<Color red="0.6447368264198303" green="0.27759504318237305" blue="0.58354651927948" />
+													</color>
+												</Stop>
+												<Stop offset="1.0">
+													<color>
+														<Color red="0.9473684430122375" green="0.41228070855140686" blue="0.41228070855140686" />
+													</color>
+												</Stop>
+											</stops>
+										</LinearGradient>
+									</textFill>
+								</Label>
+							</children>
+						</HBox>
+						<HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" stylesheets="@css/fullpackstyling.css">
+							<VBox.margin>
+								<Insets left="30.0" right="30.0" />
+							</VBox.margin>
+							<children>
+								<TextField prefHeight="40.0" prefWidth="229.0" promptText="Procure sua moeda" styleClass="transparente" stylesheets="@css/fullpackstyling.css">
+									<HBox.margin>
+										<Insets left="20.0" />
+									</HBox.margin>
+									<font>
+										<Font size="18.0" />
+									</font>
+								</TextField>
+								<Button mnemonicParsing="false" prefHeight="40.0" prefWidth="96.0" stylesheets="@css/fullpackstyling.css" text="Procurar" textFill="WHITE" wrapText="true">
+									<cursor>
+										<Cursor fx:constant="HAND" />
+									</cursor>
+									<styleClass>
+										<String fx:value="botao-procura" />
+										<String fx:value="pane-degrade" />
+									</styleClass>
+								</Button>
+							</children>
+							<styleClass>
+								<String fx:value="caixa-procura" />
+								<String fx:value="sombra" />
+							</styleClass>
+						</HBox>
+						<VBox fx:id="moedaEscolhaCard" alignment="CENTER" prefHeight="535.0" prefWidth="100.0" style="-fx-background-radius: 20;" stylesheets="@css/fullpackstyling.css">
+							<VBox.margin>
+								<Insets left="50.0" right="50.0" top="40.0" />
+							</VBox.margin>
+							<children>
+								<HBox alignment="CENTER" prefHeight="68.0" prefWidth="335.0">
+									<children>
+										<Label fx:id="nomeMoedaCard" prefHeight="62.0" prefWidth="68.0" text="BTC" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="36.0" />
+											</font>
+										</Label>
+									</children>
+									<opaqueInsets>
+										<Insets />
+									</opaqueInsets>
+									<VBox.margin>
+										<Insets />
+									</VBox.margin>
+								</HBox>
+								<ImageView fx:id="moedaImagem" fitHeight="170.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@img/9ab8ddc00d534ec22d05df7f140ccd2b.png" />
+									</image>
+								</ImageView>
+								<Separator opacity="0.29" prefWidth="200.0">
+									<VBox.margin>
+										<Insets top="10.0" />
+									</VBox.margin>
+								</Separator>
+								<HBox alignment="CENTER" prefHeight="54.0" prefWidth="335.0">
+									<children>
+										<Label prefHeight="54.0" prefWidth="191.0" text="Minima" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+										<Label fx:id="minimaCard" prefHeight="54.0" prefWidth="236.0" text="05654564564564" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+								<HBox prefHeight="54.0" prefWidth="335.0">
+									<children>
+										<Label prefHeight="54.0" prefWidth="168.0" text="Maxima" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+										<Label fx:id="maximaCard" prefHeight="54.0" prefWidth="210.0" text="05654564564564" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+								<HBox prefHeight="54.0" prefWidth="335.0">
+									<children>
+										<Label prefHeight="54.0" prefWidth="197.0" text="Nome" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+										<Label fx:id="nomeCard" prefHeight="54.0" prefWidth="240.0" text="Bitcoin" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+								<HBox prefHeight="54.0" prefWidth="335.0">
+									<children>
+										<Label prefHeight="54.0" prefWidth="196.0" text="Info" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+										<Label fx:id="infoCard" prefHeight="54.0" prefWidth="240.0" text="05654564564564" textFill="WHITE">
+											<font>
+												<Font name="Cambria" size="14.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+								<Separator opacity="0.29" prefWidth="200.0" />
+							</children>
+							<padding>
+								<Insets bottom="15.0" left="15.0" right="15.0" />
+							</padding>
+							<styleClass>
+								<String fx:value="sombra" />
+								<String fx:value="pane-degrade" />
+							</styleClass>
+						</VBox>
+					</children>
+				</VBox>
+			</left>
+			<center>
+				<VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+					<children>
+						<HBox alignment="CENTER" prefHeight="65.0" prefWidth="200.0">
+							<VBox.margin>
+								<Insets left="20.0" right="20.0" />
+							</VBox.margin>
+							<children>
+								<Label prefHeight="65.0" prefWidth="152.0" text="nome da moeda:" textFill="#616161">
+									<font>
+										<Font name="Cambria Bold" size="18.0" />
+									</font>
+								</Label>
+								<Label prefHeight="62.0" prefWidth="103.0" text="BTC" textFill="#616161" underline="true">
+									<font>
+										<Font name="Cambria Bold" size="18.0" />
+									</font>
+								</Label>
+								<Label prefHeight="62.0" prefWidth="223.0" text="conta:" textFill="#616161">
+									<font>
+										<Font name="Cambria Bold" size="18.0" />
+									</font>
+								</Label>
+								<Label prefHeight="62.0" prefWidth="201.0" text="saldo: " textFill="#616161">
+									<font>
+										<Font name="Cambria Bold" size="18.0" />
+									</font>
+								</Label>
+								<Label prefHeight="62.0" prefWidth="164.0" text="nome:" textFill="#616161">
+									<font>
+										<Font name="Cambria Bold" size="18.0" />
+									</font>
+								</Label>
+							</children>
+						</HBox>
+						<HBox prefHeight="5.0" prefWidth="880.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css">
+							<VBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</VBox.margin>
+						</HBox>
+						<HBox alignment="CENTER" prefHeight="313.0" prefWidth="880.0" VBox.vgrow="ALWAYS">
+							<children>
+								<ScrollPane fx:id="scroll" prefHeight="570.0" prefWidth="785.0" styleClass="transparente" stylesheets="@css/fullpackstyling.css">
+									<content>
+										<GridPane prefHeight="123.0" prefWidth="208.0">
+											<rowConstraints>
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+											</rowConstraints>
+										</GridPane>
+									</content>
+								</ScrollPane>
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+			</center>
+		</BorderPane>
+	</children>
+</AnchorPane>
