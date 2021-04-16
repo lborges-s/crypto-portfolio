@@ -1,4 +1,5 @@
 br\com\project\models\MyClientEndpoint$MessageHandler.class
+br\com\project\controllers\SecondaryController$1.class
 br\com\project\models\BinanceModel.class
 br\com\project\models\TickerStreamModel.class
 br\com\project\controllers\SecondaryController.class
