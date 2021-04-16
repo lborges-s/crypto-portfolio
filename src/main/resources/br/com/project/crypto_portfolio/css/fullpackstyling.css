@@ -1,39 +1,74 @@
+ /* proprios */
+ .caixa-procura {
+ 	-fx-background-color: #FFFFFF;
+ 	-fx-background-radius: 100.0;
+ }
+ 
+ .transparente {
+ 	-fx-background-color:rgba(0.0,0.0,0.0,0.0);
+ 	-fx-text-fill:black;
+ }
+ 
+ .botao-procura {
+ 	-fx-background-color:#828282;
+ 	-fx-background-radius:30.0;
+ }
+ 
+ .barra-direita {
+ 	-fx-background-color:#d3d3d3;
+ }
+ 
+ .sombra {
+ 	-fx-effect:dropShadow(three-pass-box, rgba(0.0,0.0,0.0,0.1), 10.0, 0.0, 0.0, 10.0);
+ }
+ 
+ .cartao-escolha-moeda {
+ 	-fx-background-color:rgb(230, 103, 47);
+ 	-fx-background-radius:30;
+ }
+ 
+ .texto {
+ 	-fx-text-fill:linear-gradient(to bottom left, #A868A0, #2D79E8);
+ }
+ 
+ /** */
+
 .button1
 {
 -fx-background-color : #393351;
--fx-background-radius :  30 0 0 30;
+-fx-background-radius :  30.0 0.0 0.0 30.0;
 }
 .button1:hover
 {
 -fx-background-color : #524A7B ;
--fx-background-radius :  30 0 0 30;
+-fx-background-radius :  30.0 0.0 0.0 30.0;
 }
 .button1:pressed
 {
 -fx-background-color : #2F2B43 ;
--fx-background-radius :  30 0 0 30;
+-fx-background-radius :  30.0 0.0 0.0 30.0;
 }
 
 .button2
 {
 -fx-background-color : #393351;
--fx-background-radius :  20;
+-fx-background-radius :  20.0;
 }
 .button2:hover
 {
 -fx-background-color : #524A7B ;
--fx-background-radius :  20;
+-fx-background-radius :  20.0;
 }
 .button2:pressed
 {
 -fx-background-color : #2F2B43 ;
--fx-background-radius :  20;
+-fx-background-radius :  20.0;
 }
 
 .button3
 {
     -fx-background-color : #141124;
-    -fx-background-radius :  0 0 0 0;
+    -fx-background-radius :  0.0 0.0 0.0 0.0;
 }
 .button3:hover
 {
@@ -47,46 +82,46 @@
 .button4
 {
     -fx-background-color :linear-gradient(to top left, #41951C, #D4CEE3);
-    -fx-background-radius :  30 30 30 30;
+    -fx-background-radius :  30.0 30.0 30.0 30.0;
 }
 .button4:hover
 {
     -fx-background-color :linear-gradient(to top left, #D4CEE3, #41951C);
-    -fx-background-radius :  30 30 30 30;
+    -fx-background-radius :  30.0 30.0 30.0 30.0;
 }
 .button4:pressed
 {
     -fx-background-color :linear-gradient(to top left, #41951C, #D4CEE3);
-    -fx-background-radius :  30 30 30 30;
+    -fx-background-radius :  30.0 30.0 30.0 30.0;
 }
 
 .button-blue{
     -fx-background-color : #5f94e4;
-    -fx-background-radius :  30 30 30 30;
+    -fx-background-radius :  30.0 30.0 30.0 30.0;
 }
 
 .combo-box
 {
     -fx-background-color : #141124;
     -fx-border-color:  #515658;
-    -fx-border-radius: 30;
+    -fx-border-radius: 30.0;
 }
 .combo-box:hover
 {
     -fx-background-color : #141124;
     -fx-border-color:  #FFFF;
-    -fx-border-radius: 30;
+    -fx-border-radius: 30.0;
 }
 .combo-box:pressed
 {
     -fx-background-color : #141124;
     -fx-border-color:  #FFFF;
-    -fx-border-radius: 30;
+    -fx-border-radius: 30.0;
 }
 
 .table-view .column-header,
 .table-view .column-header-background .filler {
-    -fx-cell-size : 20;
+    -fx-cell-size : 20.0;
     -fx-background-color:   #2D75E8;
 }
 .table-view .column-header .label{
@@ -96,13 +131,13 @@
    -fx-alignment: CENTER_LEFT;
 }
 .table-view .cell{
-   -fx-cell-size: 30;
+   -fx-cell-size: 30.0;
   -fx-alignment: center-left;
   -fx-text-fill: #000000;
 }
 
 .table-row-cell:selected {
-    -fx-background-color:  rgb(127, 172, 243);
+    -fx-background-color:  rgb(127.0, 172.0, 243.0);
  }
  .table-row-cell:selected .text {
         -fx-fill : white ;
@@ -113,7 +148,7 @@
 /* The increment and decrement button CSS class of scrollbar */
 .table-view .increment-button ,.table-view .decrement-button {
     -fx-background-color:transparent;
-	-fx-background-radius: 2em;
+	-fx-background-radius: 2.0em;
 
 }
 
@@ -121,24 +156,24 @@
 .table-view .scroll-bar:horizontal .track,
 .table-view .scroll-bar:vertical .track{
 	-fx-background-color: transparent;
-	-fx-border-color:derive(  #2D75E8,80%);
-	-fx-background-radius: 2em;
-	-fx-border-radius:2em;
+	-fx-border-color:derive(  #2D75E8,80.0%);
+	-fx-background-radius: 2.0em;
+	-fx-border-radius:2.0em;
 }
 
 /* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .table-view .scroll-bar:horizontal .thumb,
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color:derive( #2D75E8,90%);
-	-fx-background-insets: 2, 0, 0;
-	-fx-background-radius: 2em;
+    -fx-background-color:derive( #2D75E8,90.0%);
+	-fx-background-insets: 2.0, 0.0, 0.0;
+	-fx-background-radius: 2.0em;
 
 }
 
 /* chart properties */
 
 .chart {
-    -fx-padding: 10px;
+    -fx-padding: 10.0px;
     -fx-background-color: transparent;
     -fx-legend-visible: false;
 }
@@ -147,8 +182,8 @@
 }
 
 .chart-pie {
-    -fx-border-color: derive(-fx-pie-color, 1%);
-    -fx-border-width: 0px;
+    -fx-border-color: derive(-fx-pie-color, 1.0%);
+    -fx-border-width: 0.0px;
 }
 .linear-grad
 {
@@ -161,6 +196,7 @@
 }
 
 .text-area {
-  -fx-border-radius: 10 10 10 10;
-  -fx-background-radius: 10 10 10 10;
+  -fx-border-radius: 10.0 10.0 10.0 10.0;
+  -fx-background-radius: 10.0 10.0 10.0 10.0;
  }
+ 
