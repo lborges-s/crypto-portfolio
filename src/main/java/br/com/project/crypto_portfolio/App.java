@@ -6,26 +6,25 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.bson.Document;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.mongodb.MongoCredential;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-
-import br.com.project.models.TickerStreamModel;
+import br.com.project.models.BinanceModel;
+import br.com.project.utils.Functions;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JavaFX App
@@ -34,12 +33,18 @@ public class App extends Application {
 
 	private static Scene scene;
 	private static String baseUrl = "https://api.binance.com/api/v3/ticker/24hr?symbol=BNBUSDT";
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		
+
 		scene = new Scene(_loadFXML("testeTelaInicial"));
 		stage.setScene(scene);
 		stage.show();
+
+		stage.setMinHeight(650);
+		stage.setMinWidth(800);
 
 		try {
 			getApiTest();
@@ -49,43 +54,6 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 
-		// cria o Mongo client
-		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
-
-		// cria as Credenciais
-		MongoCredential credential;
-		credential = MongoCredential.createCredential("userTeste", "dbTeste", "password".toCharArray());
-		System.out.println("conectado com sucesso " + credential);
-
-		// acessa o banco de dados
-		MongoDatabase database = mongo.getDatabase("dbTeste");
-
-		// recupera uma coleção
-		MongoCollection<Document> collection = database.getCollection("exColl");
-		System.out.println("coleção selecionada com sucesso " + collection.countDocuments());
-//		Document document1 = new Document("title", "MongoDB").append("description", "database").append("likes", 100)
-//				.append("url", "http://www.tutorialspoint.com/mongodb/").append("by", "tutorials point");
-//		Document document2 = new Document("title", "RethinkDB").append("description", "database").append("likes", 200)
-//				.append("url", "http://www.tutorialspoint.com/rethinkdb/").append("by", "tutorials point");
-//
-//		ArrayList<Document> list = new ArrayList<Document>();
-//		list.add(document1);
-//		list.add(document2);
-//		collection.insertMany(list);
-
-		// pegar o objeto iteravel
-		FindIterable<Document> iterDoc = collection.find();
-		int i = 1;
-
-		// pega o iterador
-		MongoCursor<Document> it = iterDoc.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
-			i++;
-		}
-
-		TickerStreamModel tsm = new TickerStreamModel();
-		System.out.println(tsm.getLowPrice() + "aqui o viado");
 	}
 
 	public static void setRoot(String fxml) throws IOException {
@@ -97,7 +65,8 @@ public class App extends Application {
 		return fxmlLoader.load();
 	}
 
-	private void getApiTest() throws InterruptedException, ExecutionException {
+	private void getApiTest()
+			throws InterruptedException, ExecutionException, JsonMappingException, JsonProcessingException {
 		final HttpClient client = HttpClient.newBuilder().build();
 		URI uri = URI.create(baseUrl);
 
@@ -108,17 +77,18 @@ public class App extends Application {
 
 		if (response.get().statusCode() == 200) {
 			String body = response.get().body();
-			System.out.println(body);
-//			Gson t = new Gson();
-//			BinanceModel model = t.fromJson(body, BinanceModel.class);
-//
-//			System.out.println("Response > " + model.getHighPrice());
-
+			BinanceModel model = objectMapper.readValue(body, BinanceModel.class);
+			System.out.println("---------- API --------- ");
+			System.out.println("SYMBOL > " + model.getSymbol());
+			System.out.println("LAST PRICE > " + Functions.formatMoney(model.getLastPrice()));
+			System.out.println("------------------------ ");
 		}
 
 	}
 
 	public static void main(String[] args) {
+		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+		loggerContext.getLogger("org.mongodb.driver").setLevel(Level.ERROR);
 		launch();
 	}
 
