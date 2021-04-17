@@ -9,29 +9,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0"
-	prefWidth="225.0" xmlns="http://javafx.com/javafx/15.0.1"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="br.com.project.controllers.CoinController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
 	<children>
-		<VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0"
-			prefHeight="200.0" prefWidth="100.0" styleClass="sombra"
-			stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0"
-			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-			AnchorPane.topAnchor="10.0">
+		<VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" prefHeight="200.0" prefWidth="100.0" styleClass="sombra" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
 			<children>
 				<HBox alignment="CENTER" prefHeight="53.0" prefWidth="185.0">
 					<children>
-						<Label fx:id="nomeCard" alignment="CENTER" prefHeight="73.0"
-							prefWidth="120.0" styleClass="texto"
-							stylesheets="@css/fullpackstyling.css" text="Nome moeda">
+						<Label fx:id="nomeCard" alignment="CENTER" prefHeight="73.0" prefWidth="120.0" styleClass="texto" stylesheets="@css/fullpackstyling.css" text="Nome moeda">
 							<font>
 								<Font size="14.0" />
 							</font>
 						</Label>
-						<Label fx:id="nomeMoedaCard" alignment="CENTER"
-							prefHeight="73.0" prefWidth="120.0" text="BTC">
+						<Label fx:id="nomeMoedaCard" alignment="CENTER" prefHeight="73.0" prefWidth="120.0" text="BTC">
 							<font>
 								<Font name="System Bold" size="18.0" />
 							</font>
@@ -41,8 +30,7 @@
 						<Insets left="20.0" right="20.0" />
 					</VBox.margin>
 				</HBox>
-				<ImageView fx:id="moedaImagem" fitHeight="130.0"
-					fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+				<ImageView fx:id="moedaImagem" fitHeight="130.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
 					<image>
 						<Image url="@img/9ab8ddc00d534ec22d05df7f140ccd2b.png" />
 					</image>

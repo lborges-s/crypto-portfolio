@@ -65,7 +65,7 @@ public class PrimaryController implements Initializable {
 
 		client.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
-				System.out.println("Mensagem: " + message);
+				//System.out.println("Mensagem: " + message);
 				
 //				Gson t = new Gson();
 //				TickerStreamModel ticker = t.fromJson(message, TickerStreamModel.class);
