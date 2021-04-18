@@ -13,139 +13,173 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.PrimaryController">
-   <children>
-      <AnchorPane prefHeight="715.0" prefWidth="1026.0" style="-fx-background-color: #030307; -fx-background-radius: 15;" AnchorPane.rightAnchor="0.0">
-         <children>
-            <VBox layoutY="85.0" prefHeight="531.0" prefWidth="126.0" style="-fx-background-color: #131022; -fx-background-radius: 15 0 0 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="87.0">
-               <children>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="134.0" styleClass="button3" text="BTC" textFill="#a868a0">
-                     <stylesheets>
-                        <URL value="@css/fullpackstyling.css" />
-                     </stylesheets>
-                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/btc.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="133.0" styleClass="button3" text="BNB" textFill="#a868a0">
-                     <stylesheets>
-                        <URL value="@css/fullpackstyling.css" />
-                     </stylesheets>
-                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/bnb.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="135.0" styleClass="button3" text="XRP" textFill="#a868a0">
-                     <stylesheets>
-                        <URL value="@css/fullpackstyling.css" />
-                     </stylesheets>
-                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/xrp.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button  contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="135.0" styleClass="button3" text="ADA" textFill="#a868a0">
-                     <stylesheets>
-                        <URL value="@css/fullpackstyling.css" />
-                     </stylesheets>
-                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/ada.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="66.0" prefWidth="135.0" styleClass="button3" text="ARK" textFill="#a868a0">
-                     <stylesheets>
-                        <URL value="@css/fullpackstyling.css" />
-                     </stylesheets>
-                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/ark.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <JFXButton fx:id="primaryButton" buttonType="RAISED" onAction="#switchToSecondary" prefHeight="53.0" prefWidth="126.0" ripplerFill="#4952ff" style="-fx-border-radius: 20;" text="TEMPO REAL" textFill="#a868a0">
-                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icon/bar-chart-bar-graph-pngrepo-com.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="W_RESIZE" />
-                           </cursor>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets top="60.0" />
-                     </VBox.margin>
-                  </JFXButton>
-               </children>
-            </VBox>
-            <AnchorPane layoutX="93.0" layoutY="87.0" prefHeight="614.0" prefWidth="851.0" style="-fx-background-color: #131022; -fx-background-radius: 10;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="87.0">
-               <children>
-                  <Pane layoutX="39.0" layoutY="239.0" prefHeight="353.0" prefWidth="375.0" style="-fx-background-color: #1A172A; -fx-background-radius: 10;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="451.0" AnchorPane.topAnchor="250.0">
-                     <children>
-                        <WebView fx:id="browser2" layoutX="14.0" layoutY="14.0" prefHeight="328.0" prefWidth="350.0" />
-                     </children></Pane>
-                  <Pane layoutX="14.0" layoutY="16.0" prefHeight="222.0" prefWidth="801.0" style="-fx-background-radius: 20;" styleClass="linear-grad" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="10.0" />
-                  <Pane layoutX="451.0" layoutY="239.0" prefHeight="353.0" prefWidth="375.0" style="-fx-background-color: #1A172A; -fx-background-radius: 10;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="250.0">
-                     <children>
-                        <WebView fx:id="browser3"   layoutX="13.0" layoutY="14.0" prefHeight="328.0" prefWidth="350.0" />
-                     </children></Pane>
-                  <Line endX="100.0" endY="253.0" layoutX="325.0" layoutY="5.0" startX="100.0" startY="591.0" stroke="#b9b1b1" strokeDashOffset="2.0" />
-               </children>
-               <stylesheets>
-                  <URL value="@../css/fullpackstyling.css" />
-                  <URL value="@css/fullpackstyling.css" />
-               </stylesheets>
-            </AnchorPane>
-            <WebView fx:id="browser" disable="true" layoutX="1.0" minHeight="-Infinity" minWidth="-1.0" prefHeight="74.0" prefWidth="1026.0" styleClass="webview" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane style="-fx-background-radius: 20;"
+	xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.com.project.controllers.PrimaryController">
+	<children>
+		<AnchorPane prefHeight="715.0" prefWidth="1026.0"
+			style="-fx-background-color: #030307; -fx-background-radius: 15;"
+			AnchorPane.rightAnchor="0.0">
+			<children>
+				<VBox layoutY="85.0" prefHeight="531.0" prefWidth="126.0"
+					style="-fx-background-color: #131022; -fx-background-radius: 15 0 0 15;"
+					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					AnchorPane.topAnchor="87.0">
+					<children>
+						<Button contentDisplay="TOP" mnemonicParsing="false"
+							prefHeight="66.0" prefWidth="134.0" styleClass="button3"
+							text="BTC" textFill="#a868a0">
+							<stylesheets>
+								<URL value="@css/fullpackstyling.css" />
+							</stylesheets>
+							<graphic>
+								<ImageView fitHeight="35.0" fitWidth="73.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/btc.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<padding>
+								<Insets top="5.0" />
+							</padding>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</Button>
+						<Button contentDisplay="TOP" mnemonicParsing="false"
+							prefHeight="66.0" prefWidth="133.0" styleClass="button3"
+							text="BNB" textFill="#a868a0">
+							<stylesheets>
+								<URL value="@css/fullpackstyling.css" />
+							</stylesheets>
+							<graphic>
+								<ImageView fitHeight="35.0" fitWidth="73.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/bnb.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<padding>
+								<Insets top="5.0" />
+							</padding>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</Button>
+						<Button contentDisplay="TOP" mnemonicParsing="false"
+							prefHeight="66.0" prefWidth="135.0" styleClass="button3"
+							text="XRP" textFill="#a868a0">
+							<stylesheets>
+								<URL value="@css/fullpackstyling.css" />
+							</stylesheets>
+							<graphic>
+								<ImageView fitHeight="35.0" fitWidth="73.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/xrp.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<padding>
+								<Insets top="5.0" />
+							</padding>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</Button>
+						<Button contentDisplay="TOP" mnemonicParsing="false"
+							prefHeight="66.0" prefWidth="135.0" styleClass="button3"
+							text="ADA" textFill="#a868a0">
+							<stylesheets>
+								<URL value="@css/fullpackstyling.css" />
+							</stylesheets>
+							<graphic>
+								<ImageView fitHeight="35.0" fitWidth="73.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/ada.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<padding>
+								<Insets top="5.0" />
+							</padding>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</Button>
+						<Button contentDisplay="TOP" mnemonicParsing="false"
+							prefHeight="66.0" prefWidth="135.0" styleClass="button3"
+							text="ARK" textFill="#a868a0">
+							<stylesheets>
+								<URL value="@css/fullpackstyling.css" />
+							</stylesheets>
+							<graphic>
+								<ImageView fitHeight="35.0" fitWidth="73.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/ark.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<padding>
+								<Insets top="5.0" />
+							</padding>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</Button>
+						<JFXButton fx:id="primaryButton" buttonType="RAISED"
+							onAction="#switchToSecondary" prefHeight="53.0" prefWidth="126.0"
+							ripplerFill="#4952ff" style="-fx-border-radius: 20;"
+							text="TEMPO REAL" textFill="#a868a0">
+							<graphic>
+								<ImageView fitHeight="37.0" fitWidth="36.0"
+									layoutX="12.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@icon/bar-chart-bar-graph-pngrepo-com.png" />
+									</image>
+									<cursor>
+										<Cursor fx:constant="W_RESIZE" />
+									</cursor>
+								</ImageView>
+							</graphic>
+							<VBox.margin>
+								<Insets top="60.0" />
+							</VBox.margin>
+						</JFXButton>
+					</children>
+				</VBox>
+				<AnchorPane layoutX="93.0" layoutY="87.0"
+					prefHeight="614.0" prefWidth="851.0"
+					style="-fx-background-color: #131022; -fx-background-radius: 10;"
+					AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0"
+					AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="87.0">
+					<!--<children> <Pane layoutX="39.0" layoutY="239.0" prefHeight="353.0" 
+						prefWidth="375.0" style="-fx-background-color: #1A172A; -fx-background-radius: 
+						10;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="451.0" 
+						AnchorPane.topAnchor="250.0"> <children> <WebView fx:id="browser2" layoutX="14.0" 
+						layoutY="14.0" prefHeight="328.0" prefWidth="350.0" /> </children></Pane> 
+						<Pane layoutX="14.0" layoutY="16.0" prefHeight="222.0" prefWidth="801.0" 
+						style="-fx-background-radius: 20;" styleClass="linear-grad" stylesheets="@css/fullpackstyling.css" 
+						AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" 
+						AnchorPane.topAnchor="10.0" /> <Pane layoutX="451.0" layoutY="239.0" prefHeight="353.0" 
+						prefWidth="375.0" style="-fx-background-color: #1A172A; -fx-background-radius: 
+						10;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="451.0" AnchorPane.rightAnchor="25.0" 
+						AnchorPane.topAnchor="250.0"> <children> <WebView fx:id="browser3" layoutX="13.0" 
+						layoutY="14.0" prefHeight="328.0" prefWidth="350.0" /> </children></Pane> 
+						<Line endX="100.0" endY="253.0" layoutX="325.0" layoutY="5.0" startX="100.0" 
+						startY="591.0" stroke="#b9b1b1" strokeDashOffset="2.0" /> </children> -->
+					<!-- <stylesheets> <URL value="@../css/fullpackstyling.css" /> <URL 
+						value="@css/fullpackstyling.css" /> </stylesheets> -->
+				</AnchorPane>
+				<WebView fx:id="browser" disable="true" layoutX="1.0"
+					minHeight="-Infinity" minWidth="-1.0" prefHeight="74.0"
+					prefWidth="1026.0" styleClass="webview"
+					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+			</children>
+		</AnchorPane>
+	</children>
 </AnchorPane>

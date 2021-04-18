@@ -1,3 +1,4 @@
+br\com\project\utils\Functions.class
 br\com\project\models\MyClientEndpoint$MessageHandler.class
 br\com\project\controllers\SecondaryController$1.class
 br\com\project\controllers\CoinChosee.class
