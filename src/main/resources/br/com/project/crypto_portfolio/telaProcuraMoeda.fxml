@@ -21,13 +21,13 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
 	<children>
 		<BorderPane layoutY="76.0" prefHeight="800.0" prefWidth="1315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<left>
 				<VBox prefHeight="200.0" prefWidth="435.0" styleClass="barra-direita" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
 					<children>
-						<HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
+						<HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" styleClass="n" stylesheets="@css/fullpackstyling.css">
 							<children>
 								<Label styleClass="texto" stylesheets="@css/fullpackstyling.css" text="moedas">
 									<font>

@@ -1,109 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1315.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane layoutX="10.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="216.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
-         <center>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
-                     <children>
-                        <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-verde" stylesheets="@css/fullpackstyling.css" text="Comprar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-vermelho" stylesheets="@css/fullpackstyling.css" text="Vender" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label text="Moeda" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ChoiceBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: white;" />
-                  <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Label minHeight="0.0" text="Quantidade" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextArea maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <Label text="Preço por moeda" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextArea maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
-                           </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Label text="Data da compra" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <DatePicker maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: white;" />
-                  <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-branco" stylesheets="@css/fullpackstyling.css" text="Comprar">
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </center>
-      </BorderPane>
-      <GridPane alignment="CENTER" prefHeight="200.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <GridPane alignment="CENTER" maxHeight="200.0" prefHeight="200.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -261,5 +176,41 @@
             </BorderPane>
          </children>
       </GridPane>
+      <ScrollPane layoutX="885.0" layoutY="120.0" prefHeight="440.0" prefWidth="431.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="220.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="160.0">
+         <styleClass>
+            <String fx:value="pane-cinza-escuro" />
+            <String fx:value="border" />
+         </styleClass>
+      </ScrollPane>
+      <Pane layoutX="14.0" layoutY="381.0" prefHeight="440.0" prefWidth="860.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="160.0">
+         <styleClass>
+            <String fx:value="pane-cinza-escuro" />
+            <String fx:value="border" />
+         </styleClass>
+      </Pane>
+      <HBox alignment="CENTER" layoutX="14.0" layoutY="29.0" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
+         <children>
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" text="Compra / Venda">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" text="Adicionar aporte">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Pane prefHeight="90.0" prefWidth="1295.0" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <styleClass>
+            <String fx:value="pane-cinza-escuro" />
+            <String fx:value="border" />
+         </styleClass></Pane>
    </children>
 </AnchorPane>

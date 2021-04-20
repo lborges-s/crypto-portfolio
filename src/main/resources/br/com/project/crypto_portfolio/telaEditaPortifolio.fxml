@@ -37,7 +37,7 @@
             </HBox>
          </top>
       </BorderPane>
-      <BorderPane prefHeight="800.0" prefWidth="915.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="800.0" prefWidth="915.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <VBox alignment="CENTER" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" style="-fx-background-radius: 20;" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
                <children>
@@ -51,17 +51,7 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label text="Primeiro aporte" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField maxWidth="250.0" minHeight="35.0">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Enviar">
+                  <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Atualizar">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
