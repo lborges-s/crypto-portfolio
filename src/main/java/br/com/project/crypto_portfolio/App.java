@@ -39,7 +39,7 @@ public class App extends Application {
 	public void start(Stage stage) throws IOException {
 		
 
-		scene = new Scene(_loadFXML("testeTelaInicial"));
+		scene = new Scene(_loadFXML("telaInicial"));
 		stage.setScene(scene);
 		stage.show();
 

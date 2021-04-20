@@ -30,6 +30,10 @@
  .texto {
      -fx-color: linear-gradient(to bottom , #ff9500, #fc466b);
  }
+ 
+ .texto-degrade {
+     -fx-color: linear-gradient(to bottom , #ff9500, #fc466b);
+ }
 
  /* PANES */
  .pane-degrade {
