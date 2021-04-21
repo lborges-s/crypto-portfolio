@@ -18,7 +18,6 @@ public class Functions {
 
 		Locale brl = new Locale("pt", "BR");
 
-//		Currency brls = Currency.getInstance(brl);
 
 		NumberFormat brlFormat = NumberFormat.getCurrencyInstance(brl);
 
@@ -26,22 +25,21 @@ public class Functions {
 
 	}
 	
-	public static void handleNewWindow(String nomeTela, String title, Object controller, Window owner) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(nomeTela + ".fxml"));
-        loader.setController(controller);
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(owner);
-
-        stage.setMinHeight(650);
-        stage.setMinWidth(800);
-
-        stage.show();
-    }
-	
+	public static Stage handleNewWindow(String nomeTela, String title, IController controller, Window owner) throws IOException  {
+		FXMLLoader loader = new FXMLLoader(App.class.getResource(nomeTela + ".fxml"));
+		loader.setController(controller);
+		Stage stage = new Stage();
+		controller.setStage(stage);
+		
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		stage.setTitle(title);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(owner);
+		stage.setScene(scene);
+		stage.setMinHeight(650);
+		stage.setMinWidth(800);
+		stage.show();
+		return stage;
+	}
 }

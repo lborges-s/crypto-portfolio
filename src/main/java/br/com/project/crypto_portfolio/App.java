@@ -45,8 +45,8 @@ public class App extends Application {
 		scene = new Scene(_loadFXML("telaInicial"));
 		stage.setScene(scene);
 		stage.show();
-		  
 		stage.setMaximized(true);
+		
 		stage.setMinHeight(650);
 		stage.setMinWidth(800);
 		stage.setTitle("Crypto");

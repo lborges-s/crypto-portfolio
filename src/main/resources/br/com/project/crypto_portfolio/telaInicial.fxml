@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.PrimaryController">
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.TelaInicialController">
 	<children>
 		<BorderPane prefHeight="800.0" prefWidth="400.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -324,7 +324,7 @@
 				</Label>
 			</left>
          <right>
-            <Button fx:id="btnCriaPortfolio" mnemonicParsing="false" onAction="#muda" style="-fx-text-fill: white;" styleClass="transparente" stylesheets="@css/fullpackstyling.css" text="+" textFill="#fffdfd" BorderPane.alignment="CENTER">
+            <Button fx:id="btnCriaPortfolio" mnemonicParsing="false" onAction="#handleNewWindow" style="-fx-text-fill: white;" styleClass="transparente" stylesheets="@css/fullpackstyling.css" text="+" textFill="#fffdfd" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets right="10.0" />
                </BorderPane.margin>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="800.0" prefWidth="915.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -36,7 +36,7 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Enviar">
+                  <Button fx:id="btnSave" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#onSave" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Enviar">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -52,7 +52,7 @@
             </VBox>
          </center>
          <top>
-            <Label styleClass="sombra" stylesheets="@css/fullpackstyling.css" text="Easy Cripto" BorderPane.alignment="CENTER">
+            <Label fx:id="titleText" styleClass="sombra" stylesheets="@css/fullpackstyling.css" text="Easy Cripto" BorderPane.alignment="CENTER">
                <font>
                   <Font size="50.0" />
                </font>
