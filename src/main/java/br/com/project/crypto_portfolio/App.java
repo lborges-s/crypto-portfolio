@@ -19,11 +19,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -42,9 +45,11 @@ public class App extends Application {
 		scene = new Scene(_loadFXML("telaInicial"));
 		stage.setScene(scene);
 		stage.show();
-
+		  
+		stage.setMaximized(true);
 		stage.setMinHeight(650);
 		stage.setMinWidth(800);
+		stage.setTitle("Crypto");
 
 		try {
 			getApiTest();
@@ -53,9 +58,10 @@ public class App extends Application {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+		
 
 	}
-
+	
 	public static void setRoot(String fxml) throws IOException {
 		scene.setRoot(_loadFXML(fxml));
 	}

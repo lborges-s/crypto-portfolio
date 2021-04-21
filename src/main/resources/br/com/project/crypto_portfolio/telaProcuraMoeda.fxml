@@ -21,7 +21,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.CoinController">
 	<children>
 		<BorderPane layoutY="76.0" prefHeight="800.0" prefWidth="1315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<left>
@@ -182,32 +182,22 @@
 			<center>
 				<VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
 					<children>
-						<HBox alignment="CENTER" prefHeight="65.0" prefWidth="200.0">
+						<HBox alignment="CENTER" prefHeight="36.0" prefWidth="840.0">
 							<VBox.margin>
 								<Insets left="20.0" right="20.0" />
 							</VBox.margin>
 							<children>
-								<Label prefHeight="65.0" prefWidth="152.0" text="nome da moeda:" textFill="#616161">
+								<Label prefHeight="36.0" prefWidth="114.0" text="conta:" textFill="#616161">
 									<font>
 										<Font name="Cambria Bold" size="18.0" />
 									</font>
 								</Label>
-								<Label prefHeight="62.0" prefWidth="103.0" text="BTC" textFill="#616161" underline="true">
+								<Label prefHeight="36.0" prefWidth="129.0" text="saldo: " textFill="#616161">
 									<font>
 										<Font name="Cambria Bold" size="18.0" />
 									</font>
 								</Label>
-								<Label prefHeight="62.0" prefWidth="223.0" text="conta:" textFill="#616161">
-									<font>
-										<Font name="Cambria Bold" size="18.0" />
-									</font>
-								</Label>
-								<Label prefHeight="62.0" prefWidth="201.0" text="saldo: " textFill="#616161">
-									<font>
-										<Font name="Cambria Bold" size="18.0" />
-									</font>
-								</Label>
-								<Label prefHeight="62.0" prefWidth="164.0" text="nome:" textFill="#616161">
+								<Label prefHeight="36.0" prefWidth="131.0" text="nome:" textFill="#616161">
 									<font>
 										<Font name="Cambria Bold" size="18.0" />
 									</font>

@@ -7,41 +7,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane prefHeight="800.0" prefWidth="400.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label prefHeight="20.0" prefWidth="45.0" text="Charts" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="250.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label prefHeight="20.0" prefWidth="54.0" text="Save All" textFill="#ff6868">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
-         </top>
-      </BorderPane>
-      <BorderPane prefHeight="800.0" prefWidth="915.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="800.0" prefWidth="915.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="CENTER" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" style="-fx-background-radius: 20;" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" maxHeight="400.0" maxWidth="698.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="698.0" style="-fx-background-radius: 20;" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Nome do portifolio" textFill="WHITE">
+                  <Label fx:id="lblNomePortifolio" text="Nome do portifolio" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>

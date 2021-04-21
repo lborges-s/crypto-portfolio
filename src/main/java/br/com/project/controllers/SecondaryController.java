@@ -39,6 +39,7 @@ public class SecondaryController implements Initializable {
     private void switchTopPrimary() throws IOException {
         App.setRoot("testeTelaInicial");
     }
+  
     
 	private void _initWebsocket() {
 		MyClientEndpoint client = new MyClientEndpoint(URI.create(uriWss));
