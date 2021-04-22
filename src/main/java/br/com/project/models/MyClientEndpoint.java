@@ -1,6 +1,7 @@
 package br.com.project.models;
 
 import java.net.URI;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
 import javax.websocket.ClientEndpoint;

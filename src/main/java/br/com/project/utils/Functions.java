@@ -13,28 +13,34 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class Functions {
+	static Locale locale = new Locale("pt", "BR");
+
+	public static String formatMoney(String value, Locale loc) {
+		locale = loc;
+
+		return formatMoney(value);
+	}
 
 	public static String formatMoney(String value) {
 
-		Locale brl = new Locale("pt", "BR");
-
-
-		NumberFormat brlFormat = NumberFormat.getCurrencyInstance(brl);
+		NumberFormat brlFormat = NumberFormat.getCurrencyInstance(locale);
 
 		return brlFormat.format(Double.parseDouble(value));
 
 	}
-	
-	public static Stage handleNewWindow(String nomeTela, String title, IController controller, Window owner) throws IOException  {
+
+	public static Stage handleNewWindow(String nomeTela, String title, IController controller, Window owner)
+			throws IOException {
 		FXMLLoader loader = new FXMLLoader(App.class.getResource(nomeTela + ".fxml"));
 		loader.setController(controller);
 		Stage stage = new Stage();
 		controller.setStage(stage);
-		
+
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setTitle(title);
 		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.centerOnScreen();
 		stage.initOwner(owner);
 		stage.setScene(scene);
 		stage.setMinHeight(650);

@@ -9,14 +9,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.project.components.PaneCrypto;
 import br.com.project.models.MyClientEndpoint;
 import br.com.project.models.TickerStreamModel;
 import br.com.project.utils.Functions;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -27,6 +30,9 @@ public class TelaInicialController implements Initializable {
 
 	@FXML
 	AnchorPane mainPane;
+
+	@FXML
+	VBox vBoxListCriptos;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -64,6 +70,8 @@ public class TelaInicialController implements Initializable {
 					System.out.println(
 							"SYMBOL > " + ticker.getSymbol() + " | " + Functions.formatMoney(ticker.getLastPrice()));
 
+					_addPane(ticker);
+
 				} catch (JsonMappingException e) {
 					e.printStackTrace();
 				} catch (JsonProcessingException e) {
@@ -72,6 +80,25 @@ public class TelaInicialController implements Initializable {
 
 			}
 		});
+	}
+
+	private void _addPane(TickerStreamModel ticker) {
+
+		Platform.runLater(() -> {
+			try {
+				PaneCrypto pane = new PaneCrypto(ticker);
+				
+				boolean contains = vBoxListCriptos.getChildren().contains(pane);
+				if(contains) {
+					vBoxListCriptos.getChildren().remove(pane);
+				}
+				vBoxListCriptos.getChildren().add(pane);
+				System.out.println("childrens > " + vBoxListCriptos.getChildren().size());
+			} catch (Exception e) {
+				System.out.println("Deu ERRO ESSA PORRA " + e);
+			}
+		});
+
 	}
 
 }
