@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.TelaInicialController">
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.TelaInicialController">
 	<children>
 		<BorderPane prefHeight="800.0" prefWidth="400.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane hbarPolicy="ALWAYS" prefWidth="400.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <ScrollPane hbarPolicy="ALWAYS" pannable="true" prefHeight="800.0" prefWidth="340.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="398.0">
                      <children>
@@ -43,7 +43,7 @@
             								<Insets top="10.0" />
             							</padding>
             						</HBox>
-                        						<Pane prefHeight="76.0" prefWidth="380.0">
+                        						<Pane prefHeight="76.0" prefWidth="397.0" visible="false">
                         							<children>
                         								<ImageView fitHeight="48.0" fitWidth="48.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                         									<image>
@@ -80,6 +80,9 @@
                      </children>
                   </AnchorPane>
               </content>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </ScrollPane>
          </center>
 		</BorderPane>

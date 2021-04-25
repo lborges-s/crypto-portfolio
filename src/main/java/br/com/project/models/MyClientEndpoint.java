@@ -1,7 +1,7 @@
 package br.com.project.models;
 
+import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
 import javax.websocket.ClientEndpoint;
@@ -12,6 +12,7 @@ import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
+import javax.websocket.PongMessage;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
@@ -25,6 +26,7 @@ public class MyClientEndpoint {
 		try {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 			container.connectToServer(this, endpointURI);
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
@@ -34,17 +36,18 @@ public class MyClientEndpoint {
 	public void onOpen(Session session, EndpointConfig config) {
 		System.out.println("Tamo conectado");
 		userSession = session;
+
 	}
 
 	@OnClose
 	public void onClose(CloseReason c) {
-		System.out.println("Conex�o fechada!");
+		System.out.println("Conexão fechada!");
 		userSession = null;
 	}
 
 	@OnError
 	public void onError(Throwable t) {
-		
+		System.out.println("Erro websocket > " + t.getMessage());
 	}
 
 	@OnMessage
@@ -53,6 +56,12 @@ public class MyClientEndpoint {
 			this.messageHandler.handleMessage(message);
 		}
 	}
+
+//	@OnMessage
+//	protected void sendPongMessage(PongMessage message) throws IOException {
+//		System.out.println("sendPongMessage");
+//		userSession.getBasicRemote().sendPong(message.getApplicationData());
+//	}
 
 	public void addMessageHandler(MessageHandler msgHandler) {
 		this.messageHandler = msgHandler;

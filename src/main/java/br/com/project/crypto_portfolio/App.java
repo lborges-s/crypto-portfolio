@@ -9,25 +9,21 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.models.BinanceModel;
 import br.com.project.utils.Functions;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.LoggerContext;
-
-import org.slf4j.LoggerFactory;
 
 /**
  * JavaFX App
