@@ -19,7 +19,7 @@
 	<children>
 		<BorderPane prefHeight="800.0" prefWidth="400.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane hbarPolicy="ALWAYS" pannable="true" prefHeight="800.0" prefWidth="340.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <ScrollPane hbarPolicy="NEVER" prefWidth="400.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="398.0">
                      <children>
@@ -104,11 +104,18 @@
 				<String fx:value="border" />
 			</styleClass>
 		</ScrollPane>
-		<ScrollPane layoutX="413.0" layoutY="158.0" prefHeight="206.0" prefWidth="893.0" style="-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="158.0">
+		<ScrollPane hbarPolicy="NEVER" layoutX="413.0" layoutY="168.0" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" prefWidth="893.0" style="-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);" stylesheets="@css/fullpackstyling.css" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="168.0">
 			<styleClass>
 				<String fx:value="pane-degrade" />
 				<String fx:value="border" />
 			</styleClass>
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="875.0">
+               <children>
+                  <VBox fx:id="vBoxListPortifolios" prefWidth="100.0" />
+               </children>
+            </AnchorPane>
+         </content>
 		</ScrollPane>
 		<BorderPane layoutX="412.0" layoutY="192.0" prefHeight="0.0" prefWidth="893.0" style="-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);" styleClass="border" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="412.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="111.0">
 			<left>

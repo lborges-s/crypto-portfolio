@@ -29,7 +29,7 @@ public class PaneCrypto extends Pane {
 		this.ticker = ticker;
 		symbol = ticker.getSymbol();
 		this.setPrefSize(360, 75);
-		
+
 
 		setLbNameText(ticker.getSymbol());
 		lbName.setFont(Font.font(17));

@@ -4,13 +4,20 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.Document;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+import br.com.project.components.ListPortifolios;
 import br.com.project.components.PaneCrypto;
 import br.com.project.models.MultiTickerModel;
 import br.com.project.models.MyClientEndpoint;
@@ -38,16 +45,20 @@ public class TelaInicialController implements Initializable {
 
 	@FXML
 	VBox vBoxListCriptos;
-	
+
 	List<String> streams = new ArrayList<String>();
-	
+
+	@FXML
+	VBox vBoxListPortifolios;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
-		
+
+
 
 		_generateStringWssUrl();
 		_initWebsocket();
+		_listPortifolios();
 
 	}
 
@@ -95,11 +106,11 @@ public class TelaInicialController implements Initializable {
 //						    return u2.getLastPrice().compareTo(u1.getLastPrice());
 //						  }
 //						});
-//										
+//
 //					for (int i = 0; i < 10; i++) {
 //						_addPane(tickers.get(i));
 //					}
- 
+
 					System.out.println("SYMBOL > " + ticker2.getTicker().getSymbol() + " | "
 							+ Functions.formatMoney(ticker2.getTicker().getLastPrice()));
 //
@@ -108,7 +119,7 @@ public class TelaInicialController implements Initializable {
 				}
 //				catch (JsonMappingException e) {
 //					e.printStackTrace();
-//				} 
+//				}
 				catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -136,9 +147,8 @@ public class TelaInicialController implements Initializable {
 				System.out.println("Deu ERRO ESSA PORRA " + e);
 			}
 		});
-
 	}
-	
+
 	public String _generateStringWssUrl() {
 
 		streams.add("bnbusdt@ticker");
@@ -146,17 +156,42 @@ public class TelaInicialController implements Initializable {
 		streams.add("dogeusdt@ticker");
 		streams.add("adausdt@ticker");
 		streams.add("xrpusdt@ticker");
-		
+
 		for (int i = 0; i < streams.size(); i++) {
 			uriWssStreams += streams.get(i);
 			if(i != streams.size() - 1) {
-				uriWssStreams += "/";	
+				uriWssStreams += "/";
 			}
 		}
-		
+
 		System.out.println("URL > " + uriWssStreams);
-		
+
 		return uriWssStreams;
 	}
 
+	public void _listPortifolios() {
+		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
+		MongoDatabase database = mongo.getDatabase("dbTeste");
+
+		try {
+			MongoCollection<Document> collection = database.getCollection("portifolios");
+			System.out.println(collection.find());
+
+			// pegar o objeto iteravel
+			FindIterable<Document> iterDoc = collection.find();
+
+			MongoCursor<Document> it = iterDoc.iterator();
+			while (it.hasNext()) {
+				Document atual = it.next();
+				var idAtual = atual.getObjectId("_id");
+				String nomeAtual = atual.getString("nome");
+
+				ListPortifolios pane = new ListPortifolios(idAtual ,nomeAtual);
+				vBoxListPortifolios.getChildren().add(pane);
+
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 }
