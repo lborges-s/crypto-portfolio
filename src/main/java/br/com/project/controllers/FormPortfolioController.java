@@ -30,7 +30,7 @@ public class FormPortfolioController implements Initializable, IController {
 
 	}
 
-	FormPortfolioController(String teste) {
+	public FormPortfolioController(String teste) {
 
 		_teste = teste;
 	}

@@ -54,8 +54,6 @@ public class TelaInicialController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-
-
 		_generateStringWssUrl();
 		_initWebsocket();
 		_listPortifolios();
@@ -74,7 +72,6 @@ public class TelaInicialController implements Initializable {
 			public void handle(WindowEvent e) {
 				System.out.println("Fechando a tela");
 				System.out.println("isRefresh > " + controller.isRefresh);
-
 			}
 		});
 	}
@@ -177,7 +174,6 @@ public class TelaInicialController implements Initializable {
 			MongoCollection<Document> collection = database.getCollection("portifolios");
 			System.out.println(collection.find());
 
-			// pegar o objeto iteravel
 			FindIterable<Document> iterDoc = collection.find();
 
 			MongoCursor<Document> it = iterDoc.iterator();
@@ -187,8 +183,21 @@ public class TelaInicialController implements Initializable {
 				String nomeAtual = atual.getString("nome");
 
 				ListPortifolios pane = new ListPortifolios(idAtual ,nomeAtual);
+				
+				pane.addMessageHandler(new ListPortifolios.MessageHandler() {
+					public void handleMessage(String idAtual) {
+		        		try {
+		        			TelaCarteiraController controller = new TelaCarteiraController();
+		        			Window owner = mainPane.getScene().getWindow();
+		        			
+							Functions.handleNewWindow("telaCarteira", nomeAtual, controller, owner);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
 				vBoxListPortifolios.getChildren().add(pane);
-
 			}
 		} catch (Exception e) {
 			System.out.println(e);
