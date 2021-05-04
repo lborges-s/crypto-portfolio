@@ -1,8 +1,11 @@
 package br.com.project.controllers;
 
+import java.awt.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.com.project.components.CurrencyField;
+import br.com.project.models.PortfolioModel;
 import br.com.project.utils.IController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,38 +17,42 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class FormPortfolioController implements Initializable, IController {
-	private String _teste;
+
+	private PortfolioModel portfolioSave = new PortfolioModel();
 
 	public boolean isRefresh = false;
+	private boolean isEdit = false;
 
 	private Stage _stage;
 
 	@FXML
 	private Label titleText;
-	
+
+	@FXML
+	private TextField txtFieldNomePortfolio;
+
+	@FXML
+	private CurrencyField txtFieldVlrAporte;
+
 	@FXML
 	private Button btnSave;
 
 	FormPortfolioController() {
-
 	}
 
-	public FormPortfolioController(String teste) {
-
-		_teste = teste;
+	public FormPortfolioController(PortfolioModel portfolio) {
+		isEdit = true;
+		portfolioSave = portfolio;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		System.out.println("Teste value > " + _teste);
-
 		_stage.setOnShowing(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent e) {
 				System.out.println("tamo com a tela mostrando carai");
 
-				if (_teste != null) {
+				if (isEdit) {
 
 					titleText.setText("Editando portfólio");
 				} else {
@@ -63,7 +70,14 @@ public class FormPortfolioController implements Initializable, IController {
 
 	@FXML
 	void onSave(ActionEvent event) {
+		
 		isRefresh = true;
+		portfolioSave.setNome(txtFieldNomePortfolio.getText());
+		portfolioSave.setVlrTotalAporte(txtFieldVlrAporte.getAmount());
+		// AQUI CARMELA, LANÇA O CODIGO DO BANCO MEU REI
+		
+		
+		
 		_stage.close();
 	}
 

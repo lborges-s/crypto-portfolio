@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.com.project.components.CurrencyField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -31,11 +32,16 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="250.0" minHeight="35.0">
+                  <CurrencyField maxWidth="250.0" minHeight="35.0">
+                  	<VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </CurrencyField>
+                  <!-- <TextField maxWidth="250.0" minHeight="35.0">
                      <VBox.margin>
                         <Insets bottom="30.0" />
                      </VBox.margin>
-                  </TextField>
+                  </TextField> -->
                   <Button fx:id="btnSave" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#onSave" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Enviar">
                      <font>
                         <Font name="System Bold" size="15.0" />

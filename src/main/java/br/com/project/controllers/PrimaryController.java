@@ -66,10 +66,10 @@ public class PrimaryController implements Initializable {
 	@FXML
 	private void muda(ActionEvent event) throws IOException {
 		
-		FormPortfolioController controller = new FormPortfolioController("Inicializado");
-        Window owner = mainPane.getScene().getWindow();
-
-        Functions.handleNewWindow("telaCriaPortifolio", "Criar portifólio", controller, owner);
+//		FormPortfolioController controller = new FormPortfolioController("Inicializado");
+//        Window owner = mainPane.getScene().getWindow();
+//
+//        Functions.handleNewWindow("telaCriaPortifolio", "Criar portifólio", controller, owner);
 	}
 	
 	@FXML

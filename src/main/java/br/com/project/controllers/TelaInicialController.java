@@ -57,17 +57,16 @@ public class TelaInicialController implements Initializable {
 		_generateStringWssUrl();
 		_initWebsocket();
 		_listPortifolios();
-
 	}
 
 	@FXML
 	private void handleNewWindow(ActionEvent event) throws IOException {
-		FormPortfolioController controller = new FormPortfolioController("Carmela é lindo");
+		FormPortfolioController controller = new FormPortfolioController();
 		Window owner = mainPane.getScene().getWindow();
 
 		Stage stage = Functions.handleNewWindow("telaCriaPortifolio", "Criar portifólio", controller, owner);
 
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() { 
 			@Override
 			public void handle(WindowEvent e) {
 				System.out.println("Fechando a tela");
@@ -171,7 +170,7 @@ public class TelaInicialController implements Initializable {
 		MongoDatabase database = mongo.getDatabase("dbTeste");
 
 		try {
-			MongoCollection<Document> collection = database.getCollection("portifolios");
+			MongoCollection<Document> collection = database.getCollection("portfolios");
 			System.out.println(collection.find());
 
 			FindIterable<Document> iterDoc = collection.find();
