@@ -170,7 +170,7 @@ public class TelaInicialController implements Initializable {
 		MongoDatabase database = mongo.getDatabase("dbTeste");
 
 		try {
-			MongoCollection<Document> collection = database.getCollection("portfolios");
+			MongoCollection<Document> collection = database.getCollection("portifolios");
 			System.out.println(collection.find());
 
 			FindIterable<Document> iterDoc = collection.find();

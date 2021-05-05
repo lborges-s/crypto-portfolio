@@ -1,8 +1,14 @@
 package br.com.project.controllers;
 
-import java.awt.TextField;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 
 import br.com.project.components.CurrencyField;
 import br.com.project.models.PortfolioModel;
@@ -13,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -74,10 +81,16 @@ public class FormPortfolioController implements Initializable, IController {
 		isRefresh = true;
 		portfolioSave.setNome(txtFieldNomePortfolio.getText());
 		portfolioSave.setVlrTotalAporte(txtFieldVlrAporte.getAmount());
-		// AQUI CARMELA, LANÇA O CODIGO DO BANCO MEU REI
 		
+		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
+		MongoDatabase database = mongo.getDatabase("dbTeste");
 		
-		
+		Document document = new Document();
+	    document.append("nome", portfolioSave.getNome());
+	    document.append("aporte", portfolioSave.getVlrTotalAporte());
+
+	    database.getCollection("portifolios").insertOne(document);
+
 		_stage.close();
 	}
 
