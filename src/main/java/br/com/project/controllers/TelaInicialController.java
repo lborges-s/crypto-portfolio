@@ -171,7 +171,6 @@ public class TelaInicialController implements Initializable {
 
 		try {
 			MongoCollection<Document> collection = database.getCollection("portifolios");
-			System.out.println(collection.find());
 
 			FindIterable<Document> iterDoc = collection.find();
 

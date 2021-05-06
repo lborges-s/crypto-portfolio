@@ -93,5 +93,4 @@ public class FormPortfolioController implements Initializable, IController {
 
 		_stage.close();
 	}
-
 }

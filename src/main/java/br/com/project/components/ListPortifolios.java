@@ -33,9 +33,10 @@ public class ListPortifolios extends Pane {
 		
 		lbName.setText(nomePortifolio);
 		lbName.setFont(Font.font(20));
-		lbName.setTextFill(Color.WHITE);
+//		lbName.setTextFill(Color.WHITE);
 		lbName.setLayoutX(14.0);
 		lbName.setLayoutY(10.0);
+		lbName.getStyleClass().add("nome-portifolio");
 		this.setCursor(Cursor.HAND);
 		
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {

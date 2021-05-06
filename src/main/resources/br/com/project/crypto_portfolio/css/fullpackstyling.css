@@ -35,6 +35,15 @@
      -fx-color: linear-gradient(to bottom , #ff9500, #fc466b);
  }
 
+ .nome-portifolio {
+  	-fx-text-fill: white;
+ }
+
+ .nome-portifolio:hover {
+	-fx-cursor: hand;
+	-fx-text-fill: #575757;
+ }
+ 
  /* PANES */
  .pane-degrade {
      -fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);
@@ -72,7 +81,7 @@
  }
  
  .botao-degrade:hover {
-     -fx-background-color: linear-gradient(to bottom left, #A868A5, #2D79E9);;
+     -fx-background-color: linear-gradient(to bottom left, #A868A5, #2D79E9);
  }
  
  .botao-roxo-claro {
