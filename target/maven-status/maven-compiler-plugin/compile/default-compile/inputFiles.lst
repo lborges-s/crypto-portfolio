@@ -5,8 +5,8 @@ C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\m
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\models\TickerStreamModel.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\FormPortfolioController.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\CoinController.java
-C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\SecondaryController.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\TelaCarteiraController.java
+C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\TelaProcuraMoedaController.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\utils\Functions.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\components\CurrencyField.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\models\CoinChangeModel.java
@@ -15,5 +15,6 @@ C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\c
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\models\BinanceModel.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\TelaInicialController.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\models\PortfolioModel.java
-C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\PrimaryController.java
+C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\TelaCompraVendaController.java
+C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\controllers\TelaAporteController.java
 C:\Users\Lucas\eclipse-workspace\crypto-portfolio\src\main\java\br\com\project\utils\IController.java

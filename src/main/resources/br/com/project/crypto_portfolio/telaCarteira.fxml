@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane alignment="CENTER" maxHeight="200.0" prefHeight="200.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columnConstraints>
@@ -191,17 +191,17 @@
       </Pane>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="119.0" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="119.0">
          <children>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" text="Compra / Venda">
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaCompraVenda" styleClass="botao-degrade" text="Compra / Venda">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-degrade" text="Adicionar aporte">
+            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaAddAporte" styleClass="botao-degrade" text="Adicionar aporte">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
