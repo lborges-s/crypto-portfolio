@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 public class TelaAporteController implements Initializable, IController {
 	
 	Stage stage;
+	
+	public TelaAporteController (String idPortifolio) {
+		
+	}
 
 	@Override
 	public void setStage(Stage stage) {
@@ -20,6 +24,6 @@ public class TelaAporteController implements Initializable, IController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-
+		
 	}
 }

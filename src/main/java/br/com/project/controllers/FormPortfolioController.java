@@ -11,7 +11,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
 import br.com.project.components.CurrencyField;
-import br.com.project.models.PortfolioModel;
+import br.com.project.models.PortifolioModel;
 import br.com.project.utils.IController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,7 +25,7 @@ import javafx.stage.WindowEvent;
 
 public class FormPortfolioController implements Initializable, IController {
 
-	private PortfolioModel portfolioSave = new PortfolioModel();
+	private PortifolioModel portfolioSave = new PortifolioModel();
 
 	public boolean isRefresh = false;
 	private boolean isEdit = false;
@@ -47,7 +47,7 @@ public class FormPortfolioController implements Initializable, IController {
 	FormPortfolioController() {
 	}
 
-	public FormPortfolioController(PortfolioModel portfolio) {
+	public FormPortfolioController(PortifolioModel portfolio) {
 		isEdit = true;
 		portfolioSave = portfolio;
 	}
@@ -80,14 +80,14 @@ public class FormPortfolioController implements Initializable, IController {
 		
 		isRefresh = true;
 		portfolioSave.setNome(txtFieldNomePortfolio.getText());
-		portfolioSave.setVlrTotalAporte(txtFieldVlrAporte.getAmount());
+		portfolioSave.setVlrInicialAporte(txtFieldVlrAporte.getAmount());
 		
 		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
 		MongoDatabase database = mongo.getDatabase("dbTeste");
 		
 		Document document = new Document();
 	    document.append("nome", portfolioSave.getNome());
-	    document.append("aporte", portfolioSave.getVlrTotalAporte());
+	    document.append("aporte", portfolioSave.getVlrInicialAporte());
 
 	    database.getCollection("portifolios").insertOne(document);
 

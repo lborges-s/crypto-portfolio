@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import br.com.project.models.PortifolioModel;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
 import javafx.fxml.FXML;
@@ -22,6 +23,12 @@ public class TelaCarteiraController implements Initializable, IController {
 	
 	@FXML
 	private WebView widgetCoinMarket;
+
+	private PortifolioModel Portifolio;
+	
+	public TelaCarteiraController (PortifolioModel Portifolio) {
+		this.Portifolio = Portifolio;
+	}
 	
 	@Override
 	public void setStage(Stage stage) {
@@ -65,7 +72,7 @@ public class TelaCarteiraController implements Initializable, IController {
 	
 	@FXML
 	public void telaAddAporte() {
-		TelaAporteController controller = new TelaAporteController();
+		TelaAporteController controller = new TelaAporteController("");
 		Window owner = mainPane.getScene().getWindow();
 
 		try {

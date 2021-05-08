@@ -21,6 +21,7 @@ import br.com.project.components.ListPortifolios;
 import br.com.project.components.PaneCrypto;
 import br.com.project.models.MultiTickerModel;
 import br.com.project.models.MyClientEndpoint;
+import br.com.project.models.PortifolioModel;
 import br.com.project.models.TickerStreamModel;
 import br.com.project.utils.Functions;
 import javafx.application.Platform;
@@ -42,7 +43,7 @@ public class TelaInicialController implements Initializable {
 
 	@FXML
 	AnchorPane mainPane;
-
+	
 	@FXML
 	VBox vBoxListCriptos;
 
@@ -53,7 +54,6 @@ public class TelaInicialController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		_generateStringWssUrl();
 		_initWebsocket();
 		_listPortifolios();
@@ -179,13 +179,20 @@ public class TelaInicialController implements Initializable {
 				Document atual = it.next();
 				var idAtual = atual.getObjectId("_id");
 				String nomeAtual = atual.getString("nome");
+				double aporteInicial = atual.getDouble("aporte");
 
 				ListPortifolios pane = new ListPortifolios(idAtual ,nomeAtual);
+				
+				PortifolioModel portifolio = new PortifolioModel();
+				
+				portifolio.setId(idAtual.toString());
+				portifolio.setNome(nomeAtual);
+				portifolio.setVlrInicialAporte(aporteInicial);
 				
 				pane.addMessageHandler(new ListPortifolios.MessageHandler() {
 					public void handleMessage(String idAtual) {
 		        		try {
-		        			TelaCarteiraController controller = new TelaCarteiraController();
+		        			TelaCarteiraController controller = new TelaCarteiraController(portifolio);
 		        			Window owner = mainPane.getScene().getWindow();
 		        			
 							Functions.handleNewWindow("telaCarteira", nomeAtual, controller, owner);
@@ -194,7 +201,6 @@ public class TelaInicialController implements Initializable {
 						}
 					}
 				});
-				
 				vBoxListPortifolios.getChildren().add(pane);
 			}
 		} catch (Exception e) {
