@@ -7,7 +7,7 @@ import br.com.project.utils.IController;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class TelaProcuraMoedaController implements Initializable, IController {
+public class ProcuraMoedaController implements Initializable, IController {
 	
 	Stage stage;
 	

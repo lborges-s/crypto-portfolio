@@ -7,22 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.bson.Document;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 
-import br.com.project.components.ListPortifolios;
 import br.com.project.components.PaneCrypto;
+import br.com.project.components.PanePortfolio;
+import br.com.project.crypto_portfolio.App;
+import br.com.project.dao.MongoConcrete;
 import br.com.project.models.MultiTickerModel;
 import br.com.project.models.MyClientEndpoint;
-import br.com.project.models.PortifolioModel;
 import br.com.project.models.TickerStreamModel;
+import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -35,15 +29,16 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
-public class TelaInicialController implements Initializable {
+public class InicialController implements Initializable {
 	static String uriWss = "wss://stream.binance.com:9443/ws/bnbusdt@ticker";
 	static String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
 	static String uriWssAll = "wss://stream.binance.com:9443/ws/!ticker@arr";
 	ObjectMapper objectMapper = new ObjectMapper();
+	private final MongoConcrete<PortfolioModel> mongo = new MongoConcrete<>(PortfolioModel.class);
 
 	@FXML
 	AnchorPane mainPane;
-	
+
 	@FXML
 	VBox vBoxListCriptos;
 
@@ -61,12 +56,12 @@ public class TelaInicialController implements Initializable {
 
 	@FXML
 	private void handleNewWindow(ActionEvent event) throws IOException {
-		FormPortfolioController controller = new FormPortfolioController();
+		CriarPortfolioController controller = new CriarPortfolioController();
 		Window owner = mainPane.getScene().getWindow();
 
 		Stage stage = Functions.handleNewWindow("telaCriaPortifolio", "Criar portifólio", controller, owner);
 
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() { 
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent e) {
 				System.out.println("Fechando a tela");
@@ -81,7 +76,7 @@ public class TelaInicialController implements Initializable {
 		client.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
 
-				TickerStreamModel ticker;
+//				TickerStreamModel ticker;
 				MultiTickerModel ticker2;
 				try {
 //					System.out.println("Message " + message);
@@ -155,7 +150,7 @@ public class TelaInicialController implements Initializable {
 
 		for (int i = 0; i < streams.size(); i++) {
 			uriWssStreams += streams.get(i);
-			if(i != streams.size() - 1) {
+			if (i != streams.size() - 1) {
 				uriWssStreams += "/";
 			}
 		}
@@ -166,36 +161,22 @@ public class TelaInicialController implements Initializable {
 	}
 
 	public void _listPortifolios() {
-		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
-		MongoDatabase database = mongo.getDatabase("dbTeste");
 
 		try {
-			MongoCollection<Document> collection = database.getCollection("portifolios");
+			final List<PortfolioModel> portfolios = mongo.getAll();
 
-			FindIterable<Document> iterDoc = collection.find();
+			for (PortfolioModel portfolio : portfolios) {
+				PanePortfolio pane = new PanePortfolio(portfolio);
 
-			MongoCursor<Document> it = iterDoc.iterator();
-			while (it.hasNext()) {
-				Document atual = it.next();
-				var idAtual = atual.getObjectId("_id");
-				String nomeAtual = atual.getString("nome");
-				double aporteInicial = atual.getDouble("aporte");
-
-				ListPortifolios pane = new ListPortifolios(idAtual ,nomeAtual);
-				
-				PortifolioModel portifolio = new PortifolioModel();
-				
-				portifolio.setId(idAtual.toString());
-				portifolio.setNome(nomeAtual);
-				portifolio.setVlrInicialAporte(aporteInicial);
-				
-				pane.addMessageHandler(new ListPortifolios.MessageHandler() {
+				pane.addMessageHandler(new PanePortfolio.MessageHandler() {
 					public void handleMessage(String idAtual) {
-		        		try {
-		        			TelaCarteiraController controller = new TelaCarteiraController(portifolio);
-		        			Window owner = mainPane.getScene().getWindow();
-		        			
-							Functions.handleNewWindow("telaCarteira", nomeAtual, controller, owner);
+						try {
+							CarteiraController controller = new CarteiraController(portfolio);
+							//Criar nova Scene para passar para o App trocar a tela atual.
+							App.setRoot("telaCarteira", controller);
+//							Window owner = mainPane.getScene().getWindow();
+//
+//							Functions.handleNewWindow("telaCarteira", portfolio.getNome(), controller, owner);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

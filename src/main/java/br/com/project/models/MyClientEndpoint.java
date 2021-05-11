@@ -1,6 +1,5 @@
 package br.com.project.models;
 
-import java.io.IOException;
 import java.net.URI;
 
 import javax.swing.JOptionPane;
@@ -12,7 +11,6 @@ import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.PongMessage;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 

@@ -1,17 +1,15 @@
 package br.com.project.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.bson.Document;
-
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-
 import br.com.project.components.CurrencyField;
-import br.com.project.models.PortifolioModel;
+import br.com.project.dao.MongoConcrete;
+import br.com.project.models.portfolio.Aporte;
+import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.IController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,9 +21,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class FormPortfolioController implements Initializable, IController {
+public class CriarPortfolioController implements Initializable, IController {
 
-	private PortifolioModel portfolioSave = new PortifolioModel();
+	private final MongoConcrete<PortfolioModel> mongo = new MongoConcrete<PortfolioModel>(PortfolioModel.class);
+	private PortfolioModel portfolioSave = new PortfolioModel();
 
 	public boolean isRefresh = false;
 	private boolean isEdit = false;
@@ -44,10 +43,10 @@ public class FormPortfolioController implements Initializable, IController {
 	@FXML
 	private Button btnSave;
 
-	FormPortfolioController() {
+	CriarPortfolioController() {
 	}
 
-	public FormPortfolioController(PortifolioModel portfolio) {
+	public CriarPortfolioController(PortfolioModel portfolio) {
 		isEdit = true;
 		portfolioSave = portfolio;
 	}
@@ -57,10 +56,7 @@ public class FormPortfolioController implements Initializable, IController {
 		_stage.setOnShowing(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent e) {
-				System.out.println("tamo com a tela mostrando carai");
-
 				if (isEdit) {
-
 					titleText.setText("Editando portfólio");
 				} else {
 					titleText.setText("Criando portfólio");
@@ -79,17 +75,24 @@ public class FormPortfolioController implements Initializable, IController {
 	void onSave(ActionEvent event) {
 		
 		isRefresh = true;
+		Date date = new Date();
 		portfolioSave.setNome(txtFieldNomePortfolio.getText());
-		portfolioSave.setVlrInicialAporte(txtFieldVlrAporte.getAmount());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		  
+		Aporte aporte = new Aporte(txtFieldVlrAporte.getAmount(),dateFormat.format(date));
+		portfolioSave.addAporte(aporte);
 		
-		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
-		MongoDatabase database = mongo.getDatabase("dbTeste");
+		mongo.add(portfolioSave);
 		
-		Document document = new Document();
-	    document.append("nome", portfolioSave.getNome());
-	    document.append("aporte", portfolioSave.getVlrInicialAporte());
-
-	    database.getCollection("portifolios").insertOne(document);
+//		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
+//		MongoDatabase database = mongo.getDatabase("dbTeste");
+//		
+//		Document document = new Document();
+//		
+//	    document.append("nome", portfolioSave.getNome());
+//	    document.append("aportes", portfolioSave.getAportes());
+//
+//	    database.getCollection("portifolios").insertOne(document);
 
 		_stage.close();
 	}

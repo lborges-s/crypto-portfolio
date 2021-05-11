@@ -7,14 +7,10 @@ import br.com.project.utils.IController;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class TelaAporteController implements Initializable, IController {
+public class TransacaoController implements Initializable, IController {
 	
 	Stage stage;
 	
-	public TelaAporteController (String idPortifolio) {
-		
-	}
-
 	@Override
 	public void setStage(Stage stage) {
 		// TODO Auto-generated method stub

@@ -7,19 +7,20 @@ import br.com.project.utils.IController;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class TelaCompraVendaController implements Initializable, IController {
+public class AporteController implements Initializable, IController {
 	
 	Stage stage;
 	
+	public AporteController (String idPortifolio) {
+		
+	}
+
 	@Override
 	public void setStage(Stage stage) {
-		// TODO Auto-generated method stub
 		this.stage = stage;
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
+	public void initialize(URL location, ResourceBundle resources) {		
 	}
 }

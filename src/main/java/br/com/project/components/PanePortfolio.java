@@ -1,7 +1,6 @@
 package br.com.project.components;
 
-import org.bson.types.ObjectId;
-
+import br.com.project.models.portfolio.PortfolioModel;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -9,12 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
-public class ListPortifolios extends Pane {
+public class PanePortfolio extends Pane {
 
 	@EqualsAndHashCode.Exclude
 	private Label lbName = new Label();
@@ -26,14 +24,13 @@ public class ListPortifolios extends Pane {
 
 	private MessageHandler messageHandler;
 
-	public ListPortifolios(ObjectId id, String nomePortifolio) {
+	public PanePortfolio(PortfolioModel portfolio) {
 		
-		this.id = id.toString();
-		this.setId(id.toString());
+		this.id = portfolio.getId().toString();
+		this.setId(id);
 		
-		lbName.setText(nomePortifolio);
+		lbName.setText(portfolio.getNome());
 		lbName.setFont(Font.font(20));
-//		lbName.setTextFill(Color.WHITE);
 		lbName.setLayoutX(14.0);
 		lbName.setLayoutY(10.0);
 		lbName.getStyleClass().add("nome-portifolio");
