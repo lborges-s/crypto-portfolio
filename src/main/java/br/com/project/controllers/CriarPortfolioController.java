@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 import br.com.project.components.CurrencyField;
 import br.com.project.dao.MongoConcrete;
-import br.com.project.models.portfolio.Aporte;
+import br.com.project.models.portfolio.AporteModel;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.IController;
 import javafx.event.ActionEvent;
@@ -79,20 +79,10 @@ public class CriarPortfolioController implements Initializable, IController {
 		portfolioSave.setNome(txtFieldNomePortfolio.getText());
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		  
-		Aporte aporte = new Aporte(txtFieldVlrAporte.getAmount(),dateFormat.format(date));
+		AporteModel aporte = new AporteModel(txtFieldVlrAporte.getAmount(),dateFormat.format(date));
 		portfolioSave.addAporte(aporte);
 		
 		mongo.add(portfolioSave);
-		
-//		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
-//		MongoDatabase database = mongo.getDatabase("dbTeste");
-//		
-//		Document document = new Document();
-//		
-//	    document.append("nome", portfolioSave.getNome());
-//	    document.append("aportes", portfolioSave.getAportes());
-//
-//	    database.getCollection("portifolios").insertOne(document);
 
 		_stage.close();
 	}

@@ -7,6 +7,8 @@ import org.bson.conversions.Bson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import br.com.project.models.portfolio.AporteModel;
+
 interface IMongoAccess<T> {
 	void add(T entity);
 	
@@ -21,4 +23,6 @@ interface IMongoAccess<T> {
 	void removeMany(Bson filterQuery);
 	
 	void close();
+	
+	void addAporte(String id, AporteModel aporte);
 }

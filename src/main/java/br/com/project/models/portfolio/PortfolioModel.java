@@ -21,7 +21,7 @@ public class PortfolioModel {
 
 	@Getter
 	@Setter
-	private List<Aporte> aportes = new ArrayList<>();
+	private List<AporteModel> aportes = new ArrayList<>();
 
 	@Getter
 	@Setter
@@ -31,13 +31,13 @@ public class PortfolioModel {
 		if (aportes.isEmpty())
 			return 0;
 		double vlrTotal = 0;
-		for (Aporte aporte : aportes) {
+		for (AporteModel aporte : aportes) {
 			vlrTotal = aporte.getValor();
 		}
 		return vlrTotal;
 	}
 
-	public void addAporte(Aporte aporte) {
+	public void addAporte(AporteModel aporte) {
 		aportes.add(aporte);
 	}
 

@@ -7,13 +7,13 @@ import br.com.project.models.MongoID;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Aporte {
+public class AporteModel {
 
-	public Aporte() {
+	public AporteModel() {
 
 	}
 
-	public Aporte(double valor, String data) {
+	public AporteModel(double valor, String data) {
 		this.valor = valor;
 		this.data = data;
 	}

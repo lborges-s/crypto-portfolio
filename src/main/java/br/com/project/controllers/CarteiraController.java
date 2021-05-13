@@ -73,7 +73,7 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	public void telaAddAporte() {
-		AporteController controller = new AporteController("");
+		AporteController controller = new AporteController(portfolio.getId());
 		Window owner = mainPane.getScene().getWindow();
 
 		try {

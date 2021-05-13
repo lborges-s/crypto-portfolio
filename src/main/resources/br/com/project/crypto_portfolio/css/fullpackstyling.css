@@ -56,7 +56,11 @@
  .pane-cinza-claro {
      -fx-background-color: #E2E2E2;
  }
-
+ 
+ .pane-transparent {
+     -fx-background-color: transparent;
+ }
+ 
  .border {
      -fx-background-radius: 20;
  }

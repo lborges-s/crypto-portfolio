@@ -13,6 +13,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+import br.com.project.models.portfolio.AporteModel;
 
 public class MongoConcrete<T> implements IMongoAccess<T> {
 	private static final MongoClient client = MongoClients.create("mongodb://localhost:27017");
@@ -21,7 +24,6 @@ public class MongoConcrete<T> implements IMongoAccess<T> {
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	private Class<T> entityClass;
-
 	
 	public MongoConcrete(Class<T> entityClass) {
 		collection = database.getCollection("portfolios");
@@ -78,5 +80,23 @@ public class MongoConcrete<T> implements IMongoAccess<T> {
 	@Override
 	public void close() {
 		client.close();
+	}
+
+	@Override
+	public void addAporte(String id, AporteModel aporte) {
+		// TODO Auto-generated method stub
+		try {
+			String json = objectMapper.writeValueAsString(aporte);
+			
+			collection.updateOne(
+			    Filters.eq("_id", id),
+			    new Document().append(
+		            "$push",
+		            new Document("aportes", Document.parse(json)))
+			);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

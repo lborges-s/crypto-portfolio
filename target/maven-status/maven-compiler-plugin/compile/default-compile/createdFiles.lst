@@ -8,7 +8,6 @@ br\com\project\dao\MongoConcrete.class
 br\com\project\models\portfolio\Cripto.class
 br\com\project\components\CurrencyField$1.class
 br\com\project\controllers\CoinChosee.class
-br\com\project\models\portfolio\Aporte.class
 br\com\project\models\BinanceModel.class
 br\com\project\controllers\CriarPortfolioController$1.class
 br\com\project\models\portfolio\Transacao.class
@@ -26,6 +25,7 @@ br\com\project\controllers\InicialController.class
 br\com\project\models\MongoID.class
 br\com\project\models\MyClientEndpoint.class
 br\com\project\components\PaneCrypto.class
+br\com\project\models\portfolio\AporteModel.class
 br\com\project\controllers\ProcuraMoedaController.class
 br\com\project\crypto_portfolio\App.class
 br\com\project\controllers\CarteiraController.class
