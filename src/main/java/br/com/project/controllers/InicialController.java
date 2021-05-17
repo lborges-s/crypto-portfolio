@@ -11,8 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.components.PaneCrypto;
 import br.com.project.components.PanePortfolio;
+import br.com.project.controllers.CriarPortfolioController.IVoidCallback;
 import br.com.project.crypto_portfolio.App;
-import br.com.project.dao.MongoConcrete;
+import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.MultiTickerModel;
 import br.com.project.models.MyClientEndpoint;
 import br.com.project.models.TickerStreamModel;
@@ -20,21 +21,18 @@ import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 public class InicialController implements Initializable {
 	static String uriWss = "wss://stream.binance.com:9443/ws/bnbusdt@ticker";
 	static String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
 	static String uriWssAll = "wss://stream.binance.com:9443/ws/!ticker@arr";
 	ObjectMapper objectMapper = new ObjectMapper();
-	private final MongoConcrete<PortfolioModel> mongo = new MongoConcrete<>(PortfolioModel.class);
+	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
 
 	@FXML
 	AnchorPane mainPane;
@@ -47,6 +45,13 @@ public class InicialController implements Initializable {
 	@FXML
 	VBox vBoxListPortifolios;
 
+	final IVoidCallback callbackUpdatePortfolios = new IVoidCallback() {
+		@Override
+		public void handleCallback() {
+			_listPortifolios(true);
+		}
+	};
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_generateStringWssUrl();
@@ -55,19 +60,17 @@ public class InicialController implements Initializable {
 	}
 
 	@FXML
-	private void handleNewWindow(ActionEvent event) throws IOException {
-		CriarPortfolioController controller = new CriarPortfolioController();
+	private void addPortfolio(ActionEvent event) throws IOException {
+		CriarPortfolioController controller = new CriarPortfolioController(callbackUpdatePortfolios);
 		Window owner = mainPane.getScene().getWindow();
+		Functions.handleNewWindow("telaCriaPortifolio", "Criar portfólio", controller, owner);
+	}
 
-		Stage stage = Functions.handleNewWindow("telaCriaPortifolio", "Criar portifólio", controller, owner);
+	private void editPortfolio(PortfolioModel portfolio) throws IOException {
+		CriarPortfolioController controller = new CriarPortfolioController(portfolio, callbackUpdatePortfolios);
 
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent e) {
-				System.out.println("Fechando a tela");
-				System.out.println("isRefresh > " + controller.isRefresh);
-			}
-		});
+		Window owner = mainPane.getScene().getWindow();
+		Functions.handleNewWindow("telaCriaPortifolio", "Editar portfólio", controller, owner);
 	}
 
 	private void _initWebsocket() {
@@ -75,7 +78,6 @@ public class InicialController implements Initializable {
 
 		client.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
-
 //				TickerStreamModel ticker;
 				MultiTickerModel ticker2;
 				try {
@@ -160,6 +162,12 @@ public class InicialController implements Initializable {
 		return uriWssStreams;
 	}
 
+	public void _listPortifolios(boolean refresh) {
+		if (refresh)
+			vBoxListPortifolios.getChildren().clear();
+		_listPortifolios();
+	}
+
 	public void _listPortifolios() {
 
 		try {
@@ -168,20 +176,34 @@ public class InicialController implements Initializable {
 			for (PortfolioModel portfolio : portfolios) {
 				PanePortfolio pane = new PanePortfolio(portfolio);
 
-				pane.addMessageHandler(new PanePortfolio.MessageHandler() {
-					public void handleMessage(String idAtual) {
+				pane.addClickCallback(new PanePortfolio.ClickCallback() {
+					public void handle(boolean isEdit) {
 						try {
-							CarteiraController controller = new CarteiraController(portfolio);
-							//Criar nova Scene para passar para o App trocar a tela atual.
-							App.setRoot("telaCarteira", controller);
-//							Window owner = mainPane.getScene().getWindow();
-//
-//							Functions.handleNewWindow("telaCarteira", portfolio.getNome(), controller, owner);
+							if (isEdit) {
+								editPortfolio(portfolio);
+							} else {
+								CarteiraController controller = new CarteiraController(portfolio);
+								App.setRoot("telaCarteira", controller);
+								// Criar nova Scene para passar para o App trocar a tela atual.
+
+//								Window owner = mainPane.getScene().getWindow();
+								//
+//								Functions.handleNewWindow("telaCarteira", portfolio.getNome(), controller, owner);
+							}
+
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 				});
+				
+				pane.addClickDeleteCallback(new PanePortfolio.ClickDeleteCallback() {
+					@Override
+					public void handle() {
+						callbackUpdatePortfolios.handleCallback();
+					}});
+				
+				
 				vBoxListPortifolios.getChildren().add(pane);
 			}
 		} catch (Exception e) {

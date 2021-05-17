@@ -7,10 +7,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import br.com.project.components.CurrencyField;
-import br.com.project.dao.MongoConcrete;
-import br.com.project.models.MongoID;
+import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.portfolio.AporteModel;
-import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,23 +17,26 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class AporteController implements Initializable, IController {
-	
+
 	Stage stage;
-	
+
 	private AporteModel aporteSave = new AporteModel();
-	
-	private final MongoConcrete<PortfolioModel> mongo = new MongoConcrete<PortfolioModel>(PortfolioModel.class);
-	
+
+	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
+
 	public String idPortfolio;
 
 	@FXML
 	private Button btnSave;
-	
+
 	@FXML
 	private CurrencyField txtFieldVlrAporte;
-		
-	public AporteController (String idPortfolio) {
+	
+	private IVoidCallback voidCallback;
+
+	public AporteController(String idPortfolio, IVoidCallback voidCallback) {
 		this.idPortfolio = idPortfolio;
+		this.voidCallback = voidCallback;
 	}
 
 	@Override
@@ -44,17 +45,25 @@ public class AporteController implements Initializable, IController {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {		
+	public void initialize(URL location, ResourceBundle resources) {
 	}
-	
+
 	@FXML
 	void onSave(ActionEvent event) {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		
+
 		aporteSave.setValor(txtFieldVlrAporte.getAmount());
 		aporteSave.setData(dateFormat.format(date));
-		
+
 		mongo.addAporte(idPortfolio, aporteSave);
+
+		voidCallback.handleCallback();
+		stage.close();
 	}
+
+	public interface IVoidCallback {
+		public void handleCallback();
+	}
+
 }

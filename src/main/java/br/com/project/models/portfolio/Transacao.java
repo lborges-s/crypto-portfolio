@@ -18,11 +18,11 @@ public class Transacao {
 
 	@JsonIgnore
 	private MongoID id;
-	private String status;
+	private String tpTransacao;
 	private String simboloMoeda;
 	private double qtde;
-	private double precoCompra;
-	private Date dtCompra;
+	private double precoTransaco;
+	private Date dtTransacao;
 	
 	
 	@JsonIgnore

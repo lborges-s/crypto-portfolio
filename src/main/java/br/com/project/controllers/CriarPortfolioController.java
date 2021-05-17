@@ -6,8 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import br.com.project.components.CurrencyField;
-import br.com.project.dao.MongoConcrete;
+import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.portfolio.AporteModel;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.IController;
@@ -23,10 +25,9 @@ import javafx.stage.WindowEvent;
 
 public class CriarPortfolioController implements Initializable, IController {
 
-	private final MongoConcrete<PortfolioModel> mongo = new MongoConcrete<PortfolioModel>(PortfolioModel.class);
+	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
 	private PortfolioModel portfolioSave = new PortfolioModel();
 
-	public boolean isRefresh = false;
 	private boolean isEdit = false;
 
 	private Stage _stage;
@@ -43,12 +44,16 @@ public class CriarPortfolioController implements Initializable, IController {
 	@FXML
 	private Button btnSave;
 
-	CriarPortfolioController() {
+	private IVoidCallback callbackSaveOk;
+
+	CriarPortfolioController(IVoidCallback callbackSaveOk) {
+		this.callbackSaveOk = callbackSaveOk;
 	}
 
-	public CriarPortfolioController(PortfolioModel portfolio) {
+	public CriarPortfolioController(PortfolioModel portfolio, IVoidCallback callbackSaveOk) {
 		isEdit = true;
 		portfolioSave = portfolio;
+		this.callbackSaveOk = callbackSaveOk;
 	}
 
 	@Override
@@ -58,6 +63,9 @@ public class CriarPortfolioController implements Initializable, IController {
 			public void handle(WindowEvent e) {
 				if (isEdit) {
 					titleText.setText("Editando portfólio");
+					txtFieldNomePortfolio.setText(portfolioSave.getNome());
+					txtFieldVlrAporte.setEditable(false);
+					txtFieldVlrAporte.setAmount(portfolioSave.getAportes().get(0).getValor());
 				} else {
 					titleText.setText("Criando portfólio");
 				}
@@ -73,17 +81,52 @@ public class CriarPortfolioController implements Initializable, IController {
 
 	@FXML
 	void onSave(ActionEvent event) {
-		
-		isRefresh = true;
-		Date date = new Date();
-		portfolioSave.setNome(txtFieldNomePortfolio.getText());
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		  
-		AporteModel aporte = new AporteModel(txtFieldVlrAporte.getAmount(),dateFormat.format(date));
-		portfolioSave.addAporte(aporte);
-		
-		mongo.add(portfolioSave);
 
-		_stage.close();
+		try {
+			if (!_validateFields())
+				return;
+			portfolioSave.setNome(txtFieldNomePortfolio.getText());
+			if (isEdit) {
+				mongo.updatePortfolioName(portfolioSave.getId(), portfolioSave.getNome());
+
+			} else {
+				Date date = new Date();
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				AporteModel aporte = new AporteModel(txtFieldVlrAporte.getAmount(), dateFormat.format(date));
+				portfolioSave.addAporte(aporte);
+
+				mongo.add(portfolioSave);
+			}
+
+			JOptionPane.showMessageDialog(null, "Seu portfólio foi salvo com sucesso!", "Operação concluída",
+					JOptionPane.INFORMATION_MESSAGE);
+			callbackSaveOk.handleCallback();
+			_stage.close();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não foi possível salvar o portfólio > " + e.getMessage(), "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
+
+	private boolean _validateFields() {
+
+		if (txtFieldNomePortfolio.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Informe o nome do portfólio", "Campo Obrigatório",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+
+		if (txtFieldVlrAporte.getText().isEmpty() || !(txtFieldVlrAporte.getAmount() != 0)) {
+			JOptionPane.showMessageDialog(null, "Informe o aporte inicial", "Campo Obrigatório",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	public interface IVoidCallback {
+		public void handleCallback();
+	}
+
 }

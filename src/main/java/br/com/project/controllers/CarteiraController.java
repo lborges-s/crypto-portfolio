@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
@@ -16,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class CarteiraController implements Initializable, IController {
-
+	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
 	Stage stage;
 	@FXML
 	AnchorPane mainPane;
@@ -42,7 +46,7 @@ public class CarteiraController implements Initializable, IController {
 	public void initialize(URL location, ResourceBundle resources) {
 		String html = "<html style=\"background-color:#3e3e3e;\"><script type=\"text/javascript\" src=\"https://files.coinmarketcap.com/static/widget/coinMarquee.js\"></script><div id=\"coinmarketcap-widget-marquee\" coins=\"1,1027,825,2010,52,6636,3718,1839,4687\" currency=\"BRL\" theme=\"dark\" transparent=\"true\" show-symbol-logo=\"true\"></div></html>";
 		widgetCoinMarket.getEngine().loadContent(html);
-		
+
 		txtNomeCarteira.setText(portfolio.getNome());
 		txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalAportes())));
 	}
@@ -73,12 +77,31 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	public void telaAddAporte() {
-		AporteController controller = new AporteController(portfolio.getId());
+		AporteController.IVoidCallback callbackIfOk = new AporteController.IVoidCallback() {
+			@Override
+			public void handleCallback() {
+				updateAporte();
+			}
+		};
+
+		AporteController controller = new AporteController(portfolio.getId(), callbackIfOk);
 		Window owner = mainPane.getScene().getWindow();
 
 		try {
 			Functions.handleNewWindow("telaAporte", "Adicionar aporte", controller, owner);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateAporte() {
+		try {
+			portfolio = mongo.getById(portfolio.getId());
+			System.out.println("Portfolio atualizado > " + portfolio.getNome());
+
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 	}

@@ -2,6 +2,9 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -19,7 +22,7 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane alignment="CENTER" maxHeight="200.0" prefHeight="200.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <GridPane alignment="CENTER" maxHeight="200.0" prefHeight="187.0" prefWidth="1295.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -177,19 +180,29 @@
             </BorderPane>
          </children>
       </GridPane>
-      <ScrollPane layoutX="885.0" layoutY="120.0" prefHeight="440.0" prefWidth="431.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="220.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="160.0">
+      <ScrollPane layoutX="885.0" layoutY="139.0" prefHeight="454.0" prefWidth="431.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.0">
          <styleClass>
             <String fx:value="pane-cinza-escuro" />
             <String fx:value="border" />
          </styleClass>
       </ScrollPane>
-      <Pane layoutX="14.0" layoutY="381.0" prefHeight="440.0" prefWidth="860.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="160.0">
+      <Pane layoutX="14.0" layoutY="139.0" prefHeight="454.0" prefWidth="850.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="139.0">
          <styleClass>
             <String fx:value="pane-cinza-escuro" />
             <String fx:value="border" />
          </styleClass>
+         <children>
+            <LineChart layoutX="12.0" layoutY="-1.0" prefHeight="421.0" prefWidth="839.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
       </Pane>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="119.0" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="119.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="97.0" prefHeight="39.0" prefWidth="1295.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="97.0">
          <children>
             <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
                <HBox.margin>
@@ -208,13 +221,13 @@
             </Button>
          </children>
       </HBox>
-      <BorderPane prefHeight="99.0" prefWidth="1295.0" style="-fx-background-color: #3e3e3e; -fx-border-radius: 20;" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <BorderPane prefHeight="87.0" prefWidth="1295.0" style="-fx-background-color: #3e3e3e; -fx-border-radius: 20;" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="pane-cinza-claro" />
             <String fx:value="border" />
          </styleClass>
          <center>
-            <WebView fx:id="widgetCoinMarket" disable="true" prefHeight="89.0" prefWidth="1247.0" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER" />
+            <WebView fx:id="widgetCoinMarket" disable="true" prefHeight="74.0" prefWidth="1279.0" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER" />
          </center>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
