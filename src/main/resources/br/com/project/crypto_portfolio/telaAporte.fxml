@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- <?import br.com.project.components.CurrencyField?> Exemplo de comentario -->
-
+<?import br.com.project.components.CurrencyField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -22,11 +22,11 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <!-- <CurrencyField fx:id="txtFieldVlrAporte" maxWidth="220.0" minHeight="40.0">
+                  <CurrencyField fx:id="txtFieldVlrAporte" maxWidth="220.0" minHeight="40.0">
                   	<VBox.margin>
                         <Insets bottom="30.0" />
                      </VBox.margin>
-                  </CurrencyField> -->
+                  </CurrencyField>
                   <Label text="Data do aporte" textFill="WHITE">
                      <font>
                         <Font size="25.0" />

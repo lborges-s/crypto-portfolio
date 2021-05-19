@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -186,13 +185,13 @@
             <String fx:value="border" />
          </styleClass>
       </ScrollPane>
-      <Pane layoutX="14.0" layoutY="139.0" prefHeight="454.0" prefWidth="850.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="139.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="139.0">
          <styleClass>
             <String fx:value="pane-cinza-escuro" />
             <String fx:value="border" />
          </styleClass>
-         <children>
-            <LineChart layoutX="12.0" layoutY="-1.0" prefHeight="421.0" prefWidth="839.0">
+         <center>
+            <LineChart BorderPane.alignment="CENTER">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -200,8 +199,8 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-         </children>
-      </Pane>
+         </center>
+      </BorderPane>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="97.0" prefHeight="39.0" prefWidth="1295.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="97.0">
          <children>
             <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
