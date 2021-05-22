@@ -3,8 +3,11 @@ package br.com.project.controllers;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import br.com.project.components.CurrencyField;
 import br.com.project.dao.MongoConcretePortfolio;
@@ -14,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 public class AporteController implements Initializable, IController {
@@ -32,6 +36,9 @@ public class AporteController implements Initializable, IController {
 	@FXML
 	private CurrencyField txtFieldVlrAporte;
 	
+	@FXML
+	private DatePicker datePickerField;
+	
 	private IVoidCallback voidCallback;
 
 	public AporteController(String idPortfolio, IVoidCallback voidCallback) {
@@ -46,20 +53,38 @@ public class AporteController implements Initializable, IController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		LocalDate localDate = LocalDate.now();
+		datePickerField.setValue(localDate);
 	}
 
 	@FXML
 	void onSave(ActionEvent event) {
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
+		if(!_validateFields())return;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				
 		aporteSave.setValor(txtFieldVlrAporte.getAmount());
-		aporteSave.setData(dateFormat.format(date));
+		aporteSave.setData(datePickerField.getValue().format(formatter));
 
 		mongo.addAporte(idPortfolio, aporteSave);
 
 		voidCallback.handleCallback();
 		stage.close();
+	}
+	
+	private boolean _validateFields() {
+		if (txtFieldVlrAporte.getText().isEmpty() || !(txtFieldVlrAporte.getAmount() != 0)) {
+			JOptionPane.showMessageDialog(null, "Informe o valor de aporte", "Campo Obrigatório",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		if (datePickerField.getValue() == null) {
+			JOptionPane.showMessageDialog(null, "Informe a data de aporte", "Campo Obrigatório",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 
 	public interface IVoidCallback {

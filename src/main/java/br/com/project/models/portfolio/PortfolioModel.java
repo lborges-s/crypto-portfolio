@@ -32,7 +32,7 @@ public class PortfolioModel {
 			return 0;
 		double vlrTotal = 0;
 		for (AporteModel aporte : aportes) {
-			vlrTotal = aporte.getValor();
+			vlrTotal += aporte.getValor();
 		}
 		return vlrTotal;
 	}
