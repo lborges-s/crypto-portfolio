@@ -6,17 +6,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #2f2f2f;" styleClass="pane-cinza-claro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane alignment="CENTER" maxHeight="200.0" prefHeight="187.0" prefWidth="1295.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columnConstraints>
@@ -167,20 +170,107 @@
                   <Insets top="10.0" />
                </padding>
                <center>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="37.0" prefWidth="200.0" />
-                    </content>
+                  <ScrollPane hbarPolicy="NEVER" prefWidth="400.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="355.0">
+                           <children>
+                              <VBox fx:id="vBoxListCriptos" prefWidth="354.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Pane prefHeight="76.0" prefWidth="397.0">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@icon/ada.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label layoutX="79.0" layoutY="5.0" prefHeight="26.0" style="-fx-text-fill: linear-gradient(to bottom , #ff9500, #fc466b);" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="ADA" textFill="WHITE">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="224.0" layoutY="5.0" prefHeight="26.0" style="-fx-text-fill: linear-gradient(to bottom , #ff9500, #fc466b);" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="R$939842" textFill="WHITE">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="79.0" layoutY="42.0" prefHeight="26.0" prefWidth="93.0" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="+923" textFill="WHITE">
+                                             <font>
+                                                <Font size="11.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="224.0" layoutY="42.0" prefHeight="26.0" prefWidth="93.0" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="2.39 ADA" textFill="WHITE">
+                                             <font>
+                                                <Font size="11.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Pane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
                   </ScrollPane>
                </center>
             </BorderPane>
          </children>
       </GridPane>
-      <ScrollPane layoutX="885.0" layoutY="139.0" prefHeight="454.0" prefWidth="352.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="885.0" layoutY="139.0" prefHeight="454.0" prefWidth="352.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="139.0">
          <styleClass>
             <String fx:value="pane-cinza-escuro" />
             <String fx:value="border" />
          </styleClass>
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="355.0">
+               <children>
+                  <VBox fx:id="vBoxListCriptos1" prefWidth="354.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <Pane prefHeight="76.0" prefWidth="397.0">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icon/ada.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="79.0" layoutY="5.0" prefHeight="26.0" style="-fx-text-fill: linear-gradient(to bottom , #ff9500, #fc466b);" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="ADA" textFill="WHITE">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="224.0" layoutY="5.0" prefHeight="26.0" style="-fx-text-fill: linear-gradient(to bottom , #ff9500, #fc466b);" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="R$939842" textFill="WHITE">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="79.0" layoutY="42.0" prefHeight="26.0" prefWidth="93.0" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="+923" textFill="WHITE">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="224.0" layoutY="42.0" prefHeight="26.0" prefWidth="93.0" styleClass="texto-degrade" stylesheets="@css/fullpackstyling.css" text="2.39 ADA" textFill="WHITE">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </Pane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
       </ScrollPane>
       <BorderPane fx:id="paneChart" prefHeight="454.0" prefWidth="924.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="139.0">
          <styleClass>
