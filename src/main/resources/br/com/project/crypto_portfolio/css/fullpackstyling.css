@@ -1,4 +1,16 @@
- /* proprios */
+.selected-green{
+    -fx-background-color: grey;
+}
+.selected-green:selected{
+    -fx-background-color: green;
+}
+.selected-red{
+    -fx-background-color: grey;
+}
+.selected-red:selected{
+    -fx-background-color: red;
+}
+ /* próprios */
  .caixa-procura {
      -fx-background-color: #FFFFFF;
      -fx-background-radius: 100.0;
@@ -14,7 +26,7 @@
      -fx-background-radius: 30.0;
  }
 
- .barra-direita {
+.barra-direita {
      -fx-background-color: #d3d3d3;
  }
 
@@ -23,8 +35,8 @@
  }
 
  .cartao-escolha-moeda {
-     -fx-background-color: rgb(230, 103, 47);
-     -fx-background-radius: 30;
+     -fx-background-color: rgb(230.0, 103.0, 47.0);
+     -fx-background-radius: 30.0;
  }
 
  .texto {
@@ -62,14 +74,14 @@
  }
  
  .border {
-     -fx-background-radius: 20;
+     -fx-background-radius: 20.0;
  }
  
  /*BOTOES*/
  .botao-roxo-escuro {
      -fx-background-color: #280B6F;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -80,7 +92,7 @@
   .botao-degrade {
      -fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -91,7 +103,7 @@
  .botao-roxo-claro {
      -fx-background-color: #6730EC;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -102,7 +114,7 @@
  .botao-roxo-mais-claro {
      -fx-background-color: #7984EE;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -113,7 +125,7 @@
  .botao-azul-claro {
      -fx-background-color: #85C3FF;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -124,7 +136,7 @@
  .botao-branco {
      -fx-background-color: #FFFFFF;
      -fx-text-fill: black;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -135,7 +147,7 @@
  .botao-verde {
      -fx-background-color: #43cd8b;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -146,7 +158,7 @@
   .botao-vermelho {
      -fx-background-color: #cd434c;
      -fx-text-fill: white;
-     -fx-background-radius: 30;
+     -fx-background-radius: 30.0;
      -fx-cursor: hand;
  }
  
@@ -155,11 +167,11 @@
  }
  
  .margin-right {
- 	-fx-margin-right: 20px;
+ 	-fx-margin-right: 20.0px;
  }
  
   .margin-left {
- 	-fx-margin-left: 20px;
+ 	-fx-margin-left: 20.0px;
  }
  
  /* PANE INCREMENTS */

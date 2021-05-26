@@ -17,7 +17,9 @@ D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\utils\ICo
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\controllers\CoinController.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\models\portfolio\Transacao.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\controllers\TransacaoController.java
+D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\models\HistoricoModel.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\models\TickerStreamModel.java
+D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\components\PaneHistorico.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\controllers\CarteiraController.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\models\BinanceModel.java
 D:\Dev workspace\Eclipse\crypto-portfolio\src\main\java\br\com\project\models\portfolio\PortfolioModel.java

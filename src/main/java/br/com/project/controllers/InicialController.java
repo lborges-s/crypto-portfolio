@@ -48,15 +48,14 @@ public class InicialController implements Initializable {
 	final IVoidCallback callbackUpdatePortfolios = new IVoidCallback() {
 		@Override
 		public void handleCallback() {
-			_listPortifolios(true);
+			_loadListPortfolios(true);
 		}
 	};
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_generateStringWssUrl();
-		_initWebsocket();
-		_listPortifolios();
+//		_initWebsocket();
+		_loadListPortfolios();
 	}
 
 	@FXML
@@ -74,7 +73,8 @@ public class InicialController implements Initializable {
 	}
 
 	private void _initWebsocket() {
-		MyClientEndpoint client = new MyClientEndpoint(URI.create(uriWssStreams));
+		String urlStreams = _generateStringWssUrl();
+		MyClientEndpoint client = new MyClientEndpoint(URI.create(urlStreams));
 
 		client.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
@@ -162,13 +162,13 @@ public class InicialController implements Initializable {
 		return uriWssStreams;
 	}
 
-	public void _listPortifolios(boolean refresh) {
+	public void _loadListPortfolios(boolean refresh) {
 		if (refresh)
 			vBoxListPortifolios.getChildren().clear();
-		_listPortifolios();
+		_loadListPortfolios();
 	}
 
-	public void _listPortifolios() {
+	public void _loadListPortfolios() {
 
 		try {
 			final List<PortfolioModel> portfolios = mongo.getAll();

@@ -1,9 +1,11 @@
 br\com\project\controllers\InicialController$3.class
+br\com\project\controllers\TransacaoController$1.class
 br\com\project\controllers\TransacaoController.class
 br\com\project\components\PanePortfolio.class
 br\com\project\components\PanePortfolio$2.class
 br\com\project\utils\Functions.class
 br\com\project\models\MyClientEndpoint$MessageHandler.class
+br\com\project\components\PaneHistorico.class
 br\com\project\components\PanePortfolio$ClickCallback.class
 br\com\project\models\portfolio\Cripto.class
 br\com\project\components\CurrencyField$1.class
@@ -19,6 +21,7 @@ br\com\project\dao\IMongoAccess.class
 br\com\project\controllers\InicialController$2.class
 br\com\project\models\TickerStreamModel.class
 br\com\project\models\portfolio\PortfolioModel.class
+br\com\project\models\HistoricoModel.class
 br\com\project\controllers\InicialController$1.class
 br\com\project\controllers\CarteiraController$1.class
 br\com\project\components\PanePortfolio$1.class
@@ -26,6 +29,7 @@ br\com\project\components\CurrencyField.class
 br\com\project\utils\IController.class
 br\com\project\controllers\InicialController$4.class
 br\com\project\controllers\InicialController.class
+br\com\project\controllers\TransacaoController$2.class
 br\com\project\models\MongoID.class
 br\com\project\models\MyClientEndpoint.class
 br\com\project\components\PaneCrypto.class

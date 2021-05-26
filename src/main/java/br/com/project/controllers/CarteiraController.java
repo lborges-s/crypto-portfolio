@@ -1,5 +1,6 @@
 package br.com.project.controllers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -7,14 +8,14 @@ import java.util.ResourceBundle;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import br.com.project.components.PaneHistorico;
 import br.com.project.dao.MongoConcretePortfolio;
+import br.com.project.models.HistoricoModel;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -22,10 +23,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 public class CarteiraController implements Initializable, IController {
 	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
@@ -38,9 +39,15 @@ public class CarteiraController implements Initializable, IController {
 	private Label txtNomeCarteira;
 	@FXML
 	private Label txtVlrTotalCarteira;
+	@FXML
+	private Label txtQtdMoeda;
+	@FXML
+	private Label txtVlrPorMoeda;
 
 	@FXML
 	private BorderPane paneChart;
+	@FXML
+	private VBox vBoxHistorico;
 
 	private PortfolioModel portfolio;
 
@@ -58,7 +65,7 @@ public class CarteiraController implements Initializable, IController {
 		String html = "<html style=\"background-color:#3e3e3e;\"><script type=\"text/javascript\" src=\"https://files.coinmarketcap.com/static/widget/coinMarquee.js\"></script><div id=\"coinmarketcap-widget-marquee\" coins=\"1,1027,825,2010,52,6636,3718,1839,4687\" currency=\"BRL\" theme=\"dark\" transparent=\"true\" show-symbol-logo=\"true\"></div></html>";
 		widgetCoinMarket.getEngine().loadContent(html);
 		loadInfos(false);
-		
+
 		initChart();
 
 	}
@@ -108,21 +115,30 @@ public class CarteiraController implements Initializable, IController {
 
 	public void loadInfos(boolean isUpdate) {
 		try {
-			if(isUpdate)
-			portfolio = mongo.getById(portfolio.getId());
-			
-			System.out.println("Portfolio atualizado > " + portfolio.getNome());
-			System.out.println("Aportes > " + portfolio.getAportes().size());
-			
+			if (isUpdate)
+				portfolio = mongo.getById(portfolio.getId());
+
 			txtNomeCarteira.setText(portfolio.getNome());
 			txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalAportes())));
-			
+			txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
+
+			loadHistorico();
 
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void loadHistorico() {
+		vBoxHistorico.getChildren().clear();
+		for (HistoricoModel h : portfolio.historico()) {
+			final PaneHistorico pane = new PaneHistorico(h);
+
+			vBoxHistorico.getChildren().add(pane);
+		}
+
 	}
 
 	public void initChart() {
@@ -136,7 +152,7 @@ public class CarteiraController implements Initializable, IController {
 		lineChart.setTitle("Movimentação da carteira");
 
 		var series = new XYChart.Series<String, Number>();
-		
+
 		series.getData().add(new XYChart.Data<String, Number>("Jan", 23));
 		series.getData().add(new XYChart.Data<String, Number>("Feb", 14));
 		series.getData().add(new XYChart.Data<String, Number>("Mar", 15));

@@ -3,16 +3,18 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1315.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="572.0" prefWidth="783.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="10.0" layoutY="14.0" prefHeight="780.0" prefWidth="1295.0" style="-fx-background-radius: 20;" styleClass="pane-degrade" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
          <center>
@@ -20,22 +22,21 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
                      <children>
-                        <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-verde" stylesheets="@css/fullpackstyling.css" text="Comprar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-vermelho" stylesheets="@css/fullpackstyling.css" text="Vender" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Button>
+                        <HBox>
+                           <children>
+                                <ToggleButton fx:id="btnToggleComprar" selected="true" styleClass="selected-green" stylesheets="@css/fullpackstyling.css" text="COMPRAR" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                </ToggleButton>
+                              <ToggleButton disable="true" mnemonicParsing="false" text="button" visible="false" />
+                                <ToggleButton fx:id="btnToggleVender" styleClass="selected-red" stylesheets="@css/fullpackstyling.css" text="VENDER" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                </ToggleButton>
+                           </children>
+                        </HBox>
                      </children>
                   </HBox>
                   <Label text="Moeda" textFill="WHITE">
@@ -47,6 +48,7 @@
                      </VBox.margin>
                   </Label>
                   <ChoiceBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: white;" />
+                  <ComboBox prefWidth="150.0" />
                   <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">

@@ -18,11 +18,14 @@ public class Transacao {
 
 	@JsonIgnore
 	private MongoID id;
-	private String tpTransacao;
+
+	/// C = COMPRA
+	/// V = VENDA
+	private char tpTransacao;
 	private String simboloMoeda;
 	private double qtde;
-	private double precoTransaco;
-	private Date dtTransacao;
+	private double precoTransacao;
+	private String dtTransacao;
 	
 	
 	@JsonIgnore
@@ -33,5 +36,9 @@ public class Transacao {
 	@JsonProperty("_id")
 	public void setId(MongoID id) {
 		this.id = id;
+	}
+	
+	public boolean isVenda() {
+		return tpTransacao == 'V';
 	}
 }

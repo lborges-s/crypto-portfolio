@@ -9,9 +9,7 @@ import lombok.Setter;
 
 public class AporteModel {
 
-	public AporteModel() {
-
-	}
+	public AporteModel() {}
 
 	public AporteModel(double valor, String data) {
 		this.valor = valor;

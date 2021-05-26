@@ -23,11 +23,10 @@ public class PaneCrypto extends Pane {
 	private Label lbPercent = new Label();
 	@EqualsAndHashCode.Exclude
 	private TickerStreamModel ticker;
-	private String symbol;
+	
 
 	public PaneCrypto(TickerStreamModel ticker) {
 		this.ticker = ticker;
-		symbol = ticker.getSymbol();
 		this.setPrefSize(360, 75);
 
 
@@ -65,7 +64,7 @@ public class PaneCrypto extends Pane {
 	}
 
 	public void setLbPrice(String lastPrice) {
-		lbPrice.setText(Functions.formatMoney(lastPrice, new Locale("en", "US")));
+		lbPrice.setText(Functions.formatMoney(lastPrice, new Locale("pt", "BR")));
 	}
 
 	public void setLbPercent(String pricePercent) {

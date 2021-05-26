@@ -91,7 +91,8 @@ public class CriarPortfolioController implements Initializable, IController {
 
 			} else {
 				Date date = new Date();
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 				AporteModel aporte = new AporteModel(txtFieldVlrAporte.getAmount(), dateFormat.format(date));
 				portfolioSave.addAporte(aporte);
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.project.models.HistoricoModel;
 import br.com.project.models.MongoID;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,39 @@ public class PortfolioModel {
 			vlrTotal += aporte.getValor();
 		}
 		return vlrTotal;
+	}
+
+	public int calcQtdMoedas() {
+
+		if (transacoes.isEmpty())
+			return 0;
+
+		List<String> symbols = new ArrayList<String>();
+
+		for (Transacao transacao : transacoes) {
+			var symbol = transacao.getSimboloMoeda();
+			if (!symbols.contains(symbol))
+				symbols.add(symbol);
+		}
+
+		return symbols.size();
+
+	}
+	
+	public List<HistoricoModel> historico(){
+		var historico = new ArrayList<HistoricoModel>();
+		
+		
+		for (AporteModel a : aportes) {
+			historico.add(new HistoricoModel(a));
+		}
+		for (Transacao t : transacoes) {
+			historico.add(new HistoricoModel(t));
+		}
+		
+		
+		return historico;
+		
 	}
 
 	public void addAporte(AporteModel aporte) {
