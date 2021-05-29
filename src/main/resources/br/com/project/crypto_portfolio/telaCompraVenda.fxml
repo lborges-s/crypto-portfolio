@@ -2,11 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -47,8 +46,16 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <ChoiceBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: white;" />
-                  <ComboBox prefWidth="150.0" />
+                  <HBox alignment="CENTER" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtFieldMoeda" prefHeight="25.0" prefWidth="181.0" promptText="ex: BNBUSDT" />
+                        <Button fx:id="btnPesquisaMoeda" mnemonicParsing="false" onAction="#pesquisarMoeda" text="Pesquisar">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
@@ -58,7 +65,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextArea maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                              <TextArea maxHeight="30.0" minHeight="30.0" prefHeight="30.0" promptText="ex: 0,0000001" />
                            </children>
                            <HBox.margin>
                               <Insets right="10.0" />
@@ -87,8 +94,8 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <DatePicker maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: white;" />
-                  <Button minHeight="40.0" minWidth="150.0" mnemonicParsing="false" styleClass="botao-branco" stylesheets="@css/fullpackstyling.css" text="Comprar">
+                  <DatePicker fx:id="fieldDtCompra" editable="false" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: white;" />
+                  <Button fx:id="btnFinalizar" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salvarTransacao" styleClass="botao-branco" stylesheets="@css/fullpackstyling.css" text="COMPRAR">
                      <VBox.margin>
                         <Insets top="40.0" />
                      </VBox.margin>
