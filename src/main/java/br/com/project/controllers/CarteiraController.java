@@ -1,6 +1,5 @@
 package br.com.project.controllers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,7 +62,23 @@ public class CarteiraController implements Initializable, IController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String html = "<html style=\"background-color:#3e3e3e;\"><script type=\"text/javascript\" src=\"https://files.coinmarketcap.com/static/widget/coinMarquee.js\"></script><div id=\"coinmarketcap-widget-marquee\" coins=\"1,1027,825,2010,52,6636,3718,1839,4687\" currency=\"BRL\" theme=\"dark\" transparent=\"true\" show-symbol-logo=\"true\"></div></html>";
-		widgetCoinMarket.getEngine().loadContent(html);
+		var engine = widgetCoinMarket.getEngine();
+		engine.loadContent(html);
+
+//		Timer timer = new Timer();
+//		int begin = 0;
+//		int timeInterval = 1000;
+//		timer.schedule(new TimerTask() {
+//			@Override
+//			public void run() {
+//				Platform.runLater(() -> {
+//					System.out.println("Call timer");
+//					engine.loadContent(html);
+//					engine.reload();
+//				});
+//				
+//			}
+//		}, begin, timeInterval);
 		loadInfos(false);
 
 		initChart();
@@ -84,7 +99,14 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	public void telaCompraVenda() {
-		TransacaoController controller = new TransacaoController();
+		TransacaoController.IVoidCallback callbackIfOk = new TransacaoController.IVoidCallback() {
+			@Override
+			public void handleCallback() {
+				loadInfos(true);
+			}
+		};
+		
+		TransacaoController controller = new TransacaoController(portfolio,callbackIfOk);
 		Window owner = mainPane.getScene().getWindow();
 
 		try {

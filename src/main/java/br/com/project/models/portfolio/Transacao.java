@@ -1,7 +1,5 @@
 package br.com.project.models.portfolio;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,7 +25,6 @@ public class Transacao {
 	private double precoTransacao;
 	private String dtTransacao;
 	
-	
 	@JsonIgnore
 	public String getId() {
 		return id.get$oid();
@@ -38,7 +35,12 @@ public class Transacao {
 		this.id = id;
 	}
 	
+	@JsonIgnore
 	public boolean isVenda() {
 		return tpTransacao == 'V';
+	}
+	
+	public double vlrTotal() {
+		return qtde * precoTransacao;
 	}
 }

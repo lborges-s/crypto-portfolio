@@ -21,6 +21,7 @@ import com.mongodb.client.result.UpdateResult;
 
 import br.com.project.models.portfolio.AporteModel;
 import br.com.project.models.portfolio.PortfolioModel;
+import br.com.project.models.portfolio.Transacao;
 
 public class MongoConcretePortfolio implements IMongoAccess<PortfolioModel> {
 	private static final MongoClient client = MongoClients.create("mongodb://localhost:27017");
@@ -89,6 +90,21 @@ public class MongoConcretePortfolio implements IMongoAccess<PortfolioModel> {
 			ObjectId objId = new ObjectId(id);
 
 			collection.updateOne(Filters.eq("_id", objId), Updates.addToSet("aportes", newAporte));
+			
+			
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void addTransacao(String id, Transacao transacao) {
+		try {
+			String json = objectMapper.writeValueAsString(transacao);
+			Document newTransacao = Document.parse(json);
+			ObjectId objId = new ObjectId(id);
+
+			collection.updateOne(Filters.eq("_id", objId), Updates.addToSet("transacoes", newTransacao));
 			
 			
 		} catch (JsonProcessingException e) {
