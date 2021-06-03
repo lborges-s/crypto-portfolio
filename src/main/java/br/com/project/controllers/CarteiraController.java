@@ -2,15 +2,20 @@ package br.com.project.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.project.components.PaneHistorico;
+import br.com.project.components.PaneMoeda;
+import br.com.project.components.PanePortfolio;
+import br.com.project.crypto_portfolio.App;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.HistoricoModel;
 import br.com.project.models.portfolio.PortfolioModel;
+import br.com.project.models.portfolio.Transacao;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
 import javafx.fxml.FXML;
@@ -47,8 +52,11 @@ public class CarteiraController implements Initializable, IController {
 	private BorderPane paneChart;
 	@FXML
 	private VBox vBoxHistorico;
-
+	
 	private PortfolioModel portfolio;
+	
+	@FXML
+	VBox vBoxListCriptos;
 
 	public CarteiraController(PortfolioModel portfolio) {
 		this.portfolio = portfolio;
@@ -145,6 +153,7 @@ public class CarteiraController implements Initializable, IController {
 			txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
 
 			loadHistorico();
+			_loadListMoedas();
 
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
@@ -160,7 +169,6 @@ public class CarteiraController implements Initializable, IController {
 
 			vBoxHistorico.getChildren().add(pane);
 		}
-
 	}
 
 	public void initChart() {
@@ -192,5 +200,19 @@ public class CarteiraController implements Initializable, IController {
 
 		paneChart.setCenter(lineChart);
 
+	}
+	
+	public void _loadListMoedas() {
+		vBoxListCriptos.getChildren().clear();
+		
+		try {
+			for (Transacao transacao: portfolio.getTransacoes()) {
+				PaneMoeda pane = new PaneMoeda(transacao);
+				
+				vBoxListCriptos.getChildren().add(pane);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }

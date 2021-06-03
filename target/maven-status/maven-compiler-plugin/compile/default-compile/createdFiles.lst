@@ -45,4 +45,5 @@ br\com\project\controllers\AporteController.class
 br\com\project\models\CoinPriceModel.class
 br\com\project\models\MultiTickerModel.class
 br\com\project\components\PanePortfolio$ClickDeleteCallback.class
+br\com\project\components\PaneMoeda.class
 br\com\project\dao\MongoConcretePortfolio.class
