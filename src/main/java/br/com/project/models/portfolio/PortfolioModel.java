@@ -94,6 +94,12 @@ public class PortfolioModel {
 	public boolean isValidComprar(double amount) {
 		return amount <= (calcVlrTotalAportes() - calcVlrEmMoedas());
 	}
+	
+	public void verificaTransacoes(Transacao transacao) {
+		var transacaoList = new ArrayList<Transacao>();
+		
+
+	}
 
 //	public boolean isValidVender(String symbol, double qtdMoeda) {
 //		double qtdTotal = 0;
