@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.components.CurrencyField;
-import br.com.project.controllers.AporteController.IVoidCallback;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.CoinPriceModel;
 import br.com.project.models.portfolio.PortfolioModel;
@@ -53,13 +52,13 @@ public class TransacaoController implements Initializable, IController {
 		this.portfolio = portfolio;
 		this.voidCallback = voidCallback;
 	}
+
 	private IVoidCallback voidCallback;
-	
+
 	private PortfolioModel portfolio;
-	
+
 	final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
-	
-	@SuppressWarnings("unused")
+
 	private Stage stage;
 
 	@FXML
@@ -215,13 +214,13 @@ public class TransacaoController implements Initializable, IController {
 		final double precoMoeda = txtFieldPrecoMoeda.getAmount();
 		final char tpTr = tpTransacao.charAt(0);
 		final double qtd = Double.parseDouble(txtFieldQtd.getText());
-		final double total = qtd * precoMoeda; 
+		final double total = qtd * precoMoeda;
 		final String symbol = moedaAtual.getSymbol();
-		
+
 		System.out.println("Total > " + String.valueOf(total));
-		
-		//TODO: Quando for venda, será um valor a ser acrescentado na carteira.
-		//TODO: Quando for compra, será um valor a ser retirado da carteira.
+
+		// TODO: Quando for venda, será um valor a ser acrescentado na carteira.
+		// TODO: Quando for compra, será um valor a ser retirado da carteira.
 
 		if (tpTr == 'C' && !portfolio.isValidComprar(total)) {
 			JOptionPane.showMessageDialog(null,
@@ -229,7 +228,8 @@ public class TransacaoController implements Initializable, IController {
 					"Aporte necessário", JOptionPane.WARNING_MESSAGE);
 			return;
 		} else if (tpTr == 'V') {
-			//TODO: Verificar se já possui está moeda no portfólio, caso exista, debitar do valor desta moeda.
+			// TODO: Verificar se já possui está moeda no portfólio, caso exista, debitar do
+			// valor desta moeda.
 		}
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -240,9 +240,9 @@ public class TransacaoController implements Initializable, IController {
 		transacao.setDtTransacao(fieldDtCompra.getValue().format(formatter));
 		transacao.setPrecoTransacao(precoMoeda);
 		transacao.setQtde(qtd);
-		
+
 		mongo.addTransacao(portfolio.getId(), transacao);
-		
+
 		voidCallback.handleCallback();
 		stage.close();
 	}
@@ -293,7 +293,7 @@ public class TransacaoController implements Initializable, IController {
 //			}
 //		};
 //	}
-	
+
 	public interface IVoidCallback {
 		public void handleCallback();
 	}

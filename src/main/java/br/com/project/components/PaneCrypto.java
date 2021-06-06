@@ -21,30 +21,34 @@ public class PaneCrypto extends Pane {
 
 	@EqualsAndHashCode.Exclude
 	private Label lbPercent = new Label();
+	
 	@EqualsAndHashCode.Exclude
 	private TickerStreamModel ticker;
+	//NÃO EXCLUIR
+	private String symbol;
 	
 
 	public PaneCrypto(TickerStreamModel ticker) {
 		this.ticker = ticker;
+		symbol = ticker.getSymbol();
 		this.setPrefSize(360, 75);
 
 
-		setLbNameText(ticker.getSymbol());
+		editLbNameText(ticker.getSymbol());
 		lbName.setFont(Font.font(17));
 		lbName.relocate(79, 5);
 		lbName.setStyle("-fx-text-fill:  linear-gradient(to bottom , #ff9500, #fc466b);");
 		lbName.getStyleClass().add("texto-degrade");
 		lbName.getStylesheets().add("@css/fullpackstyling.css");
 
-		setLbPrice(ticker.getLastPrice());
+		editLbPrice(ticker.getLastPrice());
 		lbPrice.setFont(Font.font(17));
 		lbPrice.relocate(224, 5);
 		lbPrice.setStyle("-fx-text-fill:  linear-gradient(to bottom , #ff9500, #fc466b);");
 		lbPrice.getStyleClass().add("texto-degrade");
 		lbPrice.getStylesheets().add("@css/fullpackstyling.css");
 
-		setLbPercent(ticker.getPriceChangePercent());
+		editLbPercent(ticker.getPriceChangePercent());
 		lbPercent.setFont(Font.font(11));
 
 		double changePercent = Double.parseDouble(ticker.getPriceChangePercent());
@@ -59,15 +63,15 @@ public class PaneCrypto extends Pane {
 		this.getChildren().addAll(lbName, lbPrice, lbPercent);
 	}
 
-	public void setLbNameText(String name) {
+	public void editLbNameText(String name) {
 		lbName.setText(ticker.getSymbol());
 	}
 
-	public void setLbPrice(String lastPrice) {
+	public void editLbPrice(String lastPrice) {
 		lbPrice.setText(Functions.formatMoney(lastPrice, new Locale("pt", "BR")));
 	}
 
-	public void setLbPercent(String pricePercent) {
+	public void editLbPercent(String pricePercent) {
 		lbPercent.setText(pricePercent + "%");
 	}
 

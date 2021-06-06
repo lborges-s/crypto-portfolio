@@ -115,7 +115,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="93.0" prefWidth="150.0" text="Valor pago por moeda:" textFill="WHITE" wrapText="true" VBox.vgrow="SOMETIMES">
+                        <Label prefHeight="46.0" prefWidth="150.0" text="Valor em moedas:" textFill="WHITE" wrapText="true" VBox.vgrow="SOMETIMES">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -137,7 +137,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtVlrPorMoeda" text="R$ 00.000,00" textFill="WHITE">
+                        <Label fx:id="txtVlrPorMoeda" text="\$ 00.000,00" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

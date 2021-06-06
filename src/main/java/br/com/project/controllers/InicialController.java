@@ -29,7 +29,6 @@ import javafx.stage.Window;
 
 public class InicialController implements Initializable {
 	static String uriWss = "wss://stream.binance.com:9443/ws/bnbusdt@ticker";
-	static String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
 	static String uriWssAll = "wss://stream.binance.com:9443/ws/!ticker@arr";
 	ObjectMapper objectMapper = new ObjectMapper();
 	private final MongoConcretePortfolio mongo = new MongoConcretePortfolio();
@@ -40,24 +39,29 @@ public class InicialController implements Initializable {
 	@FXML
 	VBox vBoxListCriptos;
 
-	List<String> streams = new ArrayList<String>();
-
 	@FXML
 	VBox vBoxListPortifolios;
+	
+	List<PortfolioModel> listPortfolios;
+	
+	MyClientEndpoint websocketClient;
 
 	final IVoidCallback callbackUpdatePortfolios = new IVoidCallback() {
 		@Override
 		public void handleCallback() {
 			_loadListPortfolios(true);
+//			_initWebsocket();
 		}
 	};
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		_initWebsocket();
 		_loadListPortfolios();
+//		_initWebsocket();
+		
+		
+				
 	}
-
 	@FXML
 	private void addPortfolio(ActionEvent event) throws IOException {
 		CriarPortfolioController controller = new CriarPortfolioController(callbackUpdatePortfolios);
@@ -73,46 +77,23 @@ public class InicialController implements Initializable {
 	}
 
 	private void _initWebsocket() {
-		String urlStreams = _generateStringWssUrl();
-		MyClientEndpoint client = new MyClientEndpoint(URI.create(urlStreams));
-
-		client.addMessageHandler(new MyClientEndpoint.MessageHandler() {
+		List<String> symbols = _getSymbolsAllPortfolios();
+		String urlStreams = _generateStringWssUrl(symbols);
+		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
+		
+		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
-//				TickerStreamModel ticker;
-				MultiTickerModel ticker2;
+				MultiTickerModel ticker;
 				try {
-//					System.out.println("Message " + message);
+					ticker = objectMapper.readValue(message, MultiTickerModel.class);
 
-					// Convert a single object
-					ticker2 = objectMapper.readValue(message, MultiTickerModel.class);
 
-					// Convert a list object
-//					List<TickerStreamModel> tickers = objectMapper.readValue(message,
-//							new TypeReference<List<TickerStreamModel>>() {
-//							});
-
-//					tickers.sort(Comparator.comparing(TickerStreamModel::getLastPrice));
-
-//					Collections.sort(tickers, new Comparator<TickerStreamModel>() {
-//						  @Override
-//						  public int compare(TickerStreamModel u1, TickerStreamModel u2) {
-//						    return u2.getLastPrice().compareTo(u1.getLastPrice());
-//						  }
-//						});
-//
-//					for (int i = 0; i < 10; i++) {
-//						_addPane(tickers.get(i));
-//					}
-
-					System.out.println("SYMBOL > " + ticker2.getTicker().getSymbol() + " | "
-							+ Functions.formatMoney(ticker2.getTicker().getLastPrice()));
-//
-					_addPane(ticker2.getTicker());
+					System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
+							+ Functions.formatMoney(ticker.getTicker().getLastPrice()));
+					
+					_addPane(ticker.getTicker());
 
 				}
-//				catch (JsonMappingException e) {
-//					e.printStackTrace();
-//				}
 				catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -122,7 +103,6 @@ public class InicialController implements Initializable {
 	}
 
 	private void _addPane(TickerStreamModel ticker) {
-
 		Platform.runLater(() -> {
 			try {
 				PaneCrypto pane = new PaneCrypto(ticker);
@@ -130,9 +110,9 @@ public class InicialController implements Initializable {
 				int index = vBoxListCriptos.getChildren().indexOf(pane);
 				if (index != -1) {
 					PaneCrypto customPane = (PaneCrypto) vBoxListCriptos.getChildren().get(index);
-					customPane.setLbNameText(ticker.getSymbol());
-					customPane.setLbPrice(ticker.getLastPrice());
-					customPane.setLbPercent(ticker.getPriceChangePercent());
+					customPane.editLbNameText(ticker.getSymbol());
+					customPane.editLbPrice(ticker.getLastPrice());
+					customPane.editLbPercent(ticker.getPriceChangePercent());
 				} else {
 					vBoxListCriptos.getChildren().add(pane);
 				}
@@ -142,13 +122,12 @@ public class InicialController implements Initializable {
 		});
 	}
 
-	public String _generateStringWssUrl() {
-
-		streams.add("bnbusdt@ticker");
-		streams.add("btcusdt@ticker");
-		streams.add("dogeusdt@ticker");
-		streams.add("adausdt@ticker");
-		streams.add("xrpusdt@ticker");
+	public String _generateStringWssUrl(List<String> symbols) {
+		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
+		List<String> streams = new ArrayList<String>();
+		for(String symbol: symbols) {
+			streams.add(symbol + "@ticker");	
+		}
 
 		for (int i = 0; i < streams.size(); i++) {
 			uriWssStreams += streams.get(i);
@@ -171,9 +150,9 @@ public class InicialController implements Initializable {
 	public void _loadListPortfolios() {
 
 		try {
-			final List<PortfolioModel> portfolios = mongo.getAll();
+			listPortfolios = mongo.getAll();
 
-			for (PortfolioModel portfolio : portfolios) {
+			for (PortfolioModel portfolio : listPortfolios) {
 				PanePortfolio pane = new PanePortfolio(portfolio);
 
 				pane.addClickCallback(new PanePortfolio.ClickCallback() {
@@ -184,11 +163,6 @@ public class InicialController implements Initializable {
 							} else {
 								CarteiraController controller = new CarteiraController(portfolio);
 								App.setRoot("telaCarteira", controller);
-								// Criar nova Scene para passar para o App trocar a tela atual.
-
-//								Window owner = mainPane.getScene().getWindow();
-								//
-//								Functions.handleNewWindow("telaCarteira", portfolio.getNome(), controller, owner);
 							}
 
 						} catch (IOException e) {
@@ -209,5 +183,20 @@ public class InicialController implements Initializable {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	private List<String> _getSymbolsAllPortfolios(){
+		List<String> symbols = new ArrayList<String>();
+		
+		for(PortfolioModel port:listPortfolios) {
+			var list = port.unifiedSymbols();
+			
+			for(String symbol:list) {
+				if(!symbols.contains(symbol)) {
+					symbols.add(symbol.toLowerCase());
+				}
+			}
+		}
+		return symbols;
 	}
 }

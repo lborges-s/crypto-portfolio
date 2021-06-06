@@ -1,10 +1,5 @@
 package br.com.project.components;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
-
 import br.com.project.crypto_portfolio.App;
 import br.com.project.models.HistoricoModel;
 import br.com.project.utils.Functions;
@@ -88,9 +83,12 @@ public class PaneHistorico extends Pane {
 
 		this.getChildren().addAll(image, lbStatus, lbDate, lbPrice);
 		if (isTransacao) {
+			var qtdMoeda = String.valueOf(historico.getTransacao().getQtde());
+			var vlrTotal = String.valueOf(historico.getTransacao().vlrTotal());
 
-			lbQtdCoin.setText("qtd moedas - valor");
+			lbQtdCoin.setText(qtdMoeda + " - " + Functions.formatMoney(vlrTotal));
 			lbQtdCoin.setFont(Font.font(14));
+			lbQtdCoin.setTextFill(Color.WHITE);
 			lbQtdCoin.relocate(225, 35);
 
 			this.getChildren().add(lbQtdCoin);

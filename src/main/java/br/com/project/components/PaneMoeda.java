@@ -1,7 +1,8 @@
 package br.com.project.components;
 
 import br.com.project.crypto_portfolio.App;
-import br.com.project.models.portfolio.Transacao;
+import br.com.project.models.portfolio.CoinModel;
+import br.com.project.utils.Functions;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class PaneMoeda extends Pane {
 	@FXML
 	AnchorPane mainPane;
 	
-	public PaneMoeda (Transacao transacao) {
+	public PaneMoeda (CoinModel coin) {
 		
 		String icon = "icon/plus.png";
 		var img = new Image(App.class.getResourceAsStream(icon));
@@ -41,7 +42,7 @@ public class PaneMoeda extends Pane {
 		imageView.setLayoutY(13.0);
 		imageView.setImage(img);
 
-		lbNome.setText(transacao.getSimboloMoeda().toString());
+		lbNome.setText(coin.getSymbol());
 		lbNome.setFont(Font.font(17));
 		lbNome.setLayoutX(79.0);
 		lbNome.setLayoutY(5.0);
@@ -49,7 +50,7 @@ public class PaneMoeda extends Pane {
 		lbNome.getStylesheets().add("@css/fullpackstyling.css");
 		lbNome.getStyleClass().add("texto-degrade");
 		
-		lbPrecoAtual.setText("R$ 9.398,42");
+		lbPrecoAtual.setText(Functions.formatMoney(String.valueOf(coin.calcTotalPrice())));
 		lbPrecoAtual.setFont(Font.font(17));
 		lbPrecoAtual.setLayoutX(224.0);
 		lbPrecoAtual.setLayoutY(5.0);
@@ -57,15 +58,15 @@ public class PaneMoeda extends Pane {
 		lbPrecoAtual.getStylesheets().add("@css/fullpackstyling.css");
 		lbPrecoAtual.getStyleClass().add("texto-degrade");
 		
-		lbPorcentagem.setText("29%");
+		lbPorcentagem.setText(coin.calcPercentProfit(coin.getPayedPrice()) + "%");
 		lbPorcentagem.setFont(Font.font(11));
 		lbPorcentagem.setLayoutX(79.0);
 		lbPorcentagem.setLayoutY(42.0);
 		lbPorcentagem.setTextFill(Color.WHITE);
 		
-		lbPriceAtualMoeda.setText("2.39 " + transacao.getSimboloMoeda().toString());
+		lbPriceAtualMoeda.setText(Functions.round(coin.getTotalQtd(), 5) + " " + coin.getSymbol());
 		lbPriceAtualMoeda.setFont(Font.font(11));
-		lbPriceAtualMoeda.setLayoutX(224.0);
+		lbPriceAtualMoeda.setLayoutX(224.0);	
 		lbPriceAtualMoeda.setLayoutY(42.0);
 		lbPriceAtualMoeda.setTextFill(Color.WHITE);
 				

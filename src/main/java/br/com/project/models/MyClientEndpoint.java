@@ -1,5 +1,6 @@
 package br.com.project.models;
 
+import java.io.IOException;
 import java.net.URI;
 
 import javax.swing.JOptionPane;
@@ -52,6 +53,15 @@ public class MyClientEndpoint {
 	public void onMessage(String message, Session session) {
 		if (this.messageHandler != null) {
 			this.messageHandler.handleMessage(message);
+		}
+	}
+
+	public void closeConnection() {
+		try {
+			if (userSession != null)
+				userSession.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

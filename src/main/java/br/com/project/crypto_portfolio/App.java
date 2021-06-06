@@ -24,7 +24,10 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		App.stage = stage;
-
+		_startInitialStage();
+	}
+	
+	private void _startInitialStage() throws IOException {
 		scene = new Scene(_loadFXML("telaInicial").load());
 		stage.setScene(scene);
 		stage.show();
@@ -34,15 +37,8 @@ public class App extends Application {
 		stage.setMinWidth(800);
 		stage.setTitle("Ez Crypto");
 
-//		try {
-//			getApiTest();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		}
-
 	}
+	
 
 	public static void setRoot(String fxmlName) throws IOException {
 		FXMLLoader fxml = _loadFXML(fxmlName);
@@ -54,6 +50,7 @@ public class App extends Application {
 		FXMLLoader fxml = _loadFXML(fxmlName);
 		controller.setStage(stage);
 		fxml.setController(controller);
+//		stage.setScene(new Scene(fxml.load()));
 		scene.setRoot(fxml.load());
 	}
 
@@ -61,27 +58,6 @@ public class App extends Application {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
 		return fxmlLoader;
 	}
-
-//	private void getApiTest()
-//			throws InterruptedException, ExecutionException, JsonMappingException, JsonProcessingException {
-//		final HttpClient client = HttpClient.newBuilder().build();
-//		URI uri = URI.create(baseUrl);
-//
-//		HttpRequest req = HttpRequest.newBuilder(uri).GET().build();
-//
-//		CompletableFuture<HttpResponse<String>> response = client.sendAsync(req, BodyHandlers.ofString());
-//		response.thenAcceptAsync(res -> System.out.println(res));
-//
-//		if (response.get().statusCode() == 200) {
-//			String body = response.get().body();
-//			BinanceModel model = objectMapper.readValue(body, BinanceModel.class);
-//			System.out.println("---------- API --------- ");
-//			System.out.println("SYMBOL > " + model.getSymbol());
-//			System.out.println("LAST PRICE > " + Functions.formatMoney(model.getLastPrice()));
-//			System.out.println("------------------------ ");
-//		}
-//
-//	}
 
 	public static void main(String[] args) {
 		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();

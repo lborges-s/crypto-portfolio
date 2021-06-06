@@ -90,7 +90,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtFieldQtd" promptText="ex: 0,0000001" />
+                              <TextField fx:id="txtFieldQtd" promptText="ex: 1.4521" />
                            </children>
                            <HBox.margin>
                               <Insets right="10.0" />

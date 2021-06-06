@@ -28,6 +28,20 @@ public class PortfolioModel {
 	@Setter
 	private List<Transacao> transacoes = new ArrayList<>();
 
+	@JsonIgnore
+	public String getId() {
+		return id.get$oid();
+	}
+
+	@JsonProperty("_id")
+	public void setId(MongoID id) {
+		this.id = id;
+	}
+
+	public double calcVlrTotalPortfolio() {
+		return calcVlrTotalAportes() + calcVlrEmMoedas();
+	}
+
 	public double calcVlrTotalAportes() {
 		if (aportes.isEmpty())
 			return 0;
@@ -49,11 +63,11 @@ public class PortfolioModel {
 		}
 		return symbols.size();
 	}
-	/// Valor total em moedas compradas
+
 	public double calcVlrEmMoedas() {
 		double total = 0;
 		for (var t : transacoes) {
-			if(t.getTpTransacao() == 'C') {
+			if (t.getTpTransacao() == 'C') {
 				total += t.vlrTotal();
 			}
 		}
@@ -81,34 +95,33 @@ public class PortfolioModel {
 		transacoes.add(transacao);
 	}
 
-	@JsonIgnore
-	public String getId() {
-		return id.get$oid();
-	}
-
-	@JsonProperty("_id")
-	public void setId(MongoID id) {
-		this.id = id;
-	}
-
 	public boolean isValidComprar(double amount) {
 		return amount <= (calcVlrTotalAportes() - calcVlrEmMoedas());
 	}
-	
-	public void verificaTransacoes(Transacao transacao) {
-		var transacaoList = new ArrayList<Transacao>();
-		
 
+	public List<CoinModel> listMoedas() {
+		var coins = new ArrayList<CoinModel>();
+
+		for(Transacao t: transacoes) {
+			var coin = new CoinModel(t.getSimboloMoeda(), t.getQtde(), t.getPrecoTransacao());
+			if(coins.contains(coin)) {
+				System.out.println("Contains coin > " + coin.getSymbol());
+				CoinModel c = coins.get(coins.indexOf(coin));
+				c.addQtd(t.getQtde());
+			}else {
+				coins.add(coin);
+			}		
+		}
+		return coins;
 	}
 
-//	public boolean isValidVender(String symbol, double qtdMoeda) {
-//		double qtdTotal = 0;
-//		for (var t : transacoes) {
-//			if (t.getSimboloMoeda().equals(symbol) && t.getTpTransacao() == 'C') {
-//				qtdTotal += t.getQtde();
-//			}
-//		}
-//		return qtdMoeda <= qtdTotal;
-//	}
-
+	public List<String> unifiedSymbols() {
+		var symbols = new ArrayList<String>();
+		for (Transacao t : transacoes) {
+			boolean contains = symbols.contains(t.getSimboloMoeda());
+			if (!contains)
+				symbols.add(t.getSimboloMoeda());
+		}
+		return symbols;
+	}
 }

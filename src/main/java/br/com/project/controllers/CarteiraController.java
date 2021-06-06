@@ -2,6 +2,8 @@ package br.com.project.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -10,12 +12,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.project.components.PaneHistorico;
 import br.com.project.components.PaneMoeda;
-import br.com.project.components.PanePortfolio;
-import br.com.project.crypto_portfolio.App;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.HistoricoModel;
+import br.com.project.models.portfolio.CoinModel;
 import br.com.project.models.portfolio.PortfolioModel;
-import br.com.project.models.portfolio.Transacao;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
 import javafx.fxml.FXML;
@@ -52,9 +52,9 @@ public class CarteiraController implements Initializable, IController {
 	private BorderPane paneChart;
 	@FXML
 	private VBox vBoxHistorico;
-	
+
 	private PortfolioModel portfolio;
-	
+
 	@FXML
 	VBox vBoxListCriptos;
 
@@ -113,8 +113,8 @@ public class CarteiraController implements Initializable, IController {
 				loadInfos(true);
 			}
 		};
-		
-		TransacaoController controller = new TransacaoController(portfolio,callbackIfOk);
+
+		TransacaoController controller = new TransacaoController(portfolio, callbackIfOk);
 		Window owner = mainPane.getScene().getWindow();
 
 		try {
@@ -149,8 +149,9 @@ public class CarteiraController implements Initializable, IController {
 				portfolio = mongo.getById(portfolio.getId());
 
 			txtNomeCarteira.setText(portfolio.getNome());
-			txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalAportes())));
+			txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalPortfolio())));
 			txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
+			txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedas())));
 
 			loadHistorico();
 			_loadListMoedas();
@@ -164,11 +165,15 @@ public class CarteiraController implements Initializable, IController {
 
 	private void loadHistorico() {
 		vBoxHistorico.getChildren().clear();
+		List<PaneHistorico> listPanes = new ArrayList<PaneHistorico>();
 		for (HistoricoModel h : portfolio.historico()) {
 			final PaneHistorico pane = new PaneHistorico(h);
-
-			vBoxHistorico.getChildren().add(pane);
+			listPanes.add(pane);
 		}
+		Collections.reverse(listPanes);
+
+		vBoxHistorico.getChildren().addAll(listPanes);
+
 	}
 
 	public void initChart() {
@@ -201,14 +206,14 @@ public class CarteiraController implements Initializable, IController {
 		paneChart.setCenter(lineChart);
 
 	}
-	
+
 	public void _loadListMoedas() {
 		vBoxListCriptos.getChildren().clear();
-		
+
 		try {
-			for (Transacao transacao: portfolio.getTransacoes()) {
+			for (CoinModel transacao : portfolio.listMoedas()) {
 				PaneMoeda pane = new PaneMoeda(transacao);
-				
+
 				vBoxListCriptos.getChildren().add(pane);
 			}
 		} catch (Exception e) {

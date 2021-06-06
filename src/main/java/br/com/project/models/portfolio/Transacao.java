@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class Transacao {
 	public Transacao() {
-		
 	}
 
 	@JsonIgnore
@@ -24,7 +23,7 @@ public class Transacao {
 	private double qtde;
 	private double precoTransacao;
 	private String dtTransacao;
-	
+
 	@JsonIgnore
 	public String getId() {
 		return id.get$oid();
@@ -34,12 +33,12 @@ public class Transacao {
 	public void setId(MongoID id) {
 		this.id = id;
 	}
-	
+
 	@JsonIgnore
 	public boolean isVenda() {
 		return tpTransacao == 'V';
 	}
-	
+
 	public double vlrTotal() {
 		return qtde * precoTransacao;
 	}

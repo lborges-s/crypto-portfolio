@@ -23,7 +23,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="355.0">
                      <children>
-            				<VBox fx:id="vBoxListCriptos" prefWidth="356.0">
+            				<VBox fx:id="vBoxListCriptos" prefWidth="370.0">
             					<padding>
             						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             					</padding>
@@ -98,13 +98,7 @@
       				</Label>
       			</top>
       		</BorderPane>
-		<ScrollPane layoutX="384.0" layoutY="387.0" prefHeight="403.0" prefWidth="922.0" style="-fx-background-color: #3e3e3e;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="384.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="387.0">
-			<styleClass>
-				<String fx:value="pane-cinza-escuro" />
-				<String fx:value="border" />
-			</styleClass>
-		</ScrollPane>
-		<ScrollPane hbarPolicy="NEVER" layoutX="383.0" layoutY="168.0" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" prefWidth="922.0" style="-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);" stylesheets="@css/fullpackstyling.css" AnchorPane.leftAnchor="383.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="168.0">
+		<ScrollPane hbarPolicy="NEVER" layoutX="383.0" layoutY="168.0" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" prefWidth="922.0" style="-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="383.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="168.0">
 			<styleClass>
 				<String fx:value="pane-degrade" />
 				<String fx:value="border" />
