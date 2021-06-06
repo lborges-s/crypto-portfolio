@@ -288,8 +288,13 @@
             </LineChart>
          </center> -->
       </BorderPane>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="97.0" prefHeight="39.0" prefWidth="1295.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="97.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="97.0" prefHeight="39.0" prefWidth="924.0" style="-fx-background-color: #0000;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="97.0">
          <children>
+            <Button alignment="CENTER" minHeight="30.0" minWidth="110.0" mnemonicParsing="false" onAction="#backScreen" prefHeight="30.0" prefWidth="110.0" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="&lt;- VOLTAR">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
             <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />

@@ -12,12 +12,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.project.components.PaneHistorico;
 import br.com.project.components.PaneMoeda;
+import br.com.project.crypto_portfolio.App;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.HistoricoModel;
 import br.com.project.models.portfolio.CoinModel;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -209,7 +211,6 @@ public class CarteiraController implements Initializable, IController {
 
 	public void _loadListMoedas() {
 		vBoxListCriptos.getChildren().clear();
-
 		try {
 			for (CoinModel transacao : portfolio.listMoedas()) {
 				PaneMoeda pane = new PaneMoeda(transacao);
@@ -220,4 +221,14 @@ public class CarteiraController implements Initializable, IController {
 			System.out.println(e);
 		}
 	}
+
+	@FXML
+	void backScreen(ActionEvent event) {
+		try {
+			App.setRoot("telaInicial");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

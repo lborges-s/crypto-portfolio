@@ -50,17 +50,14 @@ public class InicialController implements Initializable {
 		@Override
 		public void handleCallback() {
 			_loadListPortfolios(true);
-//			_initWebsocket();
+			_initWebsocket();
 		}
 	};
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_loadListPortfolios();
-//		_initWebsocket();
-		
-		
-				
+		_initWebsocket();				
 	}
 	@FXML
 	private void addPortfolio(ActionEvent event) throws IOException {
@@ -162,6 +159,7 @@ public class InicialController implements Initializable {
 								editPortfolio(portfolio);
 							} else {
 								CarteiraController controller = new CarteiraController(portfolio);
+								websocketClient.closeConnection();
 								App.setRoot("telaCarteira", controller);
 							}
 

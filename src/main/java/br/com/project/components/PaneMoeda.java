@@ -58,11 +58,16 @@ public class PaneMoeda extends Pane {
 		lbPrecoAtual.getStylesheets().add("@css/fullpackstyling.css");
 		lbPrecoAtual.getStyleClass().add("texto-degrade");
 		
+		var percent = coin.calcPercentProfit(coin.getPayedPrice());
 		lbPorcentagem.setText(coin.calcPercentProfit(coin.getPayedPrice()) + "%");
 		lbPorcentagem.setFont(Font.font(11));
 		lbPorcentagem.setLayoutX(79.0);
 		lbPorcentagem.setLayoutY(42.0);
-		lbPorcentagem.setTextFill(Color.WHITE);
+		if(percent >= 0) {
+			lbPorcentagem.setTextFill(Color.GREEN);
+		}else  {
+			lbPorcentagem.setTextFill(Color.RED);
+		}
 		
 		lbPriceAtualMoeda.setText(Functions.round(coin.getTotalQtd(), 5) + " " + coin.getSymbol());
 		lbPriceAtualMoeda.setFont(Font.font(11));
