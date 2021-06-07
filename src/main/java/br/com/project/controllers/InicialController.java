@@ -41,9 +41,9 @@ public class InicialController implements Initializable {
 
 	@FXML
 	VBox vBoxListPortifolios;
-	
+
 	List<PortfolioModel> listPortfolios;
-	
+
 	MyClientEndpoint websocketClient;
 
 	final IVoidCallback callbackUpdatePortfolios = new IVoidCallback() {
@@ -57,8 +57,9 @@ public class InicialController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_loadListPortfolios();
-		_initWebsocket();				
+		_initWebsocket();
 	}
+
 	@FXML
 	private void addPortfolio(ActionEvent event) throws IOException {
 		CriarPortfolioController controller = new CriarPortfolioController(callbackUpdatePortfolios);
@@ -74,24 +75,27 @@ public class InicialController implements Initializable {
 	}
 
 	private void _initWebsocket() {
+		if (websocketClient != null) {
+			websocketClient.closeConnection();
+			vBoxListCriptos.getChildren().clear();
+		}
+			
 		List<String> symbols = _getSymbolsAllPortfolios();
 		String urlStreams = _generateStringWssUrl(symbols);
 		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
-		
+
 		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
 			public void handleMessage(String message) {
 				MultiTickerModel ticker;
 				try {
 					ticker = objectMapper.readValue(message, MultiTickerModel.class);
 
-
 					System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
 							+ Functions.formatMoney(ticker.getTicker().getLastPrice()));
-					
+
 					_addPane(ticker.getTicker());
 
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -122,8 +126,8 @@ public class InicialController implements Initializable {
 	public String _generateStringWssUrl(List<String> symbols) {
 		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
 		List<String> streams = new ArrayList<String>();
-		for(String symbol: symbols) {
-			streams.add(symbol + "@ticker");	
+		for (String symbol : symbols) {
+			streams.add(symbol + "@ticker");
 		}
 
 		for (int i = 0; i < streams.size(); i++) {
@@ -168,29 +172,29 @@ public class InicialController implements Initializable {
 						}
 					}
 				});
-				
+
 				pane.addClickDeleteCallback(new PanePortfolio.ClickDeleteCallback() {
 					@Override
 					public void handle() {
 						callbackUpdatePortfolios.handleCallback();
-					}});
-				
-				
+					}
+				});
+
 				vBoxListPortifolios.getChildren().add(pane);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
-	
-	private List<String> _getSymbolsAllPortfolios(){
+
+	private List<String> _getSymbolsAllPortfolios() {
 		List<String> symbols = new ArrayList<String>();
-		
-		for(PortfolioModel port:listPortfolios) {
+
+		for (PortfolioModel port : listPortfolios) {
 			var list = port.unifiedSymbols();
-			
-			for(String symbol:list) {
-				if(!symbols.contains(symbol)) {
+
+			for (String symbol : list) {
+				if (!symbols.contains(symbol)) {
 					symbols.add(symbol.toLowerCase());
 				}
 			}
