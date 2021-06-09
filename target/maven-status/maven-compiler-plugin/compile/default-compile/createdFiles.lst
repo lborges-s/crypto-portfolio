@@ -35,6 +35,7 @@ br\com\project\models\MongoID.class
 br\com\project\models\MyClientEndpoint.class
 br\com\project\components\PaneCrypto.class
 br\com\project\models\portfolio\AporteModel.class
+br\com\project\controllers\CarteiraController$3.class
 br\com\project\controllers\ProcuraMoedaController.class
 br\com\project\crypto_portfolio\App.class
 br\com\project\controllers\CarteiraController.class

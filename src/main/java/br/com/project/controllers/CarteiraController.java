@@ -1,6 +1,7 @@
 package br.com.project.controllers;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,16 +10,21 @@ import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.project.components.PaneHistorico;
 import br.com.project.components.PaneMoeda;
 import br.com.project.crypto_portfolio.App;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.HistoricoModel;
+import br.com.project.models.MultiTickerModel;
+import br.com.project.models.MyClientEndpoint;
+import br.com.project.models.TickerStreamModel;
 import br.com.project.models.portfolio.CoinModel;
 import br.com.project.models.portfolio.PortfolioModel;
 import br.com.project.utils.Functions;
 import br.com.project.utils.IController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +62,8 @@ public class CarteiraController implements Initializable, IController {
 	private VBox vBoxHistorico;
 
 	private PortfolioModel portfolio;
+
+	MyClientEndpoint websocketClient;
 
 	@FXML
 	VBox vBoxListCriptos;
@@ -156,7 +164,7 @@ public class CarteiraController implements Initializable, IController {
 			txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedas())));
 
 			loadHistorico();
-			_loadListMoedas();
+			_initWebsocket();
 
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
@@ -209,11 +217,21 @@ public class CarteiraController implements Initializable, IController {
 
 	}
 
+	@FXML
+	void backScreen(ActionEvent event) {
+		try {
+			App.setRoot("telaInicial");
+			websocketClient.closeConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void _loadListMoedas() {
 		vBoxListCriptos.getChildren().clear();
 		try {
-			for (CoinModel transacao : portfolio.listMoedas()) {
-				PaneMoeda pane = new PaneMoeda(transacao);
+			for (CoinModel coin : portfolio.listMoedas()) {
+				PaneMoeda pane = new PaneMoeda(coin);
 
 				vBoxListCriptos.getChildren().add(pane);
 			}
@@ -222,13 +240,81 @@ public class CarteiraController implements Initializable, IController {
 		}
 	}
 
-	@FXML
-	void backScreen(ActionEvent event) {
-		try {
-			App.setRoot("telaInicial");
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void _initWebsocket() {
+		if (websocketClient != null) {
+			websocketClient.closeConnection();
+			vBoxListCriptos.getChildren().clear();
 		}
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		List<String> symbols = new ArrayList<>();
+		List<CoinModel> coins = new ArrayList<>();
+
+		for (CoinModel coin : portfolio.listMoedas()) {
+			symbols.add(coin.getSymbol().toLowerCase());
+			coins.add(coin);
+
+		}
+
+		String urlStreams = _generateStringWssUrl(symbols);
+		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
+
+		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
+			public void handleMessage(String message) {
+				MultiTickerModel multiTicker;
+				try {
+					multiTicker = objectMapper.readValue(message, MultiTickerModel.class);
+					TickerStreamModel ticker = multiTicker.getTicker();
+					var symbol = ticker.getSymbol();
+
+					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
+
+					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
+							.orElse(null);
+
+					var indexCoin = coins.indexOf(cc);
+
+					var c = coins.get(indexCoin);
+
+					Platform.runLater(() -> {
+						PaneMoeda pane = new PaneMoeda(c);
+
+						int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
+						if (indexVBox != -1) {
+							PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
+							c.calcPercentProfit(Double.parseDouble(ticker.getLastPrice()));
+							customPane.editLbNome(c.getSymbol());
+							customPane.editPercent(c.getCurrentPercentProfit());
+						} else {
+							vBoxListCriptos.getChildren().add(pane);
+						}
+					});
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+	}
+
+	public String _generateStringWssUrl(List<String> symbols) {
+		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
+		List<String> streams = new ArrayList<String>();
+		for (String symbol : symbols) {
+			streams.add(symbol + "@ticker");
+		}
+
+		for (int i = 0; i < streams.size(); i++) {
+			uriWssStreams += streams.get(i);
+			if (i != streams.size() - 1) {
+				uriWssStreams += "/";
+			}
+		}
+
+		System.out.println("URL > " + uriWssStreams);
+
+		return uriWssStreams;
 	}
 
 }

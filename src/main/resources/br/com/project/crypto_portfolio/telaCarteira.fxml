@@ -231,7 +231,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <Pane prefHeight="76.0" prefWidth="397.0">
+                        <Pane prefHeight="76.0" prefWidth="397.0" visible="false">
                            <children>
                               <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="13.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -295,17 +295,17 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaCompraVenda" styleClass="botao-degrade" text="Compra / Venda">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaCompraVenda" styleClass="botao-degrade" text="Compra / Venda">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaAddAporte" styleClass="botao-degrade" text="Adicionar aporte">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaAddAporte" styleClass="botao-degrade" text="Adicionar aporte">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>

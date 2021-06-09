@@ -13,6 +13,8 @@ public class CoinModel {
 	private double totalQtd;
 	@EqualsAndHashCode.Exclude
 	private double payedPrice;
+	@EqualsAndHashCode.Exclude
+	private double currentPercentProfit;
 
 	CoinModel(String symbol, double totalQtd, double payedPrice) {
 		this.symbol = symbol;
@@ -23,10 +25,15 @@ public class CoinModel {
 	public void addQtd(double qtd) {
 		this.totalQtd += qtd;
 	}
-
+	
+	public double calcAvgPrice() {
+		return totalQtd / payedPrice;
+	}
+	
 
 	public double calcPercentProfit(double actualPrice) {
-		return actualPrice - payedPrice / payedPrice;
+		this.currentPercentProfit =  actualPrice - calcAvgPrice() / calcAvgPrice();
+		return currentPercentProfit;
 
 	}
 
