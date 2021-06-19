@@ -32,6 +32,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -67,6 +68,9 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	VBox vBoxListCriptos;
+	
+	@FXML
+	ComboBox<String> comboBoxAno;
 
 	public CarteiraController(PortfolioModel portfolio) {
 		this.portfolio = portfolio;
@@ -100,6 +104,8 @@ public class CarteiraController implements Initializable, IController {
 		loadInfos(false);
 
 		initChart();
+		
+		initComboBox();
 
 	}
 
@@ -315,6 +321,12 @@ public class CarteiraController implements Initializable, IController {
 		System.out.println("URL > " + uriWssStreams);
 
 		return uriWssStreams;
+	}
+	
+	public void initComboBox() {
+		
+		comboBoxAno.getItems().addAll("oi");
+		
 	}
 
 }

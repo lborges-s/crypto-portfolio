@@ -96,6 +96,10 @@
      -fx-cursor: hand;
  }
  
+ .borda-degrade {
+ 	-fx-background-color: linear-gradient(to bottom , #ff9500, #fc466b);
+ }
+ 
  .botao-degrade:hover {
      -fx-background-color: linear-gradient(to bottom left, #A868A5, #2D79E9);
  }
@@ -241,6 +245,7 @@
  }
 
  .combo-box {
+ 		
      -fx-background-color: #141124;
      -fx-border-color: #515658;
      -fx-border-radius: 30.0;
@@ -256,6 +261,19 @@
      -fx-background-color: #141124;
      -fx-border-color: #FFFF;
      -fx-border-radius: 30.0;
+ }
+ 
+  .combo-box .text-field {
+    -fx-text-fill: white;
+    -jfx-focus-color: white;
+	-jfx-unfocus-color: white;
+}
+
+ .combo-box > .list-cell {
+	-fx-background: #3e3e3e;
+	-fx-background-color: #3e3e3e;
+	-fx-background-radius: 30.0;
+	-fx-text-fill: white;
  }
 
  .table-view .column-header, .table-view .column-header-background .filler {
