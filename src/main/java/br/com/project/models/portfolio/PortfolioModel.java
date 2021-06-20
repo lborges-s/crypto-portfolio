@@ -183,4 +183,19 @@ public class PortfolioModel {
 //		CoinModel c2 = coins.get(index);
 //		c2 = c;
 //	}
+	
+	public List<String> anosDiferentes() {
+		List<String> ano = new ArrayList<String>();
+		for (Transacao transacao : transacoes) {
+			var data = transacao.getDtTransacao();
+			
+			data = data.substring(data.length()-4, data.length());
+			System.out.println(data);
+			
+			if (!ano.contains(data))
+				ano.add(data);
+		}
+		
+		return ano;
+	}
 }
