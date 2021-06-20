@@ -37,7 +37,7 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </CurrencyField>
-                  <Button fx:id="btnSave" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#onSave" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Enviar">
+                  <Button fx:id="btnSave" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#onSave" styleClass="botao-roxo-mais-claro" stylesheets="@css/fullpackstyling.css" text="Salvar">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

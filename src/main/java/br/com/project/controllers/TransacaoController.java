@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.project.components.CurrencyField;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.CoinPriceModel;
@@ -144,7 +143,6 @@ public class TransacaoController implements Initializable, IController {
 				txtFieldQtd.setTextFormatter(new TextFormatter<>(converter));
 //				txtFieldQtd.setTextFormatter(new TextFormatter<>(
 //						getTextChangeFormatter("^(?!(?:[^.\\s\\d]*\\d){20})\\d+(?:\\.\\d{1,10})?$")));
-
 			}
 		});
 	}
@@ -189,8 +187,6 @@ public class TransacaoController implements Initializable, IController {
 				txtMoeda.setText("MOEDA: " + moedaAtual.getSymbol());
 				txtFieldPrecoMoeda.setText(Functions.formatMoney(moedaAtual.getPrice()));
 
-				System.out.println("CHAMOU > " + body);
-				System.out.println("CHAMOU > " + moedaAtual.getSymbol());
 			} else {
 				JOptionPane.showMessageDialog(null, "Não foi possível encontrar a moeda, tente novamente",
 						"Erro ao pesquisar", JOptionPane.ERROR_MESSAGE);
@@ -227,7 +223,11 @@ public class TransacaoController implements Initializable, IController {
 					"Parece que você não possui dinheiro o suficiente em sua carteira, faça um novo aporte!",
 					"Aporte necessário", JOptionPane.WARNING_MESSAGE);
 			return;
-		} else if (tpTr == 'V') {
+		} else if (tpTr == 'V' && !portfolio.isValidVender(symbol, qtd)) {
+			JOptionPane.showMessageDialog(null,
+					"Parece que você não possui moeda o suficiente da qual está querendo vender!", "Venda bloqueada",
+					JOptionPane.WARNING_MESSAGE);
+			return;
 			// TODO: Verificar se já possui está moeda no portfólio, caso exista, debitar do
 			// valor desta moeda.
 		}
@@ -279,21 +279,6 @@ public class TransacaoController implements Initializable, IController {
 
 		return true;
 	}
-
-//	public static UnaryOperator<TextFormatter.Change> getTextChangeFormatter(String regex) {
-//		return c -> {
-//			String text = c.getControlNewText();
-//			System.out.println(text + text.matches(regex));
-//			if (text.isEmpty()) {
-//				return c;
-//			} else if (text.matches(regex)) {
-//				return c;
-//			} else {
-//				return null;
-//			}
-//		};
-//	}
-
 	public interface IVoidCallback {
 		public void handleCallback();
 	}

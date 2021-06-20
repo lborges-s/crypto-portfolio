@@ -33,7 +33,6 @@ public class PaneCrypto extends Pane {
 		symbol = ticker.getSymbol();
 		this.setPrefSize(360, 75);
 
-
 		editLbNameText(ticker.getSymbol());
 		lbName.setFont(Font.font(17));
 		lbName.relocate(79, 5);
@@ -68,11 +67,12 @@ public class PaneCrypto extends Pane {
 	}
 
 	public void editLbPrice(String lastPrice) {
-		lbPrice.setText(Functions.formatMoney(lastPrice, new Locale("pt", "BR")));
+		lbPrice.setText(Functions.formatMoney(lastPrice));
 	}
 
 	public void editLbPercent(String pricePercent) {
-		lbPercent.setText(pricePercent + "%");
+		var finalPercent = Functions.round(Double.parseDouble(pricePercent) ,2);
+		lbPercent.setText(finalPercent + "%");
 	}
 
 }

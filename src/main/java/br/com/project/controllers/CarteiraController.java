@@ -53,6 +53,8 @@ public class CarteiraController implements Initializable, IController {
 	@FXML
 	private Label txtVlrTotalCarteira;
 	@FXML
+	private Label txtVlrDisponivelCarteira;
+	@FXML
 	private Label txtQtdMoeda;
 	@FXML
 	private Label txtVlrPorMoeda;
@@ -68,7 +70,7 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	VBox vBoxListCriptos;
-	
+
 	@FXML
 	ComboBox<String> comboBoxAno;
 
@@ -87,30 +89,159 @@ public class CarteiraController implements Initializable, IController {
 		var engine = widgetCoinMarket.getEngine();
 		engine.loadContent(html);
 
-//		Timer timer = new Timer();
-//		int begin = 0;
-//		int timeInterval = 1000;
-//		timer.schedule(new TimerTask() {
-//			@Override
-//			public void run() {
-//				Platform.runLater(() -> {
-//					System.out.println("Call timer");
-//					engine.loadContent(html);
-//					engine.reload();
-//				});
-//				
-//			}
-//		}, begin, timeInterval);
+		vBoxListCriptos.getChildren().clear();
 		loadInfos(false);
 
-		initChart();
-		
 		initComboBox();
+		initChart();
+	}
+
+	public void loadInfos(boolean isUpdate) {
+		try {
+			if (isUpdate)
+				portfolio = mongo.getById(portfolio.getId());
+
+			portfolio.listMoedas();
+			_loadFields();
+			
+			loadHistorico();
+			_initWebsocketMoedas(isUpdate);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void _loadFields() {
+		txtNomeCarteira.setText(portfolio.getNome());
+		txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalPortfolio())));
+
+		txtVlrDisponivelCarteira
+				.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrDisponivelPortfolio())));
+		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
+		txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedas())));
 
 	}
 
+	private void loadHistorico() {
+		vBoxHistorico.getChildren().clear();
+		List<PaneHistorico> listPanes = new ArrayList<PaneHistorico>();
+		for (HistoricoModel h : portfolio.historico()) {
+			final PaneHistorico pane = new PaneHistorico(h);
+			listPanes.add(pane);
+		}
+		Collections.reverse(listPanes);
+
+		vBoxHistorico.getChildren().addAll(listPanes);
+
+	}
+
+	public void initChart() {
+		final CategoryAxis xAxis = new CategoryAxis();
+		final NumberAxis yAxis = new NumberAxis();
+		xAxis.setLabel("Mês");
+
+		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+		lineChart.getStylesheets().add("@css/fullpackstyling.css");
+		lineChart.setTitle("Movimentação da carteira");
+
+		var series = new XYChart.Series<String, Number>();
+		series.getData().add(new XYChart.Data<String, Number>("Jan", 10));
+		series.getData().add(new XYChart.Data<String, Number>("Fev", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Mar", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Abr", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Mai", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Jun", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Jul", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Ago", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Set", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Out", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Nov", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Dez", 0));
+
+		lineChart.getData().add(series);
+		paneChart.setCenter(lineChart);
+	}
+
+	public void _loadListMoedas() {
+		vBoxListCriptos.getChildren().clear();
+		try {
+			for (CoinModel coin : portfolio.listMoedas()) {
+				PaneMoeda pane = new PaneMoeda(coin);
+
+				vBoxListCriptos.getChildren().add(pane);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void _initWebsocketMoedas(boolean isUpdate) {
+		if (websocketClient != null) {
+			if (isUpdate)
+				websocketClient.closeConnection();
+			vBoxListCriptos.getChildren().clear();
+		}
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		List<String> symbols = portfolio.unifiedSymbols();
+		List<CoinModel> coins = portfolio.listMoedas();
+
+		String urlStreams = Functions.generateStreamWssUrl(symbols);
+		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
+
+		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
+			public void handleMessage(String message) {
+				MultiTickerModel multiTicker;
+				try {
+					multiTicker = objectMapper.readValue(message, MultiTickerModel.class);
+					TickerStreamModel ticker = multiTicker.getTicker();
+					var symbol = ticker.getSymbol();
+
+					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
+
+					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
+							.orElse(null);
+
+					// TODO: Atualizar moeda atual na lista do portfolio
+
+					var indexCoin = coins.indexOf(cc);
+					if (indexCoin != -1) {
+						var c = coins.get(indexCoin);
+//						portfolio.updateCoin(c);
+						
+
+						if (c.getTotalQtd() > 0) {
+							c.calcPercentProfit(Double.parseDouble(ticker.getLastPrice()));
+							Platform.runLater(() -> {
+								_loadFields();
+								PaneMoeda pane = new PaneMoeda(c);
+
+								int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
+								if (indexVBox != -1) {
+									PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
+									
+									customPane.editLbNome(c.getSymbol());
+									customPane.editPercent(c.getCurrentPercentProfit());
+								} else {
+									vBoxListCriptos.getChildren().add(pane);
+								}
+							});
+						}
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+	}
+
 	@FXML
-	public void telaMoedas() {
+	public void abrirTelaMoedas() {
 		ProcuraMoedaController controller = new ProcuraMoedaController();
 		Window owner = mainPane.getScene().getWindow();
 
@@ -122,7 +253,7 @@ public class CarteiraController implements Initializable, IController {
 	}
 
 	@FXML
-	public void telaCompraVenda() {
+	public void abrirTelaCompraVenda() {
 		TransacaoController.IVoidCallback callbackIfOk = new TransacaoController.IVoidCallback() {
 			@Override
 			public void handleCallback() {
@@ -141,7 +272,7 @@ public class CarteiraController implements Initializable, IController {
 	}
 
 	@FXML
-	public void telaAddAporte() {
+	public void abrirTelaAddAporte() {
 		AporteController.IVoidCallback callbackIfOk = new AporteController.IVoidCallback() {
 			@Override
 			public void handleCallback() {
@@ -159,70 +290,6 @@ public class CarteiraController implements Initializable, IController {
 		}
 	}
 
-	public void loadInfos(boolean isUpdate) {
-		try {
-			if (isUpdate)
-				portfolio = mongo.getById(portfolio.getId());
-
-			txtNomeCarteira.setText(portfolio.getNome());
-			txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalPortfolio())));
-			txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-			txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedas())));
-
-			loadHistorico();
-			_initWebsocket();
-
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadHistorico() {
-		vBoxHistorico.getChildren().clear();
-		List<PaneHistorico> listPanes = new ArrayList<PaneHistorico>();
-		for (HistoricoModel h : portfolio.historico()) {
-			final PaneHistorico pane = new PaneHistorico(h);
-			listPanes.add(pane);
-		}
-		Collections.reverse(listPanes);
-
-		vBoxHistorico.getChildren().addAll(listPanes);
-
-	}
-
-	public void initChart() {
-
-		final CategoryAxis xAxis = new CategoryAxis();
-		final NumberAxis yAxis = new NumberAxis();
-		xAxis.setLabel("Mês");
-
-		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
-
-		lineChart.setTitle("Movimentação da carteira");
-
-		var series = new XYChart.Series<String, Number>();
-
-		series.getData().add(new XYChart.Data<String, Number>("Jan", 23));
-		series.getData().add(new XYChart.Data<String, Number>("Feb", 14));
-		series.getData().add(new XYChart.Data<String, Number>("Mar", 15));
-		series.getData().add(new XYChart.Data<String, Number>("Apr", 24));
-		series.getData().add(new XYChart.Data<String, Number>("May", 34));
-		series.getData().add(new XYChart.Data<String, Number>("Jun", 36));
-		series.getData().add(new XYChart.Data<String, Number>("Jul", 22));
-		series.getData().add(new XYChart.Data<String, Number>("Aug", 45));
-		series.getData().add(new XYChart.Data<String, Number>("Sep", 43));
-		series.getData().add(new XYChart.Data<String, Number>("Oct", 17));
-		series.getData().add(new XYChart.Data<String, Number>("Nov", 29));
-		series.getData().add(new XYChart.Data<String, Number>("Dec", 25));
-
-		lineChart.getData().add(series);
-
-		paneChart.setCenter(lineChart);
-
-	}
-
 	@FXML
 	void backScreen(ActionEvent event) {
 		try {
@@ -233,100 +300,9 @@ public class CarteiraController implements Initializable, IController {
 		}
 	}
 
-	public void _loadListMoedas() {
-		vBoxListCriptos.getChildren().clear();
-		try {
-			for (CoinModel coin : portfolio.listMoedas()) {
-				PaneMoeda pane = new PaneMoeda(coin);
-
-				vBoxListCriptos.getChildren().add(pane);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	private void _initWebsocket() {
-		if (websocketClient != null) {
-			websocketClient.closeConnection();
-			vBoxListCriptos.getChildren().clear();
-		}
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		List<String> symbols = new ArrayList<>();
-		List<CoinModel> coins = new ArrayList<>();
-
-		for (CoinModel coin : portfolio.listMoedas()) {
-			symbols.add(coin.getSymbol().toLowerCase());
-			coins.add(coin);
-
-		}
-
-		String urlStreams = _generateStringWssUrl(symbols);
-		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
-
-		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
-			public void handleMessage(String message) {
-				MultiTickerModel multiTicker;
-				try {
-					multiTicker = objectMapper.readValue(message, MultiTickerModel.class);
-					TickerStreamModel ticker = multiTicker.getTicker();
-					var symbol = ticker.getSymbol();
-
-					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
-
-					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
-							.orElse(null);
-
-					var indexCoin = coins.indexOf(cc);
-
-					var c = coins.get(indexCoin);
-
-					Platform.runLater(() -> {
-						PaneMoeda pane = new PaneMoeda(c);
-
-						int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
-						if (indexVBox != -1) {
-							PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
-							c.calcPercentProfit(Double.parseDouble(ticker.getLastPrice()));
-							customPane.editLbNome(c.getSymbol());
-							customPane.editPercent(c.getCurrentPercentProfit());
-						} else {
-							vBoxListCriptos.getChildren().add(pane);
-						}
-					});
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
-
-	public String _generateStringWssUrl(List<String> symbols) {
-		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
-		List<String> streams = new ArrayList<String>();
-		for (String symbol : symbols) {
-			streams.add(symbol + "@ticker");
-		}
-
-		for (int i = 0; i < streams.size(); i++) {
-			uriWssStreams += streams.get(i);
-			if (i != streams.size() - 1) {
-				uriWssStreams += "/";
-			}
-		}
-
-		System.out.println("URL > " + uriWssStreams);
-
-		return uriWssStreams;
-	}
-	
 	public void initComboBox() {
-		
+
 		comboBoxAno.getItems().addAll("oi");
-		
 	}
 
 }

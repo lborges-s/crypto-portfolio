@@ -53,7 +53,15 @@
                               <Font size="18.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Disponível:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
                      </children>
@@ -70,12 +78,20 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtVlrTotalCarteira" text="R$ 00.000,00" textFill="WHITE">
+                        <Label fx:id="txtVlrTotalCarteira" text="\$ 00.000,00" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="txtVlrDisponivelCarteira" text="\$ 00.000,00" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
                      </children>
@@ -281,7 +297,7 @@
          <top>
             <ComboBox fx:id="comboBoxAno" prefWidth="150.0" promptText="Escolha o ano" style="-fx-background-color: #3e3e3e; -fx-border-color: linear-gradient(to bottom , #ff9500, #fc466b);" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets top="10.0" />
+                  <Insets right="20.0" top="10.0" />
                </BorderPane.margin>
             </ComboBox>
          </top>
@@ -303,17 +319,12 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaMoedas" styleClass="botao-degrade" stylesheets="@css/fullpackstyling.css" text="Lista de moedas">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#abrirTelaCompraVenda" styleClass="botao-degrade" text="Compra / Venda" textFill="WHITE">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaCompraVenda" styleClass="botao-degrade" text="Compra / Venda" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="30.0" right="30.0" />
-               </HBox.margin>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#telaAddAporte" styleClass="botao-degrade" text="Adicionar aporte">
+            <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#abrirTelaAddAporte" styleClass="botao-degrade" text="Adicionar aporte">
                <HBox.margin>
                   <Insets left="30.0" right="30.0" />
                </HBox.margin>

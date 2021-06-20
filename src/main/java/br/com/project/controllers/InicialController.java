@@ -81,7 +81,7 @@ public class InicialController implements Initializable {
 		}
 			
 		List<String> symbols = _getSymbolsAllPortfolios();
-		String urlStreams = _generateStringWssUrl(symbols);
+		String urlStreams = Functions.generateStreamWssUrl(symbols);
 		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
 
 		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
@@ -121,25 +121,6 @@ public class InicialController implements Initializable {
 				System.out.println("Deu ERRO ESSA PORRA " + e);
 			}
 		});
-	}
-
-	public String _generateStringWssUrl(List<String> symbols) {
-		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
-		List<String> streams = new ArrayList<String>();
-		for (String symbol : symbols) {
-			streams.add(symbol + "@ticker");
-		}
-
-		for (int i = 0; i < streams.size(); i++) {
-			uriWssStreams += streams.get(i);
-			if (i != streams.size() - 1) {
-				uriWssStreams += "/";
-			}
-		}
-
-		System.out.println("URL > " + uriWssStreams);
-
-		return uriWssStreams;
 	}
 
 	public void _loadListPortfolios(boolean refresh) {

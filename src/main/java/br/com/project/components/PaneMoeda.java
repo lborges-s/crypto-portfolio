@@ -23,13 +23,13 @@ public class PaneMoeda extends Pane {
 	private Label lbNome = new Label();
 
 	@EqualsAndHashCode.Exclude
-	private Label lbPrecoAtual = new Label();
+	private Label lbTotalPrice = new Label();
 
 	@EqualsAndHashCode.Exclude
 	private Label lbPorcentagem = new Label();
 
 	@EqualsAndHashCode.Exclude
-	private Label lbPriceAtualMoeda = new Label();
+	private Label lbTotalQtd = new Label();
 
 	@EqualsAndHashCode.Exclude
 	private ImageView imageView = new ImageView();
@@ -60,32 +60,30 @@ public class PaneMoeda extends Pane {
 		lbNome.getStylesheets().add("@css/fullpackstyling.css");
 		lbNome.getStyleClass().add("texto-degrade");
 
-		// TODO: Atualizar campo
-		lbPrecoAtual.setText(Functions.formatMoney(String.valueOf(coin.calcTotalPrice())));
-		lbPrecoAtual.setFont(Font.font(17));
-		lbPrecoAtual.setLayoutX(224.0);
-		lbPrecoAtual.setLayoutY(5.0);
-		lbPrecoAtual.setStyle("-fx-text-fill:   linear-gradient(to bottom , #ff9500, #fc466b);");
-		lbPrecoAtual.getStylesheets().add("@css/fullpackstyling.css");
-		lbPrecoAtual.getStyleClass().add("texto-degrade");
+		
+		editTotalPrice(coin.getTotalPayedDisplay());
+		lbTotalPrice.setFont(Font.font(17));
+		lbTotalPrice.setLayoutX(224.0);
+		lbTotalPrice.setLayoutY(5.0);
+		lbTotalPrice.setStyle("-fx-text-fill:   linear-gradient(to bottom , #ff9500, #fc466b);");
+		lbTotalPrice.getStylesheets().add("@css/fullpackstyling.css");
+		lbTotalPrice.getStyleClass().add("texto-degrade");
 
-		var percent = coin.calcPercentProfit(coin.getPayedPrice());
-		editPercent(percent);
+		editPercent(coin.getCurrentPercentProfit());
 		lbPorcentagem.setFont(Font.font(11));
 		lbPorcentagem.setLayoutX(79.0);
 		lbPorcentagem.setLayoutY(42.0);
 
-		// TODO: Atualizar campo
-		lbPriceAtualMoeda.setText(df.format(Functions.round(coin.getTotalQtd(), 5)) + " " + coin.getSymbol());
-		lbPriceAtualMoeda.setFont(Font.font(11));
-		lbPriceAtualMoeda.setLayoutX(224.0);
-		lbPriceAtualMoeda.setLayoutY(42.0);
-		lbPriceAtualMoeda.setTextFill(Color.WHITE);
+		editTotalQtd(coin.getTotalQtd());
+		lbTotalQtd.setFont(Font.font(11));
+		lbTotalQtd.setLayoutX(224.0);
+		lbTotalQtd.setLayoutY(42.0);
+		lbTotalQtd.setTextFill(Color.WHITE);
 
 		this.getChildren().addAll(lbNome);
-		this.getChildren().addAll(lbPrecoAtual);
+		this.getChildren().addAll(lbTotalPrice);
 		this.getChildren().addAll(lbPorcentagem);
-		this.getChildren().addAll(lbPriceAtualMoeda);
+		this.getChildren().addAll(lbTotalQtd);
 
 		this.setPadding(new Insets(15, 15, 15, 15));
 	}
@@ -95,11 +93,22 @@ public class PaneMoeda extends Pane {
 	}
 
 	public void editPercent(double percent) {
-		lbPorcentagem.setText(percent + "%");
-		if (percent >= 0) {
+		var finalPercent = Functions.round(percent ,2);
+		lbPorcentagem.setText(finalPercent+ "%");
+		if (finalPercent >= 0) {
 			lbPorcentagem.setTextFill(Color.GREEN);
-		} else {
+		} else if(finalPercent == 0) {
+			lbPorcentagem.setTextFill(Color.WHITE);
+		}else {
 			lbPorcentagem.setTextFill(Color.RED);
 		}
+	}
+	
+	public void editTotalQtd(double qtd) {
+		lbTotalQtd.setText(df.format(Functions.round(qtd,5)) + " " + symbol);
+	}
+	
+	public void editTotalPrice(double totalPrice) {
+		lbTotalPrice.setText(Functions.formatMoney(String.valueOf(totalPrice)));
 	}
 }

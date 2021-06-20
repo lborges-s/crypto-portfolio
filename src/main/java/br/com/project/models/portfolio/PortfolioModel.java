@@ -2,6 +2,7 @@ package br.com.project.models.portfolio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,11 +23,13 @@ public class PortfolioModel {
 
 	@Getter
 	@Setter
-	private List<AporteModel> aportes = new ArrayList<>();
+	private List<AporteModel> aportes = new ArrayList<AporteModel>();
 
 	@Getter
-	@Setter
-	private List<Transacao> transacoes = new ArrayList<>();
+	private List<Transacao> transacoes = new ArrayList<Transacao>();
+
+	@Getter
+	private List<CoinModel> coins = new ArrayList<CoinModel>();
 
 	@JsonIgnore
 	public String getId() {
@@ -38,8 +41,18 @@ public class PortfolioModel {
 		this.id = id;
 	}
 
+	public void setTransacoes(List<Transacao> transacoes) {
+		this.transacoes = transacoes;
+		System.out.println("setTransacoes");
+		listMoedas();
+	}
+
 	public double calcVlrTotalPortfolio() {
-		return calcVlrTotalAportes() + calcVlrEmMoedas();
+		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas();
+	}
+
+	public double calcVlrDisponivelPortfolio() {
+		return calcVlrTotalAportes() - calcVlrEmMoedas();
 	}
 
 	public double calcVlrTotalAportes() {
@@ -53,24 +66,44 @@ public class PortfolioModel {
 	}
 
 	public int calcQtdMoedas() {
-		if (transacoes.isEmpty())
+
+		if (coins.isEmpty())
 			return 0;
 		List<String> symbols = new ArrayList<String>();
-		for (Transacao transacao : transacoes) {
-			var symbol = transacao.getSimboloMoeda();
-			if (!symbols.contains(symbol))
-				symbols.add(symbol);
+		for (CoinModel coin : coins) {
+			var symbol = coin.getSymbol();
+			// if (!symbols.contains(symbol))
+			symbols.add(symbol);
 		}
 		return symbols.size();
+
+//		if (transacoes.isEmpty())
+//			return 0;
+//		List<String> symbols = new ArrayList<String>();
+//		for (Transacao transacao : transacoes) {
+//			var symbol = transacao.getSimboloMoeda();
+//			if (!symbols.contains(symbol))
+//				symbols.add(symbol);
+//		}
+//		return symbols.size();
 	}
 
 	public double calcVlrEmMoedas() {
 		double total = 0;
-		for (var t : transacoes) {
-			if (t.getTpTransacao() == 'C') {
-				total += t.vlrTotal();
-			}
+//		double totalVendido = 0;
+//		for (var t : transacoes) {
+//			if (t.getTpTransacao() == 'C') {
+//				total += t.vlrTotal();
+//			}
+//			if (t.getTpTransacao() == 'V') {
+//				totalVendido += t.vlrTotal();
+//			}
+//		}
+//		
+		for (var c : coins) {
+			total += c.getTotalPayed();
 		}
+//		return total - totalVendido;
 		return total;
 	}
 
@@ -93,25 +126,43 @@ public class PortfolioModel {
 
 	public void addTransacao(Transacao transacao) {
 		transacoes.add(transacao);
+		listMoedas();
 	}
 
 	public boolean isValidComprar(double amount) {
-		return amount <= (calcVlrTotalAportes() - calcVlrEmMoedas());
+		return amount <= calcVlrDisponivelPortfolio();
+	}
+
+	public boolean isValidVender(String symbol, double qtdMoeda) {
+		double qtdTotal = 0;
+//		for (var t : transacoes) {
+//			if (t.getSimboloMoeda().equals(symbol) && t.getTpTransacao() == 'C') {
+//				qtdTotal += t.getQtde();
+//			}
+//		}
+		for (var c : coins) {
+			qtdTotal += c.getTotalQtd();
+		}
+		return qtdMoeda <= qtdTotal;
 	}
 
 	public List<CoinModel> listMoedas() {
 		var coins = new ArrayList<CoinModel>();
-
-		for(Transacao t: transacoes) {
-			var coin = new CoinModel(t.getSimboloMoeda(), t.getQtde(), t.getPrecoTransacao());
-			if(coins.contains(coin)) {
-				System.out.println("Contains coin > " + coin.getSymbol());
-				CoinModel c = coins.get(coins.indexOf(coin));
-				c.addQtd(t.getQtde());
-			}else {
-				coins.add(coin);
-			}		
+		var symbols = new ArrayList<String>();
+		for (Transacao t : transacoes) {
+			if (!symbols.contains(t.getSimboloMoeda())) {
+				symbols.add(t.getSimboloMoeda());
+			}
 		}
+
+		for (String symbol : symbols) {
+			var trs = transacoes.stream().filter(tr -> symbol.equals(tr.getSimboloMoeda()))
+					.collect(Collectors.toList());
+
+			coins.add(new CoinModel(symbol, trs));
+		}
+
+		this.coins = coins;
 		return coins;
 	}
 
@@ -122,6 +173,14 @@ public class PortfolioModel {
 			if (!contains)
 				symbols.add(t.getSimboloMoeda());
 		}
+		System.out.println("unifiedSymbols " + symbols);
 		return symbols;
 	}
+
+//	public void updateCoin(CoinModel c) {
+//		var index = coins.indexOf(c);
+//		System.out.println("updated coin index > " + index);
+//		CoinModel c2 = coins.get(index);
+//		c2 = c;
+//	}
 }

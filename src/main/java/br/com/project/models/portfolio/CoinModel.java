@@ -1,44 +1,69 @@
 package br.com.project.models.portfolio;
 
+import java.util.List;
+
+import br.com.project.utils.Functions;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @EqualsAndHashCode
 public class CoinModel {
+	@Getter
 	private String symbol;
 	@EqualsAndHashCode.Exclude
-	private double totalQtd;
+	@Getter
+	private double totalQtd = 0;
 	@EqualsAndHashCode.Exclude
-	private double payedPrice;
+	@Getter
+	private double totalPayed = 0;
 	@EqualsAndHashCode.Exclude
-	private double currentPercentProfit;
+	@Getter
+	private double totalPayedDisplay = 0;
+	@EqualsAndHashCode.Exclude
+	@Getter
+	private double currentPercentProfit = 0;
+	@EqualsAndHashCode.Exclude
+	private List<Transacao> transacoes;
+	@Getter
+	private double avgPrice = 0;
 
-	CoinModel(String symbol, double totalQtd, double payedPrice) {
+	CoinModel(String symbol, List<Transacao> transacoes) {
 		this.symbol = symbol;
-		this.totalQtd = totalQtd;
-		this.payedPrice = payedPrice;
-	}
+		this.transacoes = transacoes;
 
-	public void addQtd(double qtd) {
-		this.totalQtd += qtd;
+		for (Transacao tr : transacoes) {
+			if (tr.getTpTransacao() == 'C') {
+				totalQtd += tr.getQtde();
+				totalPayed += tr.vlrTotal();
+			} else {
+				totalQtd -= tr.getQtde();
+				totalPayed -= tr.vlrTotal();
+			}
+		}
+		this.totalPayedDisplay = totalPayed;
+		this.avgPrice = _calcAvgPrice();
+
+		System.out.println("Avg Price > " + avgPrice);
 	}
-	
-	public double calcAvgPrice() {
-		return totalQtd / payedPrice;
-	}
-	
 
 	public double calcPercentProfit(double actualPrice) {
-		this.currentPercentProfit =  actualPrice - calcAvgPrice() / calcAvgPrice();
-		return currentPercentProfit;
+		this.currentPercentProfit = Functions.round((actualPrice - avgPrice) / avgPrice, 2);
+		System.out.println("currentPercentProfit > " + currentPercentProfit);
+		totalPayedDisplay = totalPayedDisplay * (currentPercentProfit + 1);
 
+		return currentPercentProfit;
 	}
 
 	public double calcTotalPrice() {
-		return totalQtd * payedPrice;
+		return totalQtd * avgPrice;
+	}
+
+	private double _calcAvgPrice() {
+		double totalPayed = 0;
+		for (Transacao tr : transacoes) {
+			totalPayed += tr.getPrecoTransacao();
+		}
+		return totalPayed / totalQtd;
 	}
 
 }

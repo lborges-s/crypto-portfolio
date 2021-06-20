@@ -1,3 +1,11 @@
+.chart-title {
+  -fx-text-fill: #ffffff;
+}
+
+ 
+.axis-label {
+  -fx-text-fill: #ffffff;
+}
 .selected-green{
     -fx-background-color: grey;
 }

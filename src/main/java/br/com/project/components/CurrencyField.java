@@ -16,7 +16,7 @@ public class CurrencyField extends TextField{
     private SimpleDoubleProperty amount;
 
     public CurrencyField() {
-    	this(new Locale("pt","BR"),0.00);
+    	this(new Locale("en","US"),0.00);
     }
 
     

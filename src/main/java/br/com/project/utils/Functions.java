@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import br.com.project.crypto_portfolio.App;
@@ -15,13 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class Functions {
-	static Locale locale = new Locale("pt", "BR");
-
-	public static String formatMoney(String value, Locale loc) {
-		locale = loc;
-
-		return formatMoney(value);
-	}
+	static Locale locale = new Locale("en", "US");
 
 	public static String formatMoney(String value) {
 
@@ -57,5 +53,23 @@ public class Functions {
 	    BigDecimal bd = BigDecimal.valueOf(value);
 	    bd = bd.setScale(places, RoundingMode.HALF_UP);
 	    return bd.doubleValue();
+	}
+	
+	public static String generateStreamWssUrl(List<String> symbols) {
+		String uriWssStreams = "wss://stream.binance.com:9443/stream?streams=";
+		List<String> streams = new ArrayList<String>();
+		for (String symbol : symbols) {
+			streams.add(symbol.toLowerCase() + "@ticker");
+		}
+
+		for (int i = 0; i < streams.size(); i++) {
+			uriWssStreams += streams.get(i);
+			if (i != streams.size() - 1) {
+				uriWssStreams += "/";
+			}
+		}
+		
+		System.out.println("URL > " + uriWssStreams);
+		return uriWssStreams;
 	}
 }
