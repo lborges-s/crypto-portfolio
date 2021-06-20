@@ -21,9 +21,9 @@ public class Functions {
 
 	public static String formatMoney(String value) {
 
-		NumberFormat brlFormat = NumberFormat.getCurrencyInstance(locale);
-
-		return brlFormat.format(Double.parseDouble(value));
+		NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+		format.setMaximumFractionDigits(4);
+		return format.format(Double.parseDouble(value));
 
 	}
 

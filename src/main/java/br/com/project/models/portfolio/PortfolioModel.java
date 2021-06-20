@@ -48,7 +48,7 @@ public class PortfolioModel {
 	}
 
 	public double calcVlrTotalPortfolio() {
-		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas();
+		return calcVlrDisponivelPortfolio() + calcVlrEmMoedasDisplay();
 	}
 
 	public double calcVlrDisponivelPortfolio() {
@@ -72,38 +72,25 @@ public class PortfolioModel {
 		List<String> symbols = new ArrayList<String>();
 		for (CoinModel coin : coins) {
 			var symbol = coin.getSymbol();
-			// if (!symbols.contains(symbol))
 			symbols.add(symbol);
 		}
 		return symbols.size();
+	}
+	
+	public double calcVlrEmMoedasDisplay() {
+		double total = 0;
 
-//		if (transacoes.isEmpty())
-//			return 0;
-//		List<String> symbols = new ArrayList<String>();
-//		for (Transacao transacao : transacoes) {
-//			var symbol = transacao.getSimboloMoeda();
-//			if (!symbols.contains(symbol))
-//				symbols.add(symbol);
-//		}
-//		return symbols.size();
+		for (var c : coins) {
+			total += c.getTotalPayedDisplay();
+		}
+		return total;
 	}
 
 	public double calcVlrEmMoedas() {
 		double total = 0;
-//		double totalVendido = 0;
-//		for (var t : transacoes) {
-//			if (t.getTpTransacao() == 'C') {
-//				total += t.vlrTotal();
-//			}
-//			if (t.getTpTransacao() == 'V') {
-//				totalVendido += t.vlrTotal();
-//			}
-//		}
-//		
 		for (var c : coins) {
 			total += c.getTotalPayed();
 		}
-//		return total - totalVendido;
 		return total;
 	}
 
@@ -135,11 +122,6 @@ public class PortfolioModel {
 
 	public boolean isValidVender(String symbol, double qtdMoeda) {
 		double qtdTotal = 0;
-//		for (var t : transacoes) {
-//			if (t.getSimboloMoeda().equals(symbol) && t.getTpTransacao() == 'C') {
-//				qtdTotal += t.getQtde();
-//			}
-//		}
 		for (var c : coins) {
 			qtdTotal += c.getTotalQtd();
 		}
@@ -176,13 +158,6 @@ public class PortfolioModel {
 		System.out.println("unifiedSymbols " + symbols);
 		return symbols;
 	}
-
-//	public void updateCoin(CoinModel c) {
-//		var index = coins.indexOf(c);
-//		System.out.println("updated coin index > " + index);
-//		CoinModel c2 = coins.get(index);
-//		c2 = c;
-//	}
 	
 	public List<String> anosDiferentes() {
 		List<String> ano = new ArrayList<String>();
@@ -190,7 +165,6 @@ public class PortfolioModel {
 			var data = transacao.getDtTransacao();
 			
 			data = data.substring(data.length()-4, data.length());
-			System.out.println(data);
 			
 			if (!ano.contains(data))
 				ano.add(data);

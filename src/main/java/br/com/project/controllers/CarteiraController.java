@@ -120,7 +120,7 @@ public class CarteiraController implements Initializable, IController {
 		txtVlrDisponivelCarteira
 				.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrDisponivelPortfolio())));
 		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-		txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedas())));
+		txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedasDisplay())));
 
 	}
 
@@ -205,17 +205,14 @@ public class CarteiraController implements Initializable, IController {
 					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
 							.orElse(null);
 
-					// TODO: Atualizar moeda atual na lista do portfolio
-
 					var indexCoin = coins.indexOf(cc);
 					if (indexCoin != -1) {
-						var c = coins.get(indexCoin);
-//						portfolio.updateCoin(c);
-						
+						var c = coins.get(indexCoin);						
 
 						if (c.getTotalQtd() > 0) {
-							c.calcPercentProfit(Double.parseDouble(ticker.getLastPrice()));
+							var actualPrice = Double.parseDouble(ticker.getLastPrice());
 							Platform.runLater(() -> {
+								c.calcPercentProfit(actualPrice);
 								_loadFields();
 								PaneMoeda pane = new PaneMoeda(c);
 
@@ -225,6 +222,8 @@ public class CarteiraController implements Initializable, IController {
 									
 									customPane.editLbNome(c.getSymbol());
 									customPane.editPercent(c.getCurrentPercentProfit());
+									customPane.editActualPrice(actualPrice);
+									customPane.editTotalPrice(c.getTotalProfit());
 								} else {
 									vBoxListCriptos.getChildren().add(pane);
 								}

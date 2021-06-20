@@ -26,6 +26,9 @@ public class PaneMoeda extends Pane {
 	private Label lbTotalPrice = new Label();
 
 	@EqualsAndHashCode.Exclude
+	private Label lbActualPrice = new Label();
+
+	@EqualsAndHashCode.Exclude
 	private Label lbPorcentagem = new Label();
 
 	@EqualsAndHashCode.Exclude
@@ -60,28 +63,34 @@ public class PaneMoeda extends Pane {
 		lbNome.getStylesheets().add("@css/fullpackstyling.css");
 		lbNome.getStyleClass().add("texto-degrade");
 
-		
-		editTotalPrice(coin.getTotalPayedDisplay());
+		editTotalPrice(coin.getTotalProfit());
 		lbTotalPrice.setFont(Font.font(17));
 		lbTotalPrice.setLayoutX(224.0);
 		lbTotalPrice.setLayoutY(5.0);
-		lbTotalPrice.setStyle("-fx-text-fill:   linear-gradient(to bottom , #ff9500, #fc466b);");
-		lbTotalPrice.getStylesheets().add("@css/fullpackstyling.css");
-		lbTotalPrice.getStyleClass().add("texto-degrade");
+//		lbTotalPrice.setStyle("-fx-text-fill:   linear-gradient(to bottom , #ff9500, #fc466b);");
+//		lbTotalPrice.getStylesheets().add("@css/fullpackstyling.css");
+//		lbTotalPrice.getStyleClass().add("texto-degrade");
 
 		editPercent(coin.getCurrentPercentProfit());
 		lbPorcentagem.setFont(Font.font(11));
 		lbPorcentagem.setLayoutX(79.0);
-		lbPorcentagem.setLayoutY(42.0);
+		lbPorcentagem.setLayoutY(50.0);
+
+		editActualPrice(coin.getActualPrice());
+		lbActualPrice.setFont(Font.font(11));
+		lbActualPrice.setLayoutX(79.0);
+		lbActualPrice.setLayoutY(35);
+		lbActualPrice.setTextFill(Color.WHITE);
 
 		editTotalQtd(coin.getTotalQtd());
 		lbTotalQtd.setFont(Font.font(11));
 		lbTotalQtd.setLayoutX(224.0);
-		lbTotalQtd.setLayoutY(42.0);
+		lbTotalQtd.setLayoutY(50.0);
 		lbTotalQtd.setTextFill(Color.WHITE);
 
 		this.getChildren().addAll(lbNome);
 		this.getChildren().addAll(lbTotalPrice);
+		this.getChildren().addAll(lbActualPrice);
 		this.getChildren().addAll(lbPorcentagem);
 		this.getChildren().addAll(lbTotalQtd);
 
@@ -92,23 +101,33 @@ public class PaneMoeda extends Pane {
 		lbNome.setText(symbol);
 	}
 
+	public void editActualPrice(double actualPrice) {
+		lbActualPrice.setText(Functions.formatMoney(String.valueOf(actualPrice)));
+	}
+
 	public void editPercent(double percent) {
-		var finalPercent = Functions.round(percent ,2);
-		lbPorcentagem.setText(finalPercent+ "%");
+		var finalPercent = Functions.round(percent, 4);
+		lbPorcentagem.setText(finalPercent + "%");
 		if (finalPercent >= 0) {
 			lbPorcentagem.setTextFill(Color.GREEN);
-		} else if(finalPercent == 0) {
+		} else if (finalPercent == 0) {
 			lbPorcentagem.setTextFill(Color.WHITE);
-		}else {
+		} else {
 			lbPorcentagem.setTextFill(Color.RED);
 		}
 	}
-	
+
 	public void editTotalQtd(double qtd) {
-		lbTotalQtd.setText(df.format(Functions.round(qtd,5)) + " " + symbol);
+		lbTotalQtd.setText(df.format(Functions.round(qtd, 5)) + " " + symbol);
 	}
-	
+
 	public void editTotalPrice(double totalPrice) {
-		lbTotalPrice.setText(Functions.formatMoney(String.valueOf(totalPrice)));
+		if (totalPrice >= 0) {
+			lbTotalPrice.setText("+"+Functions.formatMoney(String.valueOf(totalPrice)));
+			lbTotalPrice.setTextFill(Color.GREEN);
+		} else if(totalPrice < 0) {
+			lbTotalPrice.setText(Functions.formatMoney(String.valueOf(totalPrice)));
+			lbTotalPrice.setTextFill(Color.RED);
+		}
 	}
 }

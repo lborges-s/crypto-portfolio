@@ -26,6 +26,10 @@ public class CoinModel {
 	private List<Transacao> transacoes;
 	@Getter
 	private double avgPrice = 0;
+	@Getter
+	private double actualPrice = 0;
+	@Getter
+	private double totalProfit = 0;
 
 	CoinModel(String symbol, List<Transacao> transacoes) {
 		this.symbol = symbol;
@@ -46,22 +50,33 @@ public class CoinModel {
 		System.out.println("Avg Price > " + avgPrice);
 	}
 
-	public double calcPercentProfit(double actualPrice) {
-		this.currentPercentProfit = Functions.round((actualPrice - avgPrice) / avgPrice, 2);
+	public double calcPercentProfit(double _actualPrice) {
+		this.actualPrice = Functions.round(_actualPrice,4);
+		
+		
+		this.currentPercentProfit = Functions.round((actualPrice / avgPrice - 1) * 100, 4);
+//		this.currentPercentProfit = Functions.round((actualPrice - avgPrice) / avgPrice, 3);
+
 		System.out.println("currentPercentProfit > " + currentPercentProfit);
-		totalPayedDisplay = totalPayedDisplay * (currentPercentProfit + 1);
+
+//		System.out.println("totalPayedDisplay > " + totalPayedDisplay);
+
+		this.totalProfit = (currentPercentProfit / 100) * totalPayed;
+
+		totalPayedDisplay = totalPayed + totalProfit;
 
 		return currentPercentProfit;
 	}
 
-	public double calcTotalPrice() {
-		return totalQtd * avgPrice;
-	}
+//	public double calcTotalPrice() {
+//		return totalQtd * avgPrice;
+//	}
 
 	private double _calcAvgPrice() {
 		double totalPayed = 0;
 		for (Transacao tr : transacoes) {
-			totalPayed += tr.getPrecoTransacao();
+			if(tr.getTpTransacao() == 'C')
+			totalPayed += tr.vlrTotal();
 		}
 		return totalPayed / totalQtd;
 	}

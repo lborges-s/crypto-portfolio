@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- <?import br.com.project.components.CurrencyField?> -->
+<?import br.com.project.components.CurrencyField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -104,7 +104,7 @@
                                  </font>
                               </Label>
                               
-                              <!--  <CurrencyField fx:id="txtFieldPrecoMoeda" />-->
+                              <CurrencyField fx:id="txtFieldPrecoMoeda" />
                            </children>
                            <padding>
                               <Insets left="10.0" />
