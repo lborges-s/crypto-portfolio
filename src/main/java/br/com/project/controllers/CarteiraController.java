@@ -324,9 +324,7 @@ public class CarteiraController implements Initializable, IController {
 	}
 	
 	public void initComboBox() {
-		
-		comboBoxAno.getItems().addAll("oi");
-		
+		var anos = portfolio.anosDiferentes();
+		comboBoxAno.getItems().addAll(anos);
 	}
-
 }
