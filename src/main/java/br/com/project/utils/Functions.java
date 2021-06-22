@@ -19,10 +19,10 @@ import javafx.stage.Window;
 public class Functions {
 	static Locale locale = new Locale("en", "US");
 
-	public static String formatMoney(String value) {
+	public static String formatMoney(double value) {
 
 		NumberFormat format = NumberFormat.getCurrencyInstance(locale);
-		return format.format(Double.parseDouble(value));
+		return format.format(value);
 
 	}
 	

@@ -186,7 +186,7 @@ public class TransacaoController implements Initializable, IController {
 				btnPesquisaMoeda.setVisible(false);
 				txtFieldMoeda.setEditable(false);
 				txtMoeda.setText("MOEDA: " + moedaAtual.getSymbol());
-				txtFieldPrecoMoeda.setText(Functions.formatMoney(moedaAtual.getPrice()));
+				txtFieldPrecoMoeda.setText(Functions.formatMoney(Double.parseDouble(moedaAtual.getPrice())));
 
 				System.out.println("MOEDA: " + moedaAtual.getSymbol());
 				System.out.println("PREÇO: " + moedaAtual.getPrice());

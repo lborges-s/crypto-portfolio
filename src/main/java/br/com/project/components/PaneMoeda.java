@@ -48,12 +48,12 @@ public class PaneMoeda extends Pane {
 		df.setRoundingMode(RoundingMode.CEILING);
 		this.symbol = coin.getSymbol();
 
-		String icon = "icon/plus.png";
-		var img = new Image(App.class.getResourceAsStream(icon));
-
-		imageView.setLayoutX(13.0);
-		imageView.setLayoutY(13.0);
-		imageView.setImage(img);
+//		String icon = "icon/plus.png";
+//		var img = new Image(App.class.getResourceAsStream(icon));
+//
+//		imageView.setLayoutX(13.0);
+//		imageView.setLayoutY(13.0);
+//		imageView.setImage(img);
 
 		editLbNome(coin.getSymbol());
 		lbNome.setFont(Font.font(17));
@@ -67,11 +67,8 @@ public class PaneMoeda extends Pane {
 		lbTotalPrice.setFont(Font.font(17));
 		lbTotalPrice.setLayoutX(224.0);
 		lbTotalPrice.setLayoutY(5.0);
-//		lbTotalPrice.setStyle("-fx-text-fill:   linear-gradient(to bottom , #ff9500, #fc466b);");
-//		lbTotalPrice.getStylesheets().add("@css/fullpackstyling.css");
-//		lbTotalPrice.getStyleClass().add("texto-degrade");
 
-		editPercent(coin.getCurrentPercentProfit());
+		editPercent(coin.getRentabilidade());
 		lbPorcentagem.setFont(Font.font(11));
 		lbPorcentagem.setLayoutX(79.0);
 		lbPorcentagem.setLayoutY(50.0);
@@ -102,7 +99,7 @@ public class PaneMoeda extends Pane {
 	}
 
 	public void editActualPrice(double actualPrice) {
-		lbActualPrice.setText(Functions.formatMoney(String.valueOf(actualPrice)));
+		lbActualPrice.setText(Functions.formatMoney(String.valueOf(actualPrice), 3));
 	}
 
 	public void editPercent(double percent) {
@@ -122,11 +119,12 @@ public class PaneMoeda extends Pane {
 	}
 
 	public void editTotalPrice(double totalPrice) {
+		var textPrice = Functions.formatMoney(String.valueOf(totalPrice), 4);
 		if (totalPrice >= 0) {
-			lbTotalPrice.setText("+"+Functions.formatMoney(String.valueOf(totalPrice)));
+			lbTotalPrice.setText("+" + textPrice);
 			lbTotalPrice.setTextFill(Color.GREEN);
-		} else if(totalPrice < 0) {
-			lbTotalPrice.setText(Functions.formatMoney(String.valueOf(totalPrice)));
+		} else if (totalPrice < 0) {
+			lbTotalPrice.setText(textPrice);
 			lbTotalPrice.setTextFill(Color.RED);
 		}
 	}

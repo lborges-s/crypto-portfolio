@@ -51,17 +51,18 @@ public class PortfolioModel {
 	}
 
 	public double calcVlrTotalPortfolio() {
-		return calcVlrDisponivelPortfolio() + calcVlrEmMoedasDisplay() + _calcTotalVendido();
+		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas() + _calcTotalVendido();
 	}
 
 	public double calcVlrDisponivelPortfolio() {
+		//TODO: Talvez adicionar valor totalVendido no valor disponível ao inves do valor total
 		return calcVlrTotalAportes() - calcVlrEmMoedas();
 	}
 
 	private double _calcTotalVendido() {
 		double totalSold = 0;
 		for (var c : coins) {
-			totalSold += c.getTotalSold();
+			totalSold += c.getTotalGanho();
 		}
 		return totalSold;
 	}
@@ -87,20 +88,11 @@ public class PortfolioModel {
 		}
 		return symbols.size();
 	}
-
-	public double calcVlrEmMoedasDisplay() {
-		double total = 0;
-
-		for (var c : coins) {
-			total += c.getTotalPayedDisplay();
-		}
-		return total;
-	}
-
 	public double calcVlrEmMoedas() {
 		double total = 0;
 		for (var c : coins) {
-			total += c.getTotalPayed();
+			total += c.getVlrTotalInvestido();
+			//TODO: Adicionar valor de profit
 		}
 		return total;
 	}
@@ -185,7 +177,7 @@ public class PortfolioModel {
 		return anos;
 	}
 
-	public double calcTotalProfitLoss() {
+	public double calcTotalProfit() {
 		double profit = 0;
 
 		for (var c : coins) {
@@ -223,11 +215,10 @@ public class PortfolioModel {
 		double vlrTotal = 0;
 		
 		for (var t : trs) {
-			vlrTotal += t.vlrTotal();
+			vlrTotal += t.custoTransacao();
 		}
 
 		return vlrTotal;
-
 	}
 
 }

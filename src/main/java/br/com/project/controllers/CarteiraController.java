@@ -128,13 +128,16 @@ public class CarteiraController implements Initializable, IController {
 
 	public void _loadFields() {
 		txtNomeCarteira.setText(portfolio.getNome());
-		txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalPortfolio())));
-
-		txtVlrDisponivelCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrDisponivelPortfolio())));
+		
+		txtVlrTotalCarteira.setText(Functions.formatMoney(portfolio.calcVlrTotalPortfolio()));
+		
+		txtVlrDisponivelCarteira.setText(Functions.formatMoney(portfolio.calcVlrDisponivelPortfolio()));
+		
 		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-		txtVlrEmMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedasDisplay())));
-		txtVlrLucroPerda.setText(Functions.formatMoney(String.valueOf(portfolio.calcTotalProfitLoss())));
-
+		
+		txtVlrEmMoeda.setText(Functions.formatMoney(portfolio.calcVlrEmMoedas()));
+		
+		txtVlrLucroPerda.setText(Functions.formatMoney(portfolio.calcTotalProfit()));
 	}
 
 	private void loadHistorico() {
@@ -179,6 +182,7 @@ public class CarteiraController implements Initializable, IController {
 		series.getData().add(new XYChart.Data<String, Number>("Nov", 0));
 		series.getData().add(new XYChart.Data<String, Number>("Dez", 0));
 
+		lineChart.getData().clear();
 		lineChart.getData().add(series);
 		paneChart.setCenter(lineChart);
 	}
@@ -227,10 +231,10 @@ public class CarteiraController implements Initializable, IController {
 					if (indexCoin != -1) {
 						var c = coins.get(indexCoin);
 
-						if (c.getTotalQtd() > 0) {
+//						if (c.getTotalQtd() > 0) {
 							var actualPrice = Double.parseDouble(ticker.getLastPrice());
 							Platform.runLater(() -> {
-								c.calcPercentProfit(actualPrice);
+								c.calcProfit(actualPrice);
 								_loadFields();
 								PaneMoeda pane = new PaneMoeda(c);
 
@@ -239,14 +243,14 @@ public class CarteiraController implements Initializable, IController {
 									PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
 
 									customPane.editLbNome(c.getSymbol());
-									customPane.editPercent(c.getCurrentPercentProfit());
+									customPane.editPercent(c.getRentabilidade());
 									customPane.editActualPrice(actualPrice);
 									customPane.editTotalPrice(c.getTotalProfit());
 								} else {
 									vBoxListCriptos.getChildren().add(pane);
 								}
 							});
-						}
+//						}
 					}
 
 				} catch (Exception e) {

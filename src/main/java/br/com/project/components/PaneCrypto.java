@@ -67,7 +67,7 @@ public class PaneCrypto extends Pane {
 	}
 
 	public void editLbPrice(String lastPrice) {
-		lbPrice.setText(Functions.formatMoney(lastPrice));
+		lbPrice.setText(Functions.formatMoney(Double.parseDouble(lastPrice)));
 	}
 
 	public void editLbPercent(String pricePercent) {

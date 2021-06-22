@@ -56,7 +56,7 @@ public class Transacao {
 		return new SimpleDateFormat("dd/MM/yyyy").parse(dtTransacao);
 	}
 
-	public double vlrTotal() {
+	public double custoTransacao() {
 		return qtde * precoTransacao;
 	}
 }

@@ -90,8 +90,8 @@ public class InicialController implements Initializable {
 				try {
 					ticker = objectMapper.readValue(message, MultiTickerModel.class);
 
-					System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
-							+ Functions.formatMoney(ticker.getTicker().getLastPrice()));
+//					System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
+//							+ Functions.formatMoney(Double.parseDouble(ticker.getTicker().getLastPrice())));
 
 					_addPane(ticker.getTicker());
 

@@ -71,9 +71,9 @@ public class PaneHistorico extends Pane {
 		String textPrice = "";
 		if (isTransacao) {
 			textPrice += historico.getTransacao().getSimboloMoeda().toUpperCase() + " - "
-					+ Functions.formatMoney(String.valueOf(historico.getTransacao().vlrTotal()));
+					+ Functions.formatMoney(historico.getTransacao().custoTransacao());
 		} else {
-			textPrice += Functions.formatMoney(String.valueOf(historico.getAporte().getValor()));
+			textPrice += Functions.formatMoney(historico.getAporte().getValor());
 		}
 
 		lbPrice.setText(textPrice);
@@ -84,7 +84,7 @@ public class PaneHistorico extends Pane {
 		this.getChildren().addAll(image, lbStatus, lbDate, lbPrice);
 		if (isTransacao) {
 			var qtdMoeda = String.valueOf(historico.getTransacao().getQtde());
-			var precoTransacao = String.valueOf(historico.getTransacao().getPrecoTransacao());
+			var precoTransacao = historico.getTransacao().getPrecoTransacao();
 
 			lbQtdCoin.setText(qtdMoeda + " x " + Functions.formatMoney(precoTransacao) + " (por moeda)");
 			lbQtdCoin.setFont(Font.font(14));
