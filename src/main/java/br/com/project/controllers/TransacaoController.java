@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.project.components.CurrencyField;
 import br.com.project.dao.MongoConcretePortfolio;
 import br.com.project.models.CoinPriceModel;
@@ -187,6 +188,9 @@ public class TransacaoController implements Initializable, IController {
 				txtMoeda.setText("MOEDA: " + moedaAtual.getSymbol());
 				txtFieldPrecoMoeda.setText(Functions.formatMoney(moedaAtual.getPrice()));
 
+				System.out.println("MOEDA: " + moedaAtual.getSymbol());
+				System.out.println("PREÇO: " + moedaAtual.getPrice());
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Não foi possível encontrar a moeda, tente novamente",
 						"Erro ao pesquisar", JOptionPane.ERROR_MESSAGE);
@@ -215,9 +219,6 @@ public class TransacaoController implements Initializable, IController {
 
 		System.out.println("Total > " + String.valueOf(total));
 
-		// TODO: Quando for venda, será um valor a ser acrescentado na carteira.
-		// TODO: Quando for compra, será um valor a ser retirado da carteira.
-
 		if (tpTr == 'C' && !portfolio.isValidComprar(total)) {
 			JOptionPane.showMessageDialog(null,
 					"Parece que você não possui dinheiro o suficiente em sua carteira, faça um novo aporte!",
@@ -228,8 +229,6 @@ public class TransacaoController implements Initializable, IController {
 					"Parece que você não possui moeda o suficiente da qual está querendo vender!", "Venda bloqueada",
 					JOptionPane.WARNING_MESSAGE);
 			return;
-			// TODO: Verificar se já possui está moeda no portfólio, caso exista, debitar do
-			// valor desta moeda.
 		}
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -240,6 +239,8 @@ public class TransacaoController implements Initializable, IController {
 		transacao.setDtTransacao(fieldDtCompra.getValue().format(formatter));
 		transacao.setPrecoTransacao(precoMoeda);
 		transacao.setQtde(qtd);
+		transacao.setCounter(portfolio.lastCounterTransaction() + 1);
+		transacao.setAno(fieldDtCompra.getValue().getYear());
 
 		mongo.addTransacao(portfolio.getId(), transacao);
 
@@ -259,10 +260,14 @@ public class TransacaoController implements Initializable, IController {
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		} else {
-			// TODO: Validar formato informado na quantidade
 			try {
-//				nf.format(txtFieldQtd.getText());
-				Double.parseDouble(txtFieldQtd.getText());
+				double qtd = Double.parseDouble(txtFieldQtd.getText());
+				if (qtd == 0) {
+
+					JOptionPane.showMessageDialog(null, "Informe a quantidade de moedas", "Campo Obrigatório",
+							JOptionPane.WARNING_MESSAGE);
+					return false;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Campo de quantidade com formato inválido", "Campo Obrigatório",
@@ -271,7 +276,7 @@ public class TransacaoController implements Initializable, IController {
 			}
 		}
 
-		if (txtFieldPrecoMoeda.getText().isBlank() || !(txtFieldPrecoMoeda.getAmount() != 0)) {
+		if (txtFieldPrecoMoeda.getText().isBlank() || txtFieldPrecoMoeda.getAmount() == 0) {
 			JOptionPane.showMessageDialog(null, "Informe o valor por moeda", "Campo Obrigatório",
 					JOptionPane.WARNING_MESSAGE);
 			return false;
@@ -279,6 +284,7 @@ public class TransacaoController implements Initializable, IController {
 
 		return true;
 	}
+
 	public interface IVoidCallback {
 		public void handleCallback();
 	}

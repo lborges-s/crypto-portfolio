@@ -17,9 +17,9 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="1315.0" style="-fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.project.controllers.InicialController">
 	<children>
-		<BorderPane prefHeight="800.0" prefWidth="370.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane prefHeight="800.0" prefWidth="370.0" style="-fx-background-color: #2f2f2f;" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane hbarPolicy="NEVER" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <ScrollPane hbarPolicy="NEVER" prefWidth="400.0" style="-fx-background-color: #0000;" BorderPane.alignment="CENTER">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="355.0">
                      <children>
@@ -93,9 +93,9 @@
             </ScrollPane>
          </center>
 		</BorderPane>
-      		<BorderPane layoutX="370.0" prefHeight="800.0" prefWidth="945.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      		<BorderPane layoutX="370.0" prefHeight="800.0" prefWidth="945.0" styleClass="pane-cinza-escuro" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       			<top>
-      				<Label prefHeight="66.0" prefWidth="241.0" text="Crypto Ez" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      				<Label prefHeight="66.0" prefWidth="241.0" text="Ez Crypto" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
       					<font>
       						<Font size="45.0" />
       					</font>

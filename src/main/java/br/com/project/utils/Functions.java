@@ -22,7 +22,15 @@ public class Functions {
 	public static String formatMoney(String value) {
 
 		NumberFormat format = NumberFormat.getCurrencyInstance(locale);
-		format.setMaximumFractionDigits(4);
+		return format.format(Double.parseDouble(value));
+
+	}
+	
+	public static String formatMoney(String value, int fractionDigits) {
+
+		NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+		format.setMaximumFractionDigits(fractionDigits);
+		
 		return format.format(Double.parseDouble(value));
 
 	}

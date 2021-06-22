@@ -57,7 +57,9 @@ public class CarteiraController implements Initializable, IController {
 	@FXML
 	private Label txtQtdMoeda;
 	@FXML
-	private Label txtVlrPorMoeda;
+	private Label txtVlrEmMoeda;
+	@FXML
+	private Label txtVlrLucroPerda;
 
 	@FXML
 	private BorderPane paneChart;
@@ -72,7 +74,9 @@ public class CarteiraController implements Initializable, IController {
 	VBox vBoxListCriptos;
 
 	@FXML
-	ComboBox<String> comboBoxAno;
+	ComboBox<Integer> comboBoxAno;
+	
+	LineChart<String, Number> lineChart;
 
 	public CarteiraController(PortfolioModel portfolio) {
 		this.portfolio = portfolio;
@@ -90,10 +94,18 @@ public class CarteiraController implements Initializable, IController {
 		engine.loadContent(html);
 
 		vBoxListCriptos.getChildren().clear();
+		final CategoryAxis xAxis = new CategoryAxis();
+		final NumberAxis yAxis = new NumberAxis();
+		xAxis.setLabel("Mês");
+
+		lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+		lineChart.getStylesheets().add("@css/fullpackstyling.css");
+		lineChart.setTitle("Movimentação da carteira");
+		
 		loadInfos(false);
 
-		initComboBox();
-		initChart();
+		loadChart();
 	}
 
 	public void loadInfos(boolean isUpdate) {
@@ -103,7 +115,8 @@ public class CarteiraController implements Initializable, IController {
 
 			portfolio.listMoedas();
 			_loadFields();
-			
+			initComboBox();
+			loadChart();
 			loadHistorico();
 			_initWebsocketMoedas(isUpdate);
 		} catch (JsonMappingException e) {
@@ -112,15 +125,15 @@ public class CarteiraController implements Initializable, IController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void _loadFields() {
 		txtNomeCarteira.setText(portfolio.getNome());
 		txtVlrTotalCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrTotalPortfolio())));
 
-		txtVlrDisponivelCarteira
-				.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrDisponivelPortfolio())));
+		txtVlrDisponivelCarteira.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrDisponivelPortfolio())));
 		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-		txtVlrPorMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedasDisplay())));
+		txtVlrEmMoeda.setText(Functions.formatMoney(String.valueOf(portfolio.calcVlrEmMoedasDisplay())));
+		txtVlrLucroPerda.setText(Functions.formatMoney(String.valueOf(portfolio.calcTotalProfitLoss())));
 
 	}
 
@@ -137,24 +150,29 @@ public class CarteiraController implements Initializable, IController {
 
 	}
 
-	public void initChart() {
-		final CategoryAxis xAxis = new CategoryAxis();
-		final NumberAxis yAxis = new NumberAxis();
-		xAxis.setLabel("Mês");
-
-		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
-
-		lineChart.getStylesheets().add("@css/fullpackstyling.css");
-		lineChart.setTitle("Movimentação da carteira");
+	public void loadChart() {
+		if(comboBoxAno.getItems().isEmpty())return;
+//		final CategoryAxis xAxis = new CategoryAxis();
+//		final NumberAxis yAxis = new NumberAxis();
+//		xAxis.setLabel("Mês");
+//
+//		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+//
+//		lineChart.getStylesheets().add("@css/fullpackstyling.css");
+//		lineChart.setTitle("Movimentação da carteira");
+//		
+		final int ano = comboBoxAno.getValue();
+		
+		double totalMaio = portfolio.getVlrTotalTransactionsByDate(ano,4);
 
 		var series = new XYChart.Series<String, Number>();
-		series.getData().add(new XYChart.Data<String, Number>("Jan", 10));
-		series.getData().add(new XYChart.Data<String, Number>("Fev", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Mar", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Abr", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Mai", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Jun", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Jul", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Jan", portfolio.getVlrTotalTransactionsByDate(ano,0)));
+		series.getData().add(new XYChart.Data<String, Number>("Fev", portfolio.getVlrTotalTransactionsByDate(ano,1)));
+		series.getData().add(new XYChart.Data<String, Number>("Mar", portfolio.getVlrTotalTransactionsByDate(ano,2)));
+		series.getData().add(new XYChart.Data<String, Number>("Abr", portfolio.getVlrTotalTransactionsByDate(ano,3)));
+		series.getData().add(new XYChart.Data<String, Number>("Mai", totalMaio));
+		series.getData().add(new XYChart.Data<String, Number>("Jun", portfolio.getVlrTotalTransactionsByDate(ano,5)));
+		series.getData().add(new XYChart.Data<String, Number>("Jul", portfolio.getVlrTotalTransactionsByDate(ano,6)));
 		series.getData().add(new XYChart.Data<String, Number>("Ago", 0));
 		series.getData().add(new XYChart.Data<String, Number>("Set", 0));
 		series.getData().add(new XYChart.Data<String, Number>("Out", 0));
@@ -200,14 +218,14 @@ public class CarteiraController implements Initializable, IController {
 					TickerStreamModel ticker = multiTicker.getTicker();
 					var symbol = ticker.getSymbol();
 
-					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
+//					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
 
 					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
 							.orElse(null);
 
 					var indexCoin = coins.indexOf(cc);
 					if (indexCoin != -1) {
-						var c = coins.get(indexCoin);						
+						var c = coins.get(indexCoin);
 
 						if (c.getTotalQtd() > 0) {
 							var actualPrice = Double.parseDouble(ticker.getLastPrice());
@@ -219,7 +237,7 @@ public class CarteiraController implements Initializable, IController {
 								int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
 								if (indexVBox != -1) {
 									PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
-									
+
 									customPane.editLbNome(c.getSymbol());
 									customPane.editPercent(c.getCurrentPercentProfit());
 									customPane.editActualPrice(actualPrice);
@@ -301,6 +319,17 @@ public class CarteiraController implements Initializable, IController {
 
 	public void initComboBox() {
 		var anos = portfolio.anosDiferentes();
-		comboBoxAno.getItems().addAll(anos);
+		if (!anos.isEmpty()) {
+			comboBoxAno.getItems().clear();
+			comboBoxAno.getItems().addAll(anos);
+			comboBoxAno.setValue(anos.get(0));
+		}
 	}
+	
+
+    @FXML
+    void onChangeComboBox(ActionEvent event) {
+    	System.out.println("On Action comboBox");
+    }
+
 }

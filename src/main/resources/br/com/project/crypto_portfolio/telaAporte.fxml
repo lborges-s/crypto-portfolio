@@ -26,7 +26,7 @@
                   	<VBox.margin>
                         <Insets bottom="30.0" />
                      </VBox.margin>
-                  </CurrencyField>
+                  </CurrencyField> 
                   <Label text="Data do aporte" textFill="WHITE">
                      <font>
                         <Font size="25.0" />

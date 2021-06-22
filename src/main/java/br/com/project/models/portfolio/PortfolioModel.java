@@ -1,6 +1,9 @@
 package br.com.project.models.portfolio;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,11 +51,19 @@ public class PortfolioModel {
 	}
 
 	public double calcVlrTotalPortfolio() {
-		return calcVlrDisponivelPortfolio() + calcVlrEmMoedasDisplay();
+		return calcVlrDisponivelPortfolio() + calcVlrEmMoedasDisplay() + _calcTotalVendido();
 	}
 
 	public double calcVlrDisponivelPortfolio() {
 		return calcVlrTotalAportes() - calcVlrEmMoedas();
+	}
+
+	private double _calcTotalVendido() {
+		double totalSold = 0;
+		for (var c : coins) {
+			totalSold += c.getTotalSold();
+		}
+		return totalSold;
 	}
 
 	public double calcVlrTotalAportes() {
@@ -76,7 +87,7 @@ public class PortfolioModel {
 		}
 		return symbols.size();
 	}
-	
+
 	public double calcVlrEmMoedasDisplay() {
 		double total = 0;
 
@@ -122,7 +133,11 @@ public class PortfolioModel {
 
 	public boolean isValidVender(String symbol, double qtdMoeda) {
 		double qtdTotal = 0;
-		for (var c : coins) {
+		var coinsFiltered = coins.stream().filter(c -> symbol.equals(c.getSymbol())).collect(Collectors.toList());
+
+		if (coinsFiltered.isEmpty())
+			return false;
+		for (var c : coinsFiltered) {
 			qtdTotal += c.getTotalQtd();
 		}
 		return qtdMoeda <= qtdTotal;
@@ -158,18 +173,61 @@ public class PortfolioModel {
 		System.out.println("unifiedSymbols " + symbols);
 		return symbols;
 	}
-	
-	public List<String> anosDiferentes() {
-		List<String> ano = new ArrayList<String>();
-		for (Transacao transacao : transacoes) {
-			var data = transacao.getDtTransacao();
-			
-			data = data.substring(data.length()-4, data.length());
-			
-			if (!ano.contains(data))
-				ano.add(data);
+
+	public List<Integer> anosDiferentes() {
+		List<Integer> anos = new ArrayList<Integer>();
+		for (var t : transacoes) {
+			var ano = t.getAno();
+			if (!anos.contains(ano))
+				anos.add(ano);
 		}
-		
-		return ano;
+
+		return anos;
 	}
+
+	public double calcTotalProfitLoss() {
+		double profit = 0;
+
+		for (var c : coins) {
+			profit += c.getTotalProfit();
+		}
+
+		return profit;
+	}
+
+	public int lastCounterTransaction() {
+		int counter = 1;
+		for (var t : transacoes) {
+			if (t.getCounter() > counter)
+				counter = t.getCounter();
+		}
+		return counter;
+	}
+
+	public double getVlrTotalTransactionsByDate(int ano, int mes) {
+
+		var trs = transacoes.stream().filter(tr -> {
+			try {
+				Calendar calendar = new GregorianCalendar();
+				calendar.setTime(tr.getDate());
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH);
+
+				return year == ano && mes == month;
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}).collect(Collectors.toList());
+
+		double vlrTotal = 0;
+		
+		for (var t : trs) {
+			vlrTotal += t.vlrTotal();
+		}
+
+		return vlrTotal;
+
+	}
+
 }

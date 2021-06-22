@@ -102,6 +102,8 @@ public class MongoConcretePortfolio implements IMongoAccess<PortfolioModel> {
 		try {
 			String json = objectMapper.writeValueAsString(transacao);
 			Document newTransacao = Document.parse(json);
+			
+			System.out.println("newTransacao > " + newTransacao);
 			ObjectId objId = new ObjectId(id);
 
 			collection.updateOne(Filters.eq("_id", objId), Updates.addToSet("transacoes", newTransacao));

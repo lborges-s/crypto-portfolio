@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import br.com.project.components.CurrencyField?> 
+<?import br.com.project.components.CurrencyField?>
+
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -15,8 +16,16 @@
    <children>
       <BorderPane prefHeight="800.0" prefWidth="915.0" stylesheets="@css/fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="CENTER" maxHeight="400.0" maxWidth="698.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="698.0" style="-fx-background-radius: 20;" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" maxHeight="638.0" maxWidth="757.0" minHeight="400.0" minWidth="400.0" prefHeight="638.0" prefWidth="730.0" stylesheets="@css/fullpackstyling.css" BorderPane.alignment="CENTER">
                <children>
+                  <Label fx:id="titleText" styleClass="sombra" stylesheets="@css/fullpackstyling.css" text="Ez Cripto" textFill="WHITE">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="60.0" />
+                     </VBox.margin>
+                  </Label>
                   <Label fx:id="lblNomePortifolio" text="Nome do portifolio" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
@@ -41,6 +50,9 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
                   </Button>
                </children>
                <styleClass>
@@ -48,20 +60,10 @@
                   <String fx:value="sombra" />
                </styleClass>
                <BorderPane.margin>
-                  <Insets top="-50.0" />
+                  <Insets />
                </BorderPane.margin>
             </VBox>
          </center>
-         <top>
-            <Label fx:id="titleText" styleClass="sombra" stylesheets="@css/fullpackstyling.css" text="Easy Cripto" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="50.0" />
-               </font>
-               <BorderPane.margin>
-                  <Insets top="50.0" />
-               </BorderPane.margin>
-            </Label>
-         </top>
       </BorderPane>
    </children>
 </AnchorPane>
