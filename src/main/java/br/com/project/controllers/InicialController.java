@@ -81,6 +81,11 @@ public class InicialController implements Initializable {
 		}
 			
 		List<String> symbols = _getSymbolsAllPortfolios();
+		System.out.println("Symbols > " + symbols);
+		if(vBoxListCriptos.getChildren().size() > symbols.size()) {
+			vBoxListCriptos.getChildren(). clear();
+		}
+		
 		String urlStreams = Functions.generateStreamWssUrl(symbols);
 		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
 
@@ -94,11 +99,9 @@ public class InicialController implements Initializable {
 //							+ Functions.formatMoney(Double.parseDouble(ticker.getTicker().getLastPrice())));
 
 					_addPane(ticker.getTicker());
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 	}
@@ -124,8 +127,10 @@ public class InicialController implements Initializable {
 	}
 
 	public void _loadListPortfolios(boolean refresh) {
-		if (refresh)
+		if (refresh) {
 			vBoxListPortifolios.getChildren().clear();
+		}
+			
 		_loadListPortfolios();
 	}
 
@@ -147,7 +152,6 @@ public class InicialController implements Initializable {
 								websocketClient.closeConnection();
 								App.setRoot("telaCarteira", controller);
 							}
-
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -175,7 +179,7 @@ public class InicialController implements Initializable {
 			var list = port.unifiedSymbols();
 
 			for (String symbol : list) {
-				if (!symbols.contains(symbol)) {
+				if (!symbols.contains(symbol.toLowerCase())) {
 					symbols.add(symbol.toLowerCase());
 				}
 			}

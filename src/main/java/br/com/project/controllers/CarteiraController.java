@@ -75,7 +75,7 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	ComboBox<Integer> comboBoxAno;
-	
+
 	LineChart<String, Number> lineChart;
 
 	public CarteiraController(PortfolioModel portfolio) {
@@ -102,7 +102,8 @@ public class CarteiraController implements Initializable, IController {
 
 		lineChart.getStylesheets().add("@css/fullpackstyling.css");
 		lineChart.setTitle("Movimentação da carteira");
-		
+		paneChart.setCenter(lineChart);
+
 		loadInfos(false);
 
 		loadChart();
@@ -128,15 +129,15 @@ public class CarteiraController implements Initializable, IController {
 
 	public void _loadFields() {
 		txtNomeCarteira.setText(portfolio.getNome());
-		
+
 		txtVlrTotalCarteira.setText(Functions.formatMoney(portfolio.calcVlrTotalPortfolio()));
-		
+
 		txtVlrDisponivelCarteira.setText(Functions.formatMoney(portfolio.calcVlrDisponivelPortfolio()));
-		
+
 		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-		
+
 		txtVlrEmMoeda.setText(Functions.formatMoney(portfolio.calcVlrEmMoedas()));
-		
+
 		txtVlrLucroPerda.setText(Functions.formatMoney(portfolio.calcTotalProfit()));
 	}
 
@@ -154,37 +155,29 @@ public class CarteiraController implements Initializable, IController {
 	}
 
 	public void loadChart() {
-		if(comboBoxAno.getItems().isEmpty())return;
-//		final CategoryAxis xAxis = new CategoryAxis();
-//		final NumberAxis yAxis = new NumberAxis();
-//		xAxis.setLabel("Mês");
-//
-//		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
-//
-//		lineChart.getStylesheets().add("@css/fullpackstyling.css");
-//		lineChart.setTitle("Movimentação da carteira");
-//		
-		final int ano = comboBoxAno.getValue();
+		if (comboBoxAno.getItems().isEmpty())
+			return;
 		
-		double totalMaio = portfolio.getVlrTotalTransactionsByDate(ano,4);
+		final int ano = comboBoxAno.getValue();
+
+		double totalMaio = portfolio.getVlrTotalTransactionsByDate(ano, 4);
 
 		var series = new XYChart.Series<String, Number>();
-		series.getData().add(new XYChart.Data<String, Number>("Jan", portfolio.getVlrTotalTransactionsByDate(ano,0)));
-		series.getData().add(new XYChart.Data<String, Number>("Fev", portfolio.getVlrTotalTransactionsByDate(ano,1)));
-		series.getData().add(new XYChart.Data<String, Number>("Mar", portfolio.getVlrTotalTransactionsByDate(ano,2)));
-		series.getData().add(new XYChart.Data<String, Number>("Abr", portfolio.getVlrTotalTransactionsByDate(ano,3)));
+		series.getData().add(new XYChart.Data<String, Number>("Jan", portfolio.getVlrTotalTransactionsByDate(ano, 0)));
+		series.getData().add(new XYChart.Data<String, Number>("Fev", portfolio.getVlrTotalTransactionsByDate(ano, 1)));
+		series.getData().add(new XYChart.Data<String, Number>("Mar", portfolio.getVlrTotalTransactionsByDate(ano, 2)));
+		series.getData().add(new XYChart.Data<String, Number>("Abr", portfolio.getVlrTotalTransactionsByDate(ano, 3)));
 		series.getData().add(new XYChart.Data<String, Number>("Mai", totalMaio));
-		series.getData().add(new XYChart.Data<String, Number>("Jun", portfolio.getVlrTotalTransactionsByDate(ano,5)));
-		series.getData().add(new XYChart.Data<String, Number>("Jul", portfolio.getVlrTotalTransactionsByDate(ano,6)));
-		series.getData().add(new XYChart.Data<String, Number>("Ago", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Set", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Out", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Nov", 0));
-		series.getData().add(new XYChart.Data<String, Number>("Dez", 0));
+		series.getData().add(new XYChart.Data<String, Number>("Jun", portfolio.getVlrTotalTransactionsByDate(ano, 5)));
+		series.getData().add(new XYChart.Data<String, Number>("Jul", portfolio.getVlrTotalTransactionsByDate(ano, 6)));
+		series.getData().add(new XYChart.Data<String, Number>("Ago", portfolio.getVlrTotalTransactionsByDate(ano, 7)));
+		series.getData().add(new XYChart.Data<String, Number>("Set", portfolio.getVlrTotalTransactionsByDate(ano, 8)));
+		series.getData().add(new XYChart.Data<String, Number>("Out", portfolio.getVlrTotalTransactionsByDate(ano, 9)));
+		series.getData().add(new XYChart.Data<String, Number>("Nov", portfolio.getVlrTotalTransactionsByDate(ano, 10)));
+		series.getData().add(new XYChart.Data<String, Number>("Dez", portfolio.getVlrTotalTransactionsByDate(ano, 11)));
 
 		lineChart.getData().clear();
 		lineChart.getData().add(series);
-		paneChart.setCenter(lineChart);
 	}
 
 	public void _loadListMoedas() {
@@ -211,27 +204,28 @@ public class CarteiraController implements Initializable, IController {
 		List<String> symbols = portfolio.unifiedSymbols();
 		List<CoinModel> coins = portfolio.listMoedas();
 
-		String urlStreams = Functions.generateStreamWssUrl(symbols);
-		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
+		if (!coins.isEmpty()) {
 
-		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
-			public void handleMessage(String message) {
-				MultiTickerModel multiTicker;
-				try {
-					multiTicker = objectMapper.readValue(message, MultiTickerModel.class);
-					TickerStreamModel ticker = multiTicker.getTicker();
-					var symbol = ticker.getSymbol();
+			String urlStreams = Functions.generateStreamWssUrl(symbols);
+			websocketClient = new MyClientEndpoint(URI.create(urlStreams));
 
-//					System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
+			websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
+				public void handleMessage(String message) {
+					MultiTickerModel multiTicker;
+					try {
+						multiTicker = objectMapper.readValue(message, MultiTickerModel.class);
+						TickerStreamModel ticker = multiTicker.getTicker();
+						var symbol = ticker.getSymbol();
 
-					CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
-							.orElse(null);
+//						System.out.println("SYMBOL > " + symbol + " | " + Functions.formatMoney(ticker.getLastPrice()));
 
-					var indexCoin = coins.indexOf(cc);
-					if (indexCoin != -1) {
-						var c = coins.get(indexCoin);
+						CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
+								.orElse(null);
 
-//						if (c.getTotalQtd() > 0) {
+						var indexCoin = coins.indexOf(cc);
+						if (indexCoin != -1) {
+							var c = coins.get(indexCoin);
+
 							var actualPrice = Double.parseDouble(ticker.getLastPrice());
 							Platform.runLater(() -> {
 								c.calcProfit(actualPrice);
@@ -250,15 +244,16 @@ public class CarteiraController implements Initializable, IController {
 									vBoxListCriptos.getChildren().add(pane);
 								}
 							});
-//						}
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
+			});
 
-			}
-		});
+		}
 	}
 
 	@FXML
@@ -329,11 +324,11 @@ public class CarteiraController implements Initializable, IController {
 			comboBoxAno.setValue(anos.get(0));
 		}
 	}
-	
 
-    @FXML
-    void onChangeComboBox(ActionEvent event) {
-    	System.out.println("On Action comboBox");
-    }
+	@FXML
+	void onChangeComboBox(ActionEvent event) {
+		System.out.println("On Action comboBox");
+		loadChart();
+	}
 
 }

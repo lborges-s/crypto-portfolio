@@ -49,14 +49,13 @@ public class PortfolioModel {
 		System.out.println("setTransacoes");
 		listMoedas();
 	}
-
+	
 	public double calcVlrTotalPortfolio() {
-		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas() + _calcTotalVendido();
+		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas();
 	}
 
 	public double calcVlrDisponivelPortfolio() {
-		//TODO: Talvez adicionar valor totalVendido no valor disponível ao inves do valor total
-		return calcVlrTotalAportes() - calcVlrEmMoedas();
+		return calcVlrTotalAportes() - calcVlrEmMoedas() + _calcTotalVendido();
 	}
 
 	private double _calcTotalVendido() {
@@ -92,6 +91,7 @@ public class PortfolioModel {
 		double total = 0;
 		for (var c : coins) {
 			total += c.getVlrTotalInvestido();
+//			total += c.getTotalProfit();
 			//TODO: Adicionar valor de profit
 		}
 		return total;
@@ -159,8 +159,10 @@ public class PortfolioModel {
 		var symbols = new ArrayList<String>();
 		for (Transacao t : transacoes) {
 			boolean contains = symbols.contains(t.getSimboloMoeda());
-			if (!contains)
+			if (!contains) {
 				symbols.add(t.getSimboloMoeda());
+				
+			}
 		}
 		System.out.println("unifiedSymbols " + symbols);
 		return symbols;
