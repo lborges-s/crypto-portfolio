@@ -77,6 +77,9 @@ public class CarteiraController implements Initializable, IController {
 	ComboBox<Integer> comboBoxAno;
 
 	LineChart<String, Number> lineChart;
+	
+
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	public CarteiraController(PortfolioModel portfolio) {
 		this.portfolio = portfolio;
@@ -105,8 +108,7 @@ public class CarteiraController implements Initializable, IController {
 		paneChart.setCenter(lineChart);
 
 		loadInfos(false);
-
-		loadChart();
+//		loadChart();
 	}
 
 	public void loadInfos(boolean isUpdate) {
@@ -115,11 +117,11 @@ public class CarteiraController implements Initializable, IController {
 				portfolio = mongo.getById(portfolio.getId());
 
 			portfolio.listMoedas();
+			_initWebsocketMoedas(isUpdate);
 			_loadFields();
 			initComboBox();
 			loadChart();
 			loadHistorico();
-			_initWebsocketMoedas(isUpdate);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
@@ -130,13 +132,20 @@ public class CarteiraController implements Initializable, IController {
 	public void _loadFields() {
 		txtNomeCarteira.setText(portfolio.getNome());
 
-		txtVlrTotalCarteira.setText(Functions.formatMoney(portfolio.calcVlrTotalPortfolio()));
+//		txtVlrTotalCarteira.setText(Functions.formatMoney(portfolio.calcVlrTotalPortfolio()));
 
 		txtVlrDisponivelCarteira.setText(Functions.formatMoney(portfolio.calcVlrDisponivelPortfolio()));
 
-		txtQtdMoeda.setText(String.valueOf(portfolio.calcQtdMoedas()));
-
-		txtVlrEmMoeda.setText(Functions.formatMoney(portfolio.calcVlrEmMoedas()));
+		double qtdMoeda = portfolio.calcQtdMoedas();
+		txtQtdMoeda.setText(String.valueOf(qtdMoeda));
+		
+		double vlrMoedas = portfolio.calcVlrEmMoedas();
+		
+		if(vlrMoedas < 0 || qtdMoeda == 0) {
+			txtVlrEmMoeda.setText(Functions.formatMoney(0));
+		}else {
+			txtVlrEmMoeda.setText(Functions.formatMoney(vlrMoedas));	
+		}
 
 		txtVlrLucroPerda.setText(Functions.formatMoney(portfolio.calcTotalProfit()));
 	}
@@ -157,17 +166,15 @@ public class CarteiraController implements Initializable, IController {
 	public void loadChart() {
 		if (comboBoxAno.getItems().isEmpty())
 			return;
-		
-		final int ano = comboBoxAno.getValue();
 
-		double totalMaio = portfolio.getVlrTotalTransactionsByDate(ano, 4);
+		final int ano = comboBoxAno.getValue();
 
 		var series = new XYChart.Series<String, Number>();
 		series.getData().add(new XYChart.Data<String, Number>("Jan", portfolio.getVlrTotalTransactionsByDate(ano, 0)));
 		series.getData().add(new XYChart.Data<String, Number>("Fev", portfolio.getVlrTotalTransactionsByDate(ano, 1)));
 		series.getData().add(new XYChart.Data<String, Number>("Mar", portfolio.getVlrTotalTransactionsByDate(ano, 2)));
 		series.getData().add(new XYChart.Data<String, Number>("Abr", portfolio.getVlrTotalTransactionsByDate(ano, 3)));
-		series.getData().add(new XYChart.Data<String, Number>("Mai", totalMaio));
+		series.getData().add(new XYChart.Data<String, Number>("Mai", portfolio.getVlrTotalTransactionsByDate(ano, 4)));
 		series.getData().add(new XYChart.Data<String, Number>("Jun", portfolio.getVlrTotalTransactionsByDate(ano, 5)));
 		series.getData().add(new XYChart.Data<String, Number>("Jul", portfolio.getVlrTotalTransactionsByDate(ano, 6)));
 		series.getData().add(new XYChart.Data<String, Number>("Ago", portfolio.getVlrTotalTransactionsByDate(ano, 7)));
@@ -195,11 +202,11 @@ public class CarteiraController implements Initializable, IController {
 
 	private void _initWebsocketMoedas(boolean isUpdate) {
 		if (websocketClient != null) {
-			if (isUpdate)
-				websocketClient.closeConnection();
+			if (isUpdate) {
+				websocketClient.closeConnection();				
+			}
 			vBoxListCriptos.getChildren().clear();
 		}
-		ObjectMapper objectMapper = new ObjectMapper();
 
 		List<String> symbols = portfolio.unifiedSymbols();
 		List<CoinModel> coins = portfolio.listMoedas();
@@ -222,28 +229,31 @@ public class CarteiraController implements Initializable, IController {
 						CoinModel cc = coins.stream().filter(coin -> symbol.equals(coin.getSymbol())).findAny()
 								.orElse(null);
 
-						var indexCoin = coins.indexOf(cc);
-						if (indexCoin != -1) {
-							var c = coins.get(indexCoin);
+						if (cc.getTotalQtd() != 0) {
 
-							var actualPrice = Double.parseDouble(ticker.getLastPrice());
-							Platform.runLater(() -> {
-								c.calcProfit(actualPrice);
-								_loadFields();
-								PaneMoeda pane = new PaneMoeda(c);
+							var indexCoin = coins.indexOf(cc);
+							if (indexCoin != -1) {
+								var c = coins.get(indexCoin);
 
-								int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
-								if (indexVBox != -1) {
-									PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
+								var actualPrice = Double.parseDouble(ticker.getLastPrice());
+								Platform.runLater(() -> {
+									c.calcProfit(actualPrice);
+									_loadFields();
+									PaneMoeda pane = new PaneMoeda(c);
 
-									customPane.editLbNome(c.getSymbol());
-									customPane.editPercent(c.getRentabilidade());
-									customPane.editActualPrice(actualPrice);
-									customPane.editTotalPrice(c.getTotalProfit());
-								} else {
-									vBoxListCriptos.getChildren().add(pane);
-								}
-							});
+									int indexVBox = vBoxListCriptos.getChildren().indexOf(pane);
+									if (indexVBox != -1) {
+										PaneMoeda customPane = (PaneMoeda) vBoxListCriptos.getChildren().get(indexVBox);
+
+										customPane.editLbNome(c.getSymbol());
+										customPane.editPercent(c.getRentabilidade());
+										customPane.editActualPrice(actualPrice);
+										customPane.editTotalPrice(c.getTotalProfit());
+									} else {
+										vBoxListCriptos.getChildren().add(pane);
+									}
+								});
+							}
 						}
 
 					} catch (Exception e) {
@@ -327,7 +337,6 @@ public class CarteiraController implements Initializable, IController {
 
 	@FXML
 	void onChangeComboBox(ActionEvent event) {
-		System.out.println("On Action comboBox");
 		loadChart();
 	}
 

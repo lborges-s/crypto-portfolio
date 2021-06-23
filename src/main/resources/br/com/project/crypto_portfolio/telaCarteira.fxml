@@ -48,7 +48,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label text="Valor Total:" textFill="WHITE">
+                        <Label text="Valor Total:" textFill="WHITE" visible="false">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -78,7 +78,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtVlrTotalCarteira" text="\$ 00.000,00" textFill="WHITE">
+                        <Label fx:id="txtVlrTotalCarteira" text="\$ 00.000,00" textFill="WHITE" visible="false">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>

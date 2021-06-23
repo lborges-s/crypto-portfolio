@@ -85,14 +85,16 @@ public class CoinModel {
 		this.actualPrice = Functions.round(_actualPrice, 4);
 
 		final double vlrTotal = actualPrice * totalQtd;
-		final double vlrTotalProfit = (totalQtd * actualPrice) - vlrTotalInvestido;
-		final double rentabilidade = ((vlrTotal - vlrTotalInvestido) / vlrTotalInvestido) * 100;
-
-		System.out.println("Preço atual   > " + actualPrice);
-		System.out.println("Valor Total   > " + vlrTotal);
-		System.out.println("Lucro/Preju   > " + vlrTotalProfit);
-		System.out.println("Rentabilidade > " + rentabilidade);
-		System.out.println("--------------------------------");
+		final double vlrTotalProfit = vlrTotal - vlrTotalInvestido;
+		final double rentabilidade = (vlrTotalProfit / vlrTotalInvestido) * 100;
+		
+		System.out.println("MOEDA           > " + symbol);
+		System.out.println("Preço atual     > " + actualPrice);
+		System.out.println("Valor Investido > " + vlrTotalInvestido);
+		System.out.println("Valor Total     > " + vlrTotal);
+		System.out.println("Lucro/Preju     > " + vlrTotalProfit);
+		System.out.println("Rentabilidade   > " + rentabilidade);
+		System.out.println("------------------------------------");
 
 		this.totalProfit = vlrTotalProfit;
 		this.vlrTotal = vlrTotal;

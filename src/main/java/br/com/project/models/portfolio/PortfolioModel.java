@@ -46,16 +46,16 @@ public class PortfolioModel {
 
 	public void setTransacoes(List<Transacao> transacoes) {
 		this.transacoes = transacoes;
-		System.out.println("setTransacoes");
 		listMoedas();
 	}
-	
+
 	public double calcVlrTotalPortfolio() {
 		return calcVlrDisponivelPortfolio() + calcVlrEmMoedas();
 	}
 
 	public double calcVlrDisponivelPortfolio() {
-		return calcVlrTotalAportes() - calcVlrEmMoedas() + _calcTotalVendido();
+		return calcVlrTotalAportes() - calcVlrEmMoedas();
+//				+ _calcTotalVendido();
 	}
 
 	private double _calcTotalVendido() {
@@ -77,24 +77,34 @@ public class PortfolioModel {
 	}
 
 	public int calcQtdMoedas() {
-
 		if (coins.isEmpty())
 			return 0;
 		List<String> symbols = new ArrayList<String>();
-		for (CoinModel coin : coins) {
-			var symbol = coin.getSymbol();
-			symbols.add(symbol);
+		for (var coin : coins) {
+			if (coin.getTotalQtd() != 0) {
+				var symbol = coin.getSymbol();
+				symbols.add(symbol);
+			}
 		}
 		return symbols.size();
 	}
+
 	public double calcVlrEmMoedas() {
 		double total = 0;
 		for (var c : coins) {
 			total += c.getVlrTotalInvestido();
-//			total += c.getTotalProfit();
-			//TODO: Adicionar valor de profit
 		}
 		return total;
+	}
+
+	public double calcTotalProfit() {
+		double profit = 0;
+
+		for (var c : coins) {
+			profit += c.getTotalProfit();
+		}
+
+		return profit;
 	}
 
 	public List<HistoricoModel> historico() {
@@ -161,7 +171,7 @@ public class PortfolioModel {
 			boolean contains = symbols.contains(t.getSimboloMoeda());
 			if (!contains) {
 				symbols.add(t.getSimboloMoeda());
-				
+
 			}
 		}
 		System.out.println("unifiedSymbols " + symbols);
@@ -177,16 +187,6 @@ public class PortfolioModel {
 		}
 
 		return anos;
-	}
-
-	public double calcTotalProfit() {
-		double profit = 0;
-
-		for (var c : coins) {
-			profit += c.getTotalProfit();
-		}
-
-		return profit;
 	}
 
 	public int lastCounterTransaction() {
@@ -215,7 +215,7 @@ public class PortfolioModel {
 		}).collect(Collectors.toList());
 
 		double vlrTotal = 0;
-		
+
 		for (var t : trs) {
 			vlrTotal += t.custoTransacao();
 		}

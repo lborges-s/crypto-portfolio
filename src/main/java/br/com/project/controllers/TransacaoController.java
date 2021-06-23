@@ -142,8 +142,6 @@ public class TransacaoController implements Initializable, IController {
 				DoubleStringConverter converter = new DoubleStringConverter();
 
 				txtFieldQtd.setTextFormatter(new TextFormatter<>(converter));
-//				txtFieldQtd.setTextFormatter(new TextFormatter<>(
-//						getTextChangeFormatter("^(?!(?:[^.\\s\\d]*\\d){20})\\d+(?:\\.\\d{1,10})?$")));
 			}
 		});
 	}
@@ -187,9 +185,6 @@ public class TransacaoController implements Initializable, IController {
 				txtFieldMoeda.setEditable(false);
 				txtMoeda.setText("MOEDA: " + moedaAtual.getSymbol());
 				txtFieldPrecoMoeda.setText(Functions.formatMoney(Double.parseDouble(moedaAtual.getPrice())));
-
-				System.out.println("MOEDA: " + moedaAtual.getSymbol());
-				System.out.println("PREÇO: " + moedaAtual.getPrice());
 
 			} else {
 				JOptionPane.showMessageDialog(null, "Não foi possível encontrar a moeda, tente novamente",

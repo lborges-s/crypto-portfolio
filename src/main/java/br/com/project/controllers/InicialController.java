@@ -79,31 +79,34 @@ public class InicialController implements Initializable {
 			websocketClient.closeConnection();
 			vBoxListCriptos.getChildren().clear();
 		}
-			
+
 		List<String> symbols = _getSymbolsAllPortfolios();
 		System.out.println("Symbols > " + symbols);
-		if(vBoxListCriptos.getChildren().size() > symbols.size()) {
-			vBoxListCriptos.getChildren(). clear();
+		if (vBoxListCriptos.getChildren().size() > symbols.size()) {
+			vBoxListCriptos.getChildren().clear();
 		}
-		
-		String urlStreams = Functions.generateStreamWssUrl(symbols);
-		websocketClient = new MyClientEndpoint(URI.create(urlStreams));
 
-		websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
-			public void handleMessage(String message) {
-				MultiTickerModel ticker;
-				try {
-					ticker = objectMapper.readValue(message, MultiTickerModel.class);
+		if (!symbols.isEmpty()) {
 
-//					System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
-//							+ Functions.formatMoney(Double.parseDouble(ticker.getTicker().getLastPrice())));
+			String urlStreams = Functions.generateStreamWssUrl(symbols);
+			websocketClient = new MyClientEndpoint(URI.create(urlStreams));
 
-					_addPane(ticker.getTicker());
-				} catch (Exception e) {
-					e.printStackTrace();
+			websocketClient.addMessageHandler(new MyClientEndpoint.MessageHandler() {
+				public void handleMessage(String message) {
+					MultiTickerModel ticker;
+					try {
+						ticker = objectMapper.readValue(message, MultiTickerModel.class);
+
+//						System.out.println("SYMBOL > " + ticker.getTicker().getSymbol() + " | "
+//								+ Functions.formatMoney(Double.parseDouble(ticker.getTicker().getLastPrice())));
+
+						_addPane(ticker.getTicker());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	private void _addPane(TickerStreamModel ticker) {
@@ -130,7 +133,7 @@ public class InicialController implements Initializable {
 		if (refresh) {
 			vBoxListPortifolios.getChildren().clear();
 		}
-			
+
 		_loadListPortfolios();
 	}
 
@@ -149,7 +152,9 @@ public class InicialController implements Initializable {
 								editPortfolio(portfolio);
 							} else {
 								CarteiraController controller = new CarteiraController(portfolio);
-								websocketClient.closeConnection();
+								if (websocketClient != null) {
+									websocketClient.closeConnection();
+								}
 								App.setRoot("telaCarteira", controller);
 							}
 						} catch (IOException e) {
