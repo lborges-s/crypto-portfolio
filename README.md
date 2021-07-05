@@ -1,24 +1,7 @@
 # Portfólio de criptomoedas
 
-<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-<img src="exemplo-image.png" alt="Imagem da tela principal do sistema">
-
-> Este trabalho tem como objetivo principal ser um facilitador na gerência de portifólios voltados para a criptomoeda, e também está sendo desenvolvido como projeto para apresentação como projeto final do semestre no curso de Análise e Desenvolvimento de Sistemas.
-
-### Ajustes e melhorias
-
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
-
-- [x] Definição de requisitos
-
-<!---- 
-[x] Tarefa 2
-- [x] Tarefa 3
-- [ ] Tarefa 4
-- [ ] Tarefa 5
---->
-
+> Este trabalho tem como objetivo principal ser um facilitador na gerência de portfólios voltados para criptomoedas, e também foi desenvolvido como projeto para apresentação do projeto final do semestre de sistemas distribuídos no curso de Análise e Desenvolvimento de Sistemas.
 ## 🤝 Time
 
 <!---
